@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acesso VIP | Pense OffGrid</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        body {
+            background-color: #030303;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(247,147,30,0.12) 0%, transparent 60%),
+                linear-gradient(rgba(255,255,255,.015) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,.015) 1px, transparent 1px);
+            background-size: 100% 100%, 36px 36px, 36px 36px;
+            font-family: 'Inter', sans-serif;
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            overflow-x: hidden;
+        }
+        
+        .premium-glass {
+            background: linear-gradient(145deg, rgba(30, 30, 35, 0.6) 0%, rgba(15, 15, 18, 0.8) 100%);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            border-left: 1px solid rgba(255, 255, 255, 0.1);
+            border-right: 1px solid rgba(255, 255, 255, 0.02);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+            border-radius: 2.5rem;
+            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 1), inset 0 1px 0 rgba(255,255,255,0.05);
+        }
+
+        .text-gradient {
+            background: linear-gradient(to right, #ffffff, #a3a3a3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .btn-vip {
+            background: linear-gradient(90deg, #F7931E 0%, #FFC078 100%);
+            color: #120A02;
+            box-shadow: 0 10px 25px -5px rgba(247, 147, 30, 0.5), inset 0 2px 0 rgba(255, 255, 255, 0.3);
+            transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .btn-vip:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 15px 35px -5px rgba(247, 147, 30, 0.6), inset 0 2px 0 rgba(255, 255, 255, 0.4);
+        }
+
+        .glow-orb {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(247,147,30,0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            filter: blur(40px);
+            pointer-events: none;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body class="selection:bg-orange-500/30 selection:text-white relative">
+    
+    <div class="glow-orb top-10 left-10"></div>
+    <div class="glow-orb bottom-10 right-10" style="background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);"></div>
+
+    <div id="app" class="w-full max-w-2xl px-6 py-12 relative z-10">
+        <div class="premium-glass p-8 md:p-14 text-center relative overflow-hidden">
+            
+            <div class="mb-10 flex flex-col items-center">
+                <div class="w-16 h-16 rounded-full bg-gradient-to-br from-orange-500 to-yellow-600 flex items-center justify-center mb-4 shadow-[0_0_30px_rgba(247,147,30,0.3)]">
+                    <i class="fa-solid fa-bolt-lightning text-2xl text-[#120A02]"></i>
+                </div>
+                <div class="font-display text-2xl font-black tracking-widest uppercase">
+                    PENSE<span class="text-[#F7931E]">OFFGRID</span>
+                </div>
+            </div>
+
+            <h1 class="font-display text-3xl md:text-5xl font-black mb-6 leading-tight tracking-tight text-gradient">
+                Acesso <span class="text-[#F7931E]" style="-webkit-text-fill-color: initial;">VIP</span> Liberado
+            </h1>
+            
+            <p class="text-gray-400 mb-8 text-base md:text-lg leading-relaxed font-medium">
+                Você está a um passo do grupo exclusivo da nossa comunidade. Receba <strong>diagramas técnicos, alertas estruturais e ofertas validadas</strong> de equipamentos que não queimam.
+            </p>
+
+            <button @click="enterGroupAndReturn" class="btn-vip w-full py-5 rounded-2xl text-lg font-black uppercase tracking-widest flex items-center justify-center gap-3 relative overflow-hidden group">
+                <div class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out"></div>
+                <i class="fa-brands fa-whatsapp text-2xl relative z-10"></i>
+                <span class="relative z-10">ACESSAR O GRUPO AGORA</span>
+            </button>
+
+            <!-- NOVO BOTÃO: Permite o utilizador ir para o site caso mude de ideias (Com Rastreio) -->
+            <div class="mt-6 flex justify-center">
+                <a href="#" @click.prevent="goToSiteAndTrack" class="text-gray-500 hover:text-white transition-colors text-sm font-semibold underline decoration-white/20 hover:decoration-white underline-offset-4 cursor-pointer">
+                    Ir direto para o Site Original
+                </a>
+            </div>
+
+            <div class="mt-10 pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-center gap-6 text-xs text-gray-500 font-semibold uppercase tracking-widest">
+                <div class="flex items-center gap-2"><i class="fa-solid fa-shield-halved text-orange-500"></i> Links Seguros</div>
+                <div class="flex items-center gap-2"><i class="fa-solid fa-users text-orange-500"></i> Comunidade Ativa</div>
+            </div>
+        </div>
+
+        <p class="text-center mt-10 text-gray-600 text-[10px] font-bold uppercase tracking-widest opacity-60">
+            &copy; 2026 PENSE OFFGRID. Todos os direitos reservados.
+        </p>
+    </div>
+
+    <script>
+        new Vue({
+            el: '#app',
+            methods: {
+                enterGroupAndReturn() {
+                    const waLink = "https://chat.whatsapp.com/LIL7ytXyakpE4JnGvCgMBq";
+                    
+                    try {
+                        // Abre o WhatsApp numa nova aba (puxa o foco do utilizador no telemóvel)
+                        window.open(waLink, '_blank');
+                    } catch(e) {
+                        console.error("Pop-up bloqueado.", e);
+                    }
+                    
+                    try {
+                        // Transforma a página VIP atual na Home do Site Original (Usando o arquivo para evitar falha no proxy)
+                        window.location.href = 'index.html';
+                    } catch(e) {
+                        console.error("Erro ao redirecionar.", e);
+                    }
+                },
+                
+                // NOVA FUNÇÃO: Rastreio ativo para quem clica em "Ir direto para o Site Original"
+                goToSiteAndTrack() {
+                    const siteLink = "index.html"; // Evita o erro de base vazia em iframes ('/')
+                    const shopeeLink = "https://s.shopee.com.br/7KrhPU0WRF";
+                    
+                    const cooldownHours = 12;
+                    const lastTracked = localStorage.getItem('archan_shopee_tracked_vip');
+                    const now = Date.now();
+
+                    if (!lastTracked || (now - parseInt(lastTracked)) > (cooldownHours * 60 * 60 * 1000)) {
+                        localStorage.setItem('archan_shopee_tracked_vip', now.toString());
+                        
+                        try {
+                            // Abre o site original numa nova aba
+                            window.open(siteLink, '_blank');
+                            // A aba atual (VIP) que ficou para trás vira a Shopee silenciosamente
+                            window.location.href = shopeeLink;
+                        } catch(e) {
+                            // Segurança contra bloqueios totais
+                            window.location.href = siteLink;
+                        }
+                    } else {
+                        try {
+                            // Se já rastreou nas últimas 12h, vai apenas pro site
+                            window.location.href = siteLink;
+                        } catch(e) {
+                            console.error("Erro ao redirecionar.", e);
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+
+<script type="module">
+  import { bootGlobalLinks } from "/assets/js/firebase-public.js";
+  bootGlobalLinks().catch((error) => console.warn("Links globais fallback:", error));
+</script>
+</body>
+</html>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pense Offgrid Admin Global V2</title>
+  <meta name="theme-color" content="#030303"/>
+  <meta name="robots" content="noindex,nofollow"/>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800;900&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="./style.css"/>
+</head>
+<body>
+  <div id="appShell">
+    <header class="topbar glass">
+      <a class="brand" href="../" target="_blank" rel="noopener">PENSE <span>OFFGRID</span> ADMIN</a>
+
+      <div class="top-actions">
+        <span class="status-pill" id="authStatus"><i id="authDot"></i><b>Offline</b></span>
+        <a class="btn ghost" href="../" target="_blank" rel="noopener">Abrir site</a>
+        <button class="btn danger" id="logoutBtn" type="button">Sair</button>
+      </div>
+    </header>
+
+    <main class="shell">
+      <section class="auth-card glass" id="authCard">
+        <div>
+          <span class="eyebrow">Controle geral do ecossistema</span>
+          <h1>Painel Administrativo Global</h1>
+          <p>Entre com sua conta autorizada do Firebase para editar Home, Notícias, Projetos, Rifas, Cursos, Tutoriais, Jogos, Documentos, Calculadora e links globais.</p>
+        </div>
+
+        <div class="login-grid">
+          <label>E-mail
+            <input id="email" type="email" autocomplete="email" placeholder="admin@email.com"/>
+          </label>
+
+          <label>Senha
+            <input id="password" type="password" autocomplete="current-password" placeholder="senha"/>
+          </label>
+        </div>
+
+        <div class="actions-row">
+          <button class="btn primary" id="loginBtn" type="button">Entrar</button>
+          <button class="btn ghost" id="googleBtn" type="button">Google</button>
+        </div>
+      </section>
+
+      <section class="admin-layout hidden" id="adminApp">
+        <aside class="sidebar glass">
+          <div class="sidebar-title">
+            <span class="eyebrow">Módulos</span>
+            <strong>Ecossistema</strong>
+          </div>
+
+          <nav id="moduleTabs" class="module-tabs"></nav>
+
+          <div class="sidebar-note">
+            <b>Banco principal:</b><br>
+            ecosystem / penseoffgrid / modules
+          </div>
+        </aside>
+
+        <section class="workspace">
+          <section class="dashboard-panel panel active" id="dashboardPanel">
+            <div class="hero-admin glass">
+              <div>
+                <span class="eyebrow">Admin V2</span>
+                <h1>Controle total do Pense Offgrid</h1>
+                <p>Este painel já nasce modular. Cada aba do site tem sua área, seus registros, seus links, suas imagens e seus status. Cada item salvo aqui fica disponível no Firebase para as páginas públicas consumirem.</p>
+              </div>
+              <div class="dashboard-actions">
+                <button class="btn primary" id="reloadAllBtn" type="button">Recarregar dados</button>
+                <button class="btn ghost" id="exportAllBtn" type="button">Exportar backup</button>
+              </div>
+            </div>
+
+            <div class="kpi-grid" id="kpiGrid"></div>
+
+            <div class="glass card">
+              <div class="card-head">
+                <div>
+                  <span class="eyebrow">Mapa de integração</span>
+                  <h2>Estrutura Firebase</h2>
+                </div>
+              </div>
+              <pre class="code-map">ecosystem/penseoffgrid/modules/home/settings/main
+ecosystem/penseoffgrid/modules/home/carousel/{id}
+ecosystem/penseoffgrid/modules/home/banners/{id}
+ecosystem/penseoffgrid/modules/home/ctas/{id}
+ecosystem/penseoffgrid/modules/home/socials/{id}
+
+ecosystem/penseoffgrid/modules/news/posts/{slug}
+ecosystem/penseoffgrid/modules/projects/items/{slug}
+ecosystem/penseoffgrid/modules/raffles/items/{slug}
+ecosystem/penseoffgrid/modules/courses/lessons/{slug}
+ecosystem/penseoffgrid/modules/tutorials/items/{slug}
+ecosystem/penseoffgrid/modules/games/items/{slug}
+ecosystem/penseoffgrid/modules/calculator/rules/main
+ecosystem/penseoffgrid/modules/calculator/equipment/{slug}
+ecosystem/penseoffgrid/modules/docs/documents/{slug}
+ecosystem/penseoffgrid/modules/global/links/{slug}</pre>
+            </div>
+          </section>
+
+          <section class="module-panel panel" id="modulePanel">
+            <div class="module-hero glass">
+              <div>
+                <span class="eyebrow" id="moduleEyebrow">Módulo</span>
+                <h1 id="moduleTitle">Módulo</h1>
+                <p id="moduleDescription">Controle do módulo.</p>
+              </div>
+
+              <div class="module-public-actions">
+                <a class="btn ghost" id="openPublicPage" href="../" target="_blank" rel="noopener">Abrir página</a>
+                <button class="btn primary" id="createMainItemBtn" type="button">Novo item</button>
+              </div>
+            </div>
+
+            <div class="subnav glass" id="sectionTabs"></div>
+
+            <div id="sectionArea"></div>
+          </section>
+
+          <section class="backup-panel panel" id="backupPanel">
+            <div class="glass card">
+              <div class="card-head">
+                <div>
+                  <span class="eyebrow">Backup</span>
+                  <h2>Exportação e importação</h2>
+                  <p>Use para copiar o estado carregado do painel. A importação é manual nesta versão para evitar sobrescrever dados por acidente.</p>
+                </div>
+              </div>
+              <textarea id="backupText" class="backup-text" placeholder="O backup aparecerá aqui."></textarea>
+            </div>
+          </section>
+        </section>
+      </section>
+    </main>
+
+    <div id="toast" class="toast"></div>
+
+    <div id="editorModal" class="modal-backdrop">
+      <div class="modal-box glass">
+        <div class="modal-head">
+          <div>
+            <span class="eyebrow" id="modalEyebrow">Editor</span>
+            <h2 id="modalTitle">Editar</h2>
+          </div>
+          <button class="icon-btn" id="closeModalBtn" type="button">×</button>
+        </div>
+
+        <form id="editorForm" class="editor-form"></form>
+
+        <div class="modal-actions">
+          <button class="btn primary" id="saveModalBtn" type="button">Salvar</button>
+          <button class="btn ghost" id="duplicateModalBtn" type="button">Duplicar</button>
+          <button class="btn danger" id="deleteModalBtn" type="button">Excluir</button>
+          <button class="btn ghost" id="cancelModalBtn" type="button">Cancelar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="./app.js"></script>
+</body>
+</html>

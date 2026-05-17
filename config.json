@@ -1,0 +1,27 @@
+{
+  "global": {
+    "maintenance": false,
+    "message": "Sistema online",
+    "banner": {
+      "enabled": false,
+      "text": ""
+    }
+  },
+  "simulator": {
+    "enabled": true,
+    "economy": {
+      "sellMultiplier": 1,
+      "clickMultiplier": 1,
+      "generationMultiplier": 1,
+      "missionMultiplier": 1
+    },
+    "ranking": {
+      "season": "2026_01",
+      "frozen": false
+    }
+  },
+  "event": {
+    "active": null,
+    "name": ""
+  }
+}

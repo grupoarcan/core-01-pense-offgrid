@@ -1,0 +1,2486 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Rifas Offgrid | Pense Offgrid</title>
+  <meta name="description" content="Rifas Pense Offgrid: concorra a inversores, baterias, ferramentas e equipamentos para sistemas offgrid." />
+  <meta name="theme-color" content="#030303" />
+
+  <meta property="og:title" content="Rifas Offgrid | Pense Offgrid" />
+  <meta property="og:description" content="Escolha uma rifa, selecione seus números e concorra a equipamentos offgrid." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://www.penseoffgrid.com.br/og-thumb.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800;900&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --orange:#F7931E;
+      --orange2:#FFC078;
+      --bg:#030303;
+      --line:rgba(255,255,255,.1);
+      --muted:#AEB7C6;
+      --green:#22c55e;
+      --red:#ef4444;
+      --cyan:#00e5ff;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      color:#fff;
+      font-family:Inter,system-ui,sans-serif;
+      background:
+        radial-gradient(circle at 18% 0%,rgba(247,147,30,.14),transparent 42%),
+        radial-gradient(circle at 92% 8%,rgba(0,229,255,.07),transparent 34%),
+        linear-gradient(rgba(255,255,255,.016) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.016) 1px,transparent 1px),
+        var(--bg);
+      background-size:100% 100%,100% 100%,36px 36px,36px 36px;
+      overflow-x:hidden;
+    }
+
+    a{text-decoration:none;color:inherit}
+    input,select,button{font-family:Inter,system-ui,sans-serif}
+    .shell{width:min(1240px,calc(100% - 28px));margin:0 auto}
+
+    .glass{
+      background:linear-gradient(145deg,rgba(30,30,35,.64),rgba(12,13,17,.92));
+      backdrop-filter:blur(22px);
+      border-top:1px solid rgba(255,255,255,.15);
+      border-left:1px solid rgba(255,255,255,.09);
+      border-right:1px solid rgba(255,255,255,.04);
+      border-bottom:1px solid rgba(255,255,255,.04);
+      box-shadow:0 28px 70px -18px rgba(0,0,0,.92),inset 0 1px 0 rgba(255,255,255,.04);
+    }
+
+    .topbar{
+      margin-top:18px;
+      border-radius:24px;
+      padding:14px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:14px;
+      flex-wrap:wrap;
+    }
+
+    .brand{
+      font-family:Montserrat,sans-serif;
+      font-size:22px;
+      font-weight:900;
+      letter-spacing:-.05em;
+      text-transform:uppercase;
+    }
+
+    .brand span{color:var(--orange)}
+
+    .nav{display:flex;gap:8px;flex-wrap:wrap}
+
+    .nav a{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.045);
+      border-radius:14px;
+      padding:10px 12px;
+      font-size:11px;
+      font-weight:900;
+      text-transform:uppercase;
+      transition:.2s;
+    }
+
+    .nav a:hover{border-color:rgba(247,147,30,.45);background:rgba(247,147,30,.1)}
+
+    .page-hero{
+      margin-top:18px;
+      border-radius:30px;
+      padding:28px;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .page-hero:after{
+      content:"";
+      position:absolute;
+      right:-100px;
+      bottom:-150px;
+      width:380px;
+      height:380px;
+      border-radius:50%;
+      background:radial-gradient(circle,rgba(247,147,30,.17),transparent 68%);
+      pointer-events:none;
+      filter:blur(10px);
+    }
+
+    .badge{
+      display:inline-flex;
+      width:max-content;
+      align-items:center;
+      gap:8px;
+      border:1px solid rgba(247,147,30,.35);
+      border-radius:999px;
+      padding:8px 12px;
+      color:#ffd08a;
+      background:rgba(247,147,30,.08);
+      font-size:11px;
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:.12em;
+    }
+
+    .dot{width:8px;height:8px;border-radius:999px;background:var(--orange);box-shadow:0 0 18px rgba(247,147,30,.8)}
+
+    h1{
+      font-family:Montserrat,sans-serif;
+      font-size:clamp(36px,6vw,72px);
+      line-height:.94;
+      letter-spacing:-.075em;
+      margin:20px 0 14px;
+      max-width:920px;
+      text-transform:uppercase;
+      position:relative;
+      z-index:2;
+    }
+
+    h1 span{color:var(--orange)}
+
+    .lead{
+      color:#D1D7E4;
+      font-size:17px;
+      line-height:1.65;
+      margin:0;
+      max-width:850px;
+      position:relative;
+      z-index:2;
+    }
+
+    .hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px;position:relative;z-index:2}
+
+    .btn,.mini-btn{
+      border:0;
+      min-height:50px;
+      border-radius:16px;
+      padding:0 18px;
+      font-weight:950;
+      text-transform:uppercase;
+      letter-spacing:.055em;
+      font-size:12px;
+      transition:.2s;
+      cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .btn:hover,.mini-btn:hover{transform:translateY(-2px)}
+
+    .primary{
+      background:linear-gradient(90deg,var(--orange),var(--orange2));
+      color:#120700;
+      box-shadow:0 16px 34px rgba(247,147,30,.22);
+    }
+
+    .ghost{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.05);
+      color:white;
+    }
+
+    .share-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:12px;
+    }
+
+    .share-actions .btn{
+      min-height:42px;
+      padding:0 13px;
+      font-size:11px;
+    }
+
+    .card-share{
+      width:100%;
+      margin-top:10px;
+      min-height:42px;
+      border-radius:15px;
+      border:1px solid rgba(255,255,255,.1);
+      background:rgba(255,255,255,.055);
+      color:#fff;
+      font-weight:900;
+      text-transform:uppercase;
+      font-size:11px;
+      cursor:pointer;
+    }
+
+    .card-share:hover{border-color:rgba(247,147,30,.45);background:rgba(247,147,30,.1)}
+
+    .raffle-grid{
+      margin-top:20px;
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:16px;
+    }
+
+    .raffle-card{
+      min-height:470px;
+      border-radius:30px;
+      overflow:hidden;
+      position:relative;
+      padding:1px;
+      cursor:pointer;
+      transition:.25s;
+      border:1px solid rgba(255,255,255,.09);
+      background:
+        radial-gradient(circle at 50% 0%,rgba(247,147,30,.18),transparent 38%),
+        linear-gradient(145deg,rgba(30,30,35,.7),rgba(12,13,17,.95));
+      animation:cardPulse 4s ease-in-out infinite;
+    }
+
+    .raffle-card:hover{
+      transform:translateY(-6px);
+      border-color:rgba(247,147,30,.52);
+      box-shadow:0 24px 70px rgba(247,147,30,.12),0 30px 80px rgba(0,0,0,.45);
+    }
+
+    @keyframes cardPulse{
+      0%,100%{box-shadow:0 0 0 1px rgba(247,147,30,.02),0 22px 60px rgba(0,0,0,.42)}
+      50%{box-shadow:0 0 0 1px rgba(247,147,30,.18),0 0 36px rgba(247,147,30,.18),0 22px 60px rgba(0,0,0,.42)}
+    }
+
+    .raffle-media{
+      height:235px;
+      margin:14px;
+      border-radius:24px;
+      display:grid;
+      place-items:center;
+      background:
+        radial-gradient(circle at center,rgba(255,255,255,.08),transparent 58%),
+        linear-gradient(145deg,#171d28,#07090d);
+      border:1px solid rgba(247,147,30,.16);
+      overflow:hidden;
+      position:relative;
+    }
+
+    .raffle-media img{
+      width:100%;
+      max-height:210px;
+      object-fit:contain;
+      filter:drop-shadow(0 24px 44px rgba(0,0,0,.62));
+      padding:16px;
+    }
+
+    .raffle-media .emoji{
+      font-size:112px;
+      filter:drop-shadow(0 0 45px rgba(247,147,30,.22));
+    }
+
+    .raffle-status{
+      position:absolute;
+      left:14px;
+      top:14px;
+      z-index:2;
+      border:1px solid rgba(34,197,94,.35);
+      background:rgba(34,197,94,.11);
+      color:#bbf7d0;
+      border-radius:999px;
+      padding:7px 10px;
+      font-size:10px;
+      text-transform:uppercase;
+      font-weight:950;
+      letter-spacing:.1em;
+    }
+
+    .raffle-body{
+      padding:0 18px 18px;
+    }
+
+    .raffle-body h2{
+      font-family:Montserrat,sans-serif;
+      font-size:25px;
+      line-height:1;
+      letter-spacing:-.05em;
+      margin:0 0 10px;
+      text-transform:uppercase;
+    }
+
+    .raffle-body p{
+      color:var(--muted);
+      line-height:1.48;
+      font-size:14px;
+      margin:0 0 16px;
+    }
+
+    .raffle-metrics{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:8px;
+      margin-bottom:14px;
+    }
+
+    .metric{
+      border:1px solid rgba(255,255,255,.08);
+      background:rgba(255,255,255,.04);
+      border-radius:16px;
+      padding:10px;
+    }
+
+    .metric small{
+      display:block;
+      color:var(--muted);
+      font-size:9px;
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:.11em;
+      margin-bottom:5px;
+    }
+
+    .metric b{
+      font-family:Montserrat,sans-serif;
+      font-size:18px;
+    }
+
+
+    .progress-wrap{
+      margin-top:14px;
+      padding:12px;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.1);
+      background:rgba(255,255,255,.045);
+    }
+
+    .progress-top{
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      color:var(--muted);
+      font-size:12px;
+      font-weight:800;
+      margin-bottom:8px;
+    }
+
+    .progress-bar{
+      width:100%;
+      height:10px;
+      border-radius:999px;
+      overflow:hidden;
+      background:rgba(255,255,255,.08);
+    }
+
+    .progress-fill{
+      height:100%;
+      width:0%;
+      border-radius:999px;
+      background:linear-gradient(90deg,var(--orange),#ffd166);
+      transition:width .35s ease;
+    }
+
+    .detail-alerts{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:10px;
+      margin-top:14px;
+    }
+
+    .alert-chip{
+      padding:12px;
+      border-radius:16px;
+      border:1px solid rgba(247,147,30,.18);
+      background:rgba(247,147,30,.08);
+      color:#f7f2e9;
+      font-size:13px;
+      line-height:1.35;
+      font-weight:700;
+    }
+
+    .alert-chip small{
+      display:block;
+      color:var(--muted);
+      text-transform:uppercase;
+      letter-spacing:.1em;
+      font-size:9px;
+      margin-bottom:4px;
+    }
+
+    .payment-box,.winner-box{
+      margin-top:12px;
+      padding:12px;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.1);
+      background:rgba(255,255,255,.045);
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.45;
+    }
+
+    .payment-box strong,.winner-box strong{color:#fff}
+
+    .mini-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+
+    .mini-actions button,.mini-actions a{
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.06);
+      color:#fff;
+      border-radius:999px;
+      padding:8px 10px;
+      font-size:12px;
+      font-weight:900;
+      text-decoration:none;
+      cursor:pointer;
+    }
+
+    .section-title{
+      margin-top:30px;
+      display:flex;
+      justify-content:space-between;
+      align-items:end;
+      gap:16px;
+      flex-wrap:wrap;
+    }
+
+    .section-title h2{
+      font-family:Montserrat,sans-serif;
+      text-transform:uppercase;
+      letter-spacing:-.055em;
+      line-height:1;
+      font-size:clamp(26px,4vw,42px);
+      margin:0;
+    }
+
+    .section-title p{
+      color:var(--muted);
+      margin:0;
+      max-width:600px;
+      line-height:1.5;
+    }
+
+    .modal{
+      position:fixed;
+      inset:0;
+      z-index:100;
+      background:rgba(0,0,0,.86);
+      backdrop-filter:blur(12px);
+      display:none;
+      overflow:auto;
+      padding:16px;
+    }
+
+    .modal.active{display:block}
+
+    .modal-shell{
+      width:min(1280px,100%);
+      margin:0 auto;
+      position:relative;
+    }
+
+    .modal-close{
+      position:sticky;
+      top:12px;
+      left:100%;
+      z-index:20;
+      width:52px;
+      height:52px;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.15);
+      background:rgba(10,10,12,.9);
+      color:#fff;
+      font-size:28px;
+      cursor:pointer;
+      margin-left:auto;
+      display:grid;
+      place-items:center;
+      backdrop-filter:blur(12px);
+    }
+
+    .raffle-detail{
+      border-radius:30px;
+      padding:22px;
+      display:grid;
+      grid-template-columns:.92fr 1.08fr;
+      gap:18px;
+      align-items:stretch;
+      overflow:hidden;
+      position:relative;
+      margin-top:12px;
+    }
+
+    .raffle-detail:after{
+      content:"";
+      position:absolute;
+      right:-120px;
+      bottom:-140px;
+      width:360px;
+      height:360px;
+      border-radius:50%;
+      background:radial-gradient(circle,rgba(247,147,30,.16),transparent 68%);
+      pointer-events:none;
+      filter:blur(10px);
+    }
+
+    .prize-media{
+      position:relative;
+      z-index:2;
+      min-height:430px;
+      border-radius:26px;
+      overflow:hidden;
+      border:1px solid rgba(247,147,30,.22);
+      background:
+        radial-gradient(circle at top right,rgba(247,147,30,.22),transparent 42%),
+        linear-gradient(145deg,#161b25,#07090d);
+      display:grid;
+      place-items:center;
+      padding:22px;
+    }
+
+    .prize-image{
+      width:100%;
+      height:100%;
+      min-height:330px;
+      border-radius:22px;
+      display:grid;
+      place-items:center;
+      background:
+        radial-gradient(circle at center,rgba(255,255,255,.07),transparent 58%),
+        rgba(0,0,0,.25);
+      position:relative;
+      overflow:hidden;
+    }
+
+    .prize-image img{
+      width:100%;
+      max-height:390px;
+      object-fit:contain;
+      filter:drop-shadow(0 24px 48px rgba(0,0,0,.65));
+    }
+
+    .fallback-icon{
+      font-size:150px;
+      filter:drop-shadow(0 0 45px rgba(247,147,30,.22));
+    }
+
+    .prize-stamp{
+      position:absolute;
+      left:18px;
+      top:18px;
+      border:1px solid rgba(247,147,30,.45);
+      background:rgba(0,0,0,.55);
+      color:#ffd08a;
+      border-radius:999px;
+      padding:9px 12px;
+      font-size:11px;
+      font-weight:950;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      backdrop-filter:blur(10px);
+    }
+
+    .hero-copy{
+      position:relative;
+      z-index:2;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      padding:8px 8px 8px 0;
+    }
+
+    .detail-title{
+      font-family:Montserrat,sans-serif;
+      font-size:clamp(34px,5vw,60px);
+      line-height:.96;
+      letter-spacing:-.07em;
+      margin:20px 0 14px;
+      text-transform:uppercase;
+    }
+
+    .detail-title span{color:var(--orange)}
+
+    .lead{
+      color:#D1D7E4;
+      font-size:16px;
+      line-height:1.65;
+      margin:0;
+      max-width:740px;
+    }
+
+    .stats{
+      margin-top:20px;
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:10px;
+    }
+
+    .stat{
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:13px;
+      background:rgba(255,255,255,.035);
+    }
+
+    .stat small{
+      display:block;
+      color:var(--muted);
+      font-weight:900;
+      text-transform:uppercase;
+      font-size:9px;
+      letter-spacing:.12em;
+      margin-bottom:6px;
+    }
+
+    .stat b{
+      font-family:Montserrat,sans-serif;
+      font-size:20px;
+    }
+
+    .main-layout{
+      display:grid;
+      grid-template-columns:1fr 360px;
+      gap:18px;
+      align-items:start;
+      margin-top:18px;
+    }
+
+    .section-card{
+      border-radius:28px;
+      padding:22px;
+    }
+
+    .section-head{
+      display:flex;
+      justify-content:space-between;
+      gap:16px;
+      flex-wrap:wrap;
+      align-items:end;
+      margin-bottom:16px;
+    }
+
+    .kicker{
+      color:var(--orange);
+      font-size:11px;
+      font-weight:950;
+      text-transform:uppercase;
+      letter-spacing:.22em;
+      margin-bottom:8px;
+    }
+
+    .section-head h2{
+      font-family:Montserrat,sans-serif;
+      font-size:clamp(24px,3vw,36px);
+      line-height:1;
+      margin:0;
+      text-transform:uppercase;
+      letter-spacing:-.055em;
+    }
+
+    .section-head p{
+      color:var(--muted);
+      max-width:560px;
+      line-height:1.5;
+      margin:0;
+      font-size:14px;
+    }
+
+    .legend{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      margin-bottom:14px;
+    }
+
+    .legend span{
+      border:1px solid var(--line);
+      border-radius:999px;
+      padding:7px 10px;
+      font-size:11px;
+      font-weight:900;
+      text-transform:uppercase;
+      color:#e5e7eb;
+      background:rgba(255,255,255,.04);
+    }
+
+    .legend .available:before,.legend .selected:before,.legend .sold:before{
+      content:"";
+      display:inline-block;
+      width:8px;
+      height:8px;
+      border-radius:50%;
+      margin-right:7px;
+    }
+
+    .legend .available:before{background:#374151}
+    .legend .selected:before{background:var(--green)}
+    .legend .sold:before{background:var(--red)}
+
+    .number-box{
+      border-radius:24px;
+      border:1px solid rgba(255,255,255,.07);
+      background:rgba(0,0,0,.2);
+      padding:12px;
+    }
+
+    .number-grid{
+      display:grid;
+      grid-template-columns:repeat(16,1fr);
+      gap:6px;
+      max-height:460px;
+      overflow:auto;
+      padding:4px;
+    }
+
+    .number-grid.loading{
+      min-height:260px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      color:#fcd9a0;
+      font-weight:900;
+      letter-spacing:.04em;
+      border:1px dashed rgba(247,147,30,.35);
+      border-radius:18px;
+      background:rgba(247,147,30,.05);
+    }
+
+    .number-grid.loading:before{
+      content:"Carregando números e reservas da rifa...";
+    }
+
+    .modal-busy{
+      position:fixed;
+      left:50%;
+      bottom:20px;
+      transform:translateX(-50%) translateY(12px);
+      opacity:0;
+      pointer-events:none;
+      z-index:140;
+      border:1px solid rgba(247,147,30,.38);
+      border-radius:999px;
+      padding:13px 18px;
+      background:rgba(11,13,18,.94);
+      color:#ffd08a;
+      font-weight:950;
+      box-shadow:0 18px 50px rgba(0,0,0,.45);
+      transition:.18s ease;
+      text-align:center;
+      max-width:min(92vw,520px);
+    }
+
+    .modal-busy.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+    .btn[disabled]{opacity:.72;cursor:not-allowed;filter:saturate(.75)}
+
+    .num{
+      min-height:34px;
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:10px;
+      background:#111827;
+      color:#e5e7eb;
+      font-weight:900;
+      font-size:11px;
+      cursor:pointer;
+      transition:.15s;
+    }
+
+    .num:hover{
+      transform:translateY(-1px);
+      border-color:rgba(247,147,30,.5);
+      background:rgba(247,147,30,.12);
+    }
+
+    .num.selected{
+      background:rgba(34,197,94,.25);
+      border-color:rgba(34,197,94,.7);
+      color:#bbf7d0;
+      box-shadow:0 0 0 1px rgba(34,197,94,.15),0 0 18px rgba(34,197,94,.16);
+    }
+
+    .num.prize:not(.sold){
+      border-color:rgba(250,204,21,.72);
+      background:linear-gradient(145deg,rgba(250,204,21,.18),rgba(17,24,39,.96));
+      color:#fef3c7;
+      box-shadow:inset 0 0 0 1px rgba(250,204,21,.14);
+    }
+
+    .num.prize:not(.sold)::after{content:"★";font-size:8px;margin-left:2px;color:#facc15}
+
+    .summary-row.discount-line{color:#bbf7d0}
+    .summary-row.discount-line b{color:#86efac}
+    .selected-prizes{font-size:12px;color:#fde68a;line-height:1.45;margin-top:8px;font-weight:850}
+    .selected-discount{font-size:12px;color:#86efac;line-height:1.45;margin-top:8px;font-weight:850}
+
+    .num.sold{
+      background:rgba(239,68,68,.2);
+      border-color:rgba(239,68,68,.5);
+      color:#fecaca;
+      cursor:not-allowed;
+      opacity:.72;
+    }
+
+    .side-stack{display:grid;gap:16px;position:sticky;top:18px}
+
+    .rules,.summary,.buyers{
+      border-radius:28px;
+      padding:20px;
+      border:1px solid rgba(247,147,30,.18);
+      background:
+        radial-gradient(circle at 100% 0%,rgba(247,147,30,.12),transparent 38%),
+        linear-gradient(145deg,rgba(30,30,35,.64),rgba(12,13,17,.92));
+    }
+
+    .rules h3,.summary h3,.buyers h3{
+      font-family:Montserrat,sans-serif;
+      font-size:23px;
+      line-height:1;
+      letter-spacing:-.045em;
+      text-transform:uppercase;
+      margin:0 0 12px;
+    }
+
+    .rule-list{
+      margin:0;
+      padding:0;
+      list-style:none;
+      display:grid;
+      gap:10px;
+    }
+
+    .rule-list li{
+      color:#dbe2ee;
+      line-height:1.45;
+      font-size:14px;
+      border-bottom:1px solid rgba(255,255,255,.07);
+      padding-bottom:10px;
+    }
+
+    .rule-list li:last-child{border-bottom:0;padding-bottom:0}
+
+    .summary-row{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      border-bottom:1px solid rgba(255,255,255,.08);
+      padding:10px 0;
+      color:#dbe2ee;
+    }
+
+    .summary-row b{color:white}
+
+    .selected-list{
+      min-height:42px;
+      color:#bbf7d0;
+      font-weight:900;
+      line-height:1.5;
+      margin-top:8px;
+    }
+
+    .form-card{
+      margin-top:18px;
+      border-radius:28px;
+      padding:22px;
+    }
+
+    .form-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr 1fr;
+      gap:12px;
+    }
+
+    label{
+      display:block;
+      font-size:11px;
+      color:#ffd08a;
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:.11em;
+    }
+
+    input{
+      margin-top:6px;
+      width:100%;
+      border:1px solid var(--line);
+      border-radius:14px;
+      background:#070a0f;
+      color:#fff;
+      padding:13px;
+      outline:none;
+      font-weight:700;
+    }
+
+    input:focus{border-color:rgba(247,147,30,.52)}
+
+    .buyer{
+      display:grid;
+      grid-template-columns:auto 1fr auto;
+      gap:10px;
+      align-items:center;
+      padding:11px 0;
+      border-bottom:1px solid rgba(255,255,255,.07);
+    }
+
+    .buyer:last-child{border-bottom:0}
+
+    .avatar{
+      width:36px;
+      height:36px;
+      display:grid;
+      place-items:center;
+      border-radius:14px;
+      background:linear-gradient(135deg,var(--orange),var(--orange2));
+      color:#140700;
+      font-weight:950;
+    }
+
+    .buyer strong{display:block;font-size:13px}
+    .buyer small{display:block;color:var(--muted);margin-top:3px}
+    .buyer b{color:#bbf7d0;font-size:12px}
+
+    .notice{
+      margin-top:12px;
+      color:var(--muted);
+      font-size:12px;
+      line-height:1.5;
+    }
+
+    .footer{
+      margin:18px 0 30px;
+      border-radius:26px;
+      padding:22px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:16px;
+      flex-wrap:wrap;
+    }
+
+    .footer p{color:var(--muted);margin:6px 0 0;line-height:1.5}
+    .footer-actions{display:flex;gap:10px;flex-wrap:wrap}
+
+    .footer-actions a{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.045);
+      border-radius:14px;
+      padding:12px 14px;
+      font-size:12px;
+      font-weight:900;
+      text-transform:uppercase;
+    }
+
+    .footer-actions a:first-child{
+      background:linear-gradient(90deg,var(--orange),var(--orange2));
+      color:#120700;
+      border:0;
+    }
+
+    .toast{
+      position:fixed;
+      left:50%;
+      bottom:18px;
+      transform:translateX(-50%) translateY(80px);
+      opacity:0;
+      z-index:180;
+      border:1px solid rgba(247,147,30,.45);
+      background:#08090d;
+      color:#ffd08a;
+      border-radius:999px;
+      padding:12px 18px;
+      font-weight:900;
+      transition:.25s;
+      box-shadow:0 20px 60px rgba(0,0,0,.5);
+      text-align:center;
+      width:max-content;
+      max-width:calc(100% - 24px);
+    }
+
+    .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+    .postpay-modal{
+      position:fixed;
+      inset:0;
+      z-index:220;
+      display:none;
+      place-items:center;
+      padding:18px;
+      background:rgba(0,0,0,.82);
+      backdrop-filter:blur(14px);
+    }
+
+    .postpay-modal.active{display:grid}
+
+    .postpay-card{
+      width:min(560px,100%);
+      border:1px solid rgba(247,147,30,.45);
+      border-radius:28px;
+      background:
+        radial-gradient(circle at 14% 0%, rgba(247,147,30,.22), transparent 38%),
+        linear-gradient(180deg, rgba(20,22,32,.98), rgba(8,9,13,.98));
+      box-shadow:0 28px 90px rgba(0,0,0,.68);
+      padding:26px;
+      color:#fff;
+      text-align:center;
+    }
+
+    .postpay-card .badge{
+      width:64px;
+      height:64px;
+      margin:0 auto 14px;
+      border-radius:22px;
+      display:grid;
+      place-items:center;
+      background:rgba(34,197,94,.16);
+      border:1px solid rgba(34,197,94,.35);
+      color:#86efac;
+      font-size:30px;
+      font-weight:1000;
+    }
+
+    .postpay-card h2{
+      margin:0 0 8px;
+      font-family:Montserrat,Inter,sans-serif;
+      font-size:clamp(24px,4vw,34px);
+      text-transform:uppercase;
+    }
+
+    .postpay-card p{
+      margin:0 auto 16px;
+      color:#cbd5e1;
+      line-height:1.55;
+      max-width:460px;
+    }
+
+    .postpay-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:center;
+      margin-top:18px;
+    }
+
+    .postpay-actions .btn{min-width:180px}
+
+
+    @media(max-width:1120px){
+      .raffle-grid{grid-template-columns:repeat(2,1fr)}
+      .raffle-detail{grid-template-columns:1fr}
+      .main-layout{grid-template-columns:1fr}
+      .side-stack{position:relative;top:auto}
+      .number-grid{grid-template-columns:repeat(12,1fr)}
+      .form-grid{grid-template-columns:1fr 1fr}
+    }
+
+    @media(max-width:680px){
+      .shell{width:min(100% - 18px,1240px)}
+      .topbar{margin-top:8px;border-radius:20px}
+      .nav{width:100%;display:grid;grid-template-columns:1fr 1fr}
+      .nav a{text-align:center}
+      .page-hero{border-radius:24px;padding:20px}
+      .raffle-grid{grid-template-columns:1fr}
+      .detail-alerts{grid-template-columns:1fr}
+      .raffle-card{min-height:440px}
+      .raffle-media{height:210px}
+      .modal{padding:8px}
+      .modal-close{top:8px;width:48px;height:48px}
+      .raffle-detail{border-radius:24px;padding:16px}
+      .prize-media{min-height:320px}
+      .prize-image{min-height:260px}
+      .fallback-icon{font-size:112px}
+      .stats{grid-template-columns:1fr 1fr}
+      .hero-actions .btn{width:100%}
+      .number-grid{grid-template-columns:repeat(5,1fr);max-height:430px}
+      .form-grid{grid-template-columns:1fr}
+      .footer{display:block}
+      .footer-actions{margin-top:14px}
+      .footer-actions a{width:100%;text-align:center}
+    }
+  
+    .postpay-receipt{margin:16px 0;padding:14px;border:1px solid rgba(255,159,28,.28);border-radius:18px;background:rgba(255,159,28,.08);display:grid;gap:6px;text-align:left}
+    .postpay-receipt strong{color:#fff;font-size:1rem}
+    .postpay-receipt span{color:var(--muted);font-size:.92rem}
+  </style>
+</head>
+
+<body>
+  <main class="shell">
+    <header class="topbar glass">
+      <a href="/" class="brand">PENSE <span>OFFGRID</span></a>
+      <nav class="nav">
+        <a href="/">Home</a>
+        <a href="/projetos/">Projetos</a>
+        <a href="/noticias/">Notícias</a>
+        <a href="/cursos/">Cursos</a>
+      </nav>
+    </header>
+
+    <section class="page-hero glass">
+      <div class="badge"><span class="dot"></span>Rifas Offgrid</div>
+      <h1>Escolha uma rifa e concorra a equipamentos <span>offgrid</span></h1>
+      <p class="lead">
+        Selecione uma campanha ativa, escolha seus números e acompanhe as regras de cada sorteio.
+        As rifas foram pensadas para quem quer evoluir seu sistema com inversores, baterias, ferramentas e equipamentos úteis.
+      </p>
+      <div class="hero-actions">
+        <a class="btn primary" href="#rifas">Ver rifas ativas</a>
+        <a class="btn ghost" href="/projetos/">Ver projetos</a>
+      </div>
+    </section>
+
+    <section class="section-title" id="rifas">
+      <div>
+        <div class="kicker">Campanhas ativas</div>
+        <h2>Rifas disponíveis</h2>
+      </div>
+      <p>Toque em uma rifa para abrir os números, regras, resumo e formulário de participação.</p>
+    </section>
+
+    <section class="raffle-grid" id="raffleGrid"></section>
+
+    <footer class="footer glass">
+      <div>
+        <strong>Pense Offgrid Rifas</strong>
+        <p>Equipamentos, oportunidades e comunidade para quem vive energia offgrid.</p>
+      </div>
+
+      <div class="footer-actions">
+        <a href="/">Voltar para Home</a>
+        <a href="/projetos/">Projetos</a>
+        <a href="/calculadora/">Calculadora</a>
+      </div>
+    </footer>
+  </main>
+
+  <div class="modal" id="raffleModal" aria-hidden="true">
+    <div class="modal-shell">
+      <button class="modal-close" id="closeModalBtn" aria-label="Fechar">×</button>
+
+      <section class="raffle-detail glass">
+        <div class="prize-media">
+          <div class="prize-stamp">Prêmio em destaque</div>
+          <div class="prize-image" id="prizeImageBox"></div>
+        </div>
+
+        <div class="hero-copy">
+          <div class="badge"><span class="dot"></span>Participar da rifa</div>
+          <h2 class="detail-title" id="detailTitle"></h2>
+          <p class="lead" id="detailDescription"></p>
+
+          <div class="stats">
+            <div class="stat">
+              <small>Valor por número</small>
+              <b id="ticketPriceLabel">R$ 0,00</b>
+            </div>
+            <div class="stat">
+              <small>Total</small>
+              <b id="totalNumbersLabel">0</b>
+            </div>
+            <div class="stat">
+              <small>Disponíveis</small>
+              <b id="availableLabel">0</b>
+            </div>
+            <div class="stat">
+              <small>Selecionados</small>
+              <b id="selectedCountLabel">0</b>
+            </div>
+          </div>
+
+          <div class="progress-wrap" id="detailProgressBox">
+            <div class="progress-top"><span id="detailProgressText">0% vendido</span><span id="detailCountdownText">Sorteio a definir</span></div>
+            <div class="progress-bar"><div class="progress-fill" id="detailProgressFill"></div></div>
+          </div>
+
+          <div class="detail-alerts" id="detailAlerts"></div>
+
+          <div class="hero-actions">
+            <a class="btn primary" href="#numeros">Escolher números</a>
+            <a class="btn ghost" href="#regras">Ver regras</a>
+          </div>
+
+          <div class="share-actions" aria-label="Compartilhar rifa">
+            <button class="btn ghost" type="button" id="shareRaffleBtn">Compartilhar rifa</button>
+            <button class="btn ghost" type="button" id="copyShareLinkBtn">Copiar link</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="main-layout">
+        <div>
+          <section class="section-card glass" id="numeros">
+            <div class="section-head">
+              <div>
+                <div class="kicker">Escolha seus números</div>
+                <h2>Mapa da rifa</h2>
+              </div>
+              <p>Cinza está disponível, verde é sua seleção atual e vermelho já está indisponível.</p>
+            </div>
+
+            <div class="legend">
+              <span class="available">Disponível</span>
+              <span class="selected">Selecionado</span>
+              <span class="sold">Indisponível</span>
+            </div>
+
+            <div class="number-box">
+              <div class="number-grid" id="numberGrid"></div>
+            </div>
+          </section>
+
+          <section class="form-card glass">
+            <div class="section-head">
+              <div>
+                <div class="kicker">Identificação</div>
+                <h2>Seus dados</h2>
+              </div>
+              <p>Nome, WhatsApp e e-mail são obrigatórios. Cidade, estado e CPF podem ajudar na identificação.</p>
+            </div>
+
+            <form class="form-grid" id="raffleForm">
+              <label>Nome completo
+                <input id="name" type="text" placeholder="Seu nome" required>
+              </label>
+
+              <label>WhatsApp
+                <input id="whatsapp" type="tel" placeholder="(00) 00000-0000" required>
+              </label>
+
+              <label>E-mail
+                <input id="email" type="email" placeholder="email@exemplo.com" required>
+              </label>
+
+              <label>CPF opcional
+                <input id="cpf" type="text" placeholder="000.000.000-00">
+              </label>
+
+              <label>Cidade opcional
+                <input id="city" type="text" placeholder="Cidade">
+              </label>
+
+              <label>Estado opcional
+                <input id="state" type="text" placeholder="UF">
+              </label>
+            </form>
+          </section>
+        </div>
+
+        <aside class="side-stack">
+          <section class="summary glass">
+            <h3>Resumo</h3>
+
+            <div class="summary-row">
+              <span>Números</span>
+              <b id="selectedCount">0</b>
+            </div>
+
+            <div class="summary-row">
+              <span>Valor unitário</span>
+              <b id="ticketPrice">R$ 0,00</b>
+            </div>
+
+            <div class="summary-row" id="subtotalRow" style="display:none">
+              <span>Subtotal</span>
+              <b id="subtotalPrice">R$ 0,00</b>
+            </div>
+
+            <div class="summary-row discount-line" id="discountRow" style="display:none">
+              <span>Desconto</span>
+              <b id="discountPrice">- R$ 0,00</b>
+            </div>
+
+            <div class="summary-row">
+              <span>Total</span>
+              <b id="totalPrice">R$ 0,00</b>
+            </div>
+
+            <div class="summary-row" style="display:block">
+              <span>Números escolhidos</span>
+              <div class="selected-list" id="selectedList">Nenhum número selecionado.</div>
+            </div>
+
+            <div class="payment-box" id="paymentBox"></div>
+
+            <button class="btn primary" style="width:100%;margin-top:14px" id="checkoutBtn">Finalizar pré-reserva</button>
+            <button class="btn ghost" style="width:100%;margin-top:10px" id="clearBtn">Limpar seleção</button>
+
+            <p class="notice">A pré-reserva gera uma mensagem com código e números escolhidos. A confirmação continua manual no painel após validação do pagamento/comprovante.</p>
+          </section>
+
+          <section class="rules glass" id="regras">
+            <h3>Regras principais</h3>
+            <ul class="rule-list" id="rulesList"></ul>
+          </section>
+
+          <section class="buyers glass">
+            <h3>Últimas participações</h3>
+            <div id="buyersList"></div>
+          </section>
+        </aside>
+      </section>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+  <div class="modal-busy" id="modalBusy">Carregando...</div>
+
+
+  <div class="postpay-modal" id="postPaymentModal" aria-hidden="true">
+    <div class="postpay-card">
+      <div class="badge" id="postPaymentBadge">✓</div>
+      <h2 id="postPaymentTitle">Pagamento recebido</h2>
+      <p id="postPaymentText">Seus números foram registrados. Entre no grupo oficial para acompanhar a rifa.</p>
+      <div class="postpay-receipt" id="postPaymentReceipt" style="display:none"></div>
+      <div class="postpay-actions">
+        <button class="btn ghost" type="button" id="postPaymentCopyReceiptBtn" style="display:none">Copiar comprovante</button>
+        <a class="btn primary" id="postPaymentGroupBtn" href="#" target="_blank" rel="noopener noreferrer">Entrar no grupo da rifa</a>
+        <button class="btn ghost" type="button" id="postPaymentCloseBtn">Continuar na página</button>
+      </div>
+    </div>
+  </div>
+
+
+  <script>
+    let raffles = [
+      {
+        id: "rifa-inversor-anenji-11000w",
+        slug: "rifa-inversor-anenji-11000w",
+        title: "Inversor Anenji 11.000W 48V",
+        headline: "Rifa do inversor Anenji 11.000W 48V",
+        description: "Campanha para concorrer a um inversor de alta potência para sistemas offgrid robustos.",
+        icon: "⚡",
+        imageUrl: "",
+        totalNumbers: 400,
+        ticketPrice: 10,
+        status: "ativa",
+        paymentUrl: "",
+        whatsappUrl: "",
+        groupUrl: "",
+        whatsappMessageTemplate: "",
+        soldNumbers: [3, 8, 17, 28, 33, 44, 57, 71, 88, 99, 104, 121, 139, 156, 177, 199, 207, 222, 248, 260, 277, 301, 319, 333, 350, 372, 388],
+        rules: [
+          "O sorteio será informado oficialmente na página da rifa.",
+          "A referência padrão poderá ser a Loteria Federal.",
+          "Com 50% dos números vendidos, o sorteio já poderá ocorrer conforme decisão da organização.",
+          "Números confirmados só ficam indisponíveis após confirmação de pagamento.",
+          "O participante deve informar dados corretos para contato e validação."
+        ],
+        recentBuyers: [
+          { name:"Rafael", city:"Recife", state:"PE", tickets:4 },
+          { name:"Marcos", city:"Petrolina", state:"PE", tickets:2 },
+          { name:"André", city:"Caruaru", state:"PE", tickets:6 }
+        ]
+      },
+      {
+        id: "rifa-bateria-lifepo4",
+        slug: "rifa-bateria-lifepo4",
+        title: "Banco de Baterias LiFePO4",
+        headline: "Rifa do banco de baterias LiFePO4",
+        description: "Uma oportunidade para concorrer a armazenamento de energia para seu sistema offgrid.",
+        icon: "🔋",
+        imageUrl: "",
+        totalNumbers: 400,
+        ticketPrice: 8,
+        status: "ativa",
+        paymentUrl: "",
+        whatsappUrl: "",
+        groupUrl: "",
+        whatsappMessageTemplate: "",
+        soldNumbers: [5, 11, 22, 45, 66, 89, 101, 120, 167, 188, 212, 245, 289, 320, 355],
+        rules: [
+          "O sorteio será informado oficialmente na página da rifa.",
+          "A referência padrão poderá ser a Loteria Federal.",
+          "Com 50% dos números vendidos, o sorteio já poderá ocorrer conforme decisão da organização.",
+          "Números confirmados só ficam indisponíveis após confirmação de pagamento.",
+          "O participante deve informar dados corretos para contato e validação."
+        ],
+        recentBuyers: [
+          { name:"João", city:"Maceió", state:"AL", tickets:3 },
+          { name:"Carlos", city:"Natal", state:"RN", tickets:5 },
+          { name:"Paulo", city:"João Pessoa", state:"PB", tickets:2 }
+        ]
+      },
+      {
+        id: "rifa-kit-ferramentas",
+        slug: "rifa-kit-ferramentas",
+        title: "Kit Técnico Offgrid",
+        headline: "Rifa do kit técnico offgrid",
+        description: "Ferramentas e acessórios para quem monta, ajusta e cuida de sistemas offgrid.",
+        icon: "🛠️",
+        imageUrl: "",
+        totalNumbers: 200,
+        ticketPrice: 5,
+        status: "ativa",
+        paymentUrl: "",
+        whatsappUrl: "",
+        groupUrl: "",
+        whatsappMessageTemplate: "",
+        soldNumbers: [2, 9, 18, 24, 37, 48, 59, 73, 91, 102, 130, 150, 175],
+        rules: [
+          "O sorteio será informado oficialmente na página da rifa.",
+          "A referência padrão poderá ser a Loteria Federal.",
+          "Com 50% dos números vendidos, o sorteio já poderá ocorrer conforme decisão da organização.",
+          "Números confirmados só ficam indisponíveis após confirmação de pagamento.",
+          "O participante deve informar dados corretos para contato e validação."
+        ],
+        recentBuyers: [
+          { name:"Eduardo", city:"Arcoverde", state:"PE", tickets:4 },
+          { name:"Bruno", city:"Salgueiro", state:"PE", tickets:1 },
+          { name:"Lucas", city:"Fortaleza", state:"CE", tickets:3 }
+        ]
+      }
+    ];
+
+    const state = {
+      currentRaffle: null,
+      selected: new Set(),
+      unavailableSet: new Set(),
+      availabilityCache: new Map(),
+      checkoutBusy: false
+    };
+
+    const toast = document.getElementById("toast");
+    const modal = document.getElementById("raffleModal");
+    const grid = document.getElementById("numberGrid");
+    const modalBusy = document.getElementById("modalBusy");
+
+    const currency = (value) => Number(value || 0).toLocaleString("pt-BR", { style:"currency", currency:"BRL" });
+    const pad = (num) => String(num).padStart(3, "0");
+    const escapeHtml = (value = "") => String(value).replace(/[&<>'"]/g, (char) => ({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#039;",'"':"&quot;"}[char]));
+
+    function showToast(message){
+      toast.textContent = message;
+      toast.classList.add("show");
+      setTimeout(() => toast.classList.remove("show"), 2400);
+    }
+
+
+    function setModalBusy(active, message = "Carregando..."){
+      if(!modalBusy) return;
+      modalBusy.textContent = message;
+      modalBusy.classList.toggle("show", Boolean(active));
+    }
+
+    function setCheckoutBusy(active, label){
+      state.checkoutBusy = Boolean(active);
+      const button = document.getElementById("checkoutBtn");
+      if(!button) return;
+      button.disabled = Boolean(active);
+      if(label) button.textContent = label;
+    }
+
+    function parseNumbers(value){
+      if(Array.isArray(value)) return value.map(Number).filter(Boolean);
+      return String(value || "")
+        .split(/\n|,|;/)
+        .map(item => Number(String(item).trim()))
+        .filter(Boolean);
+    }
+
+    function parseBuyerLines(value){
+      if(Array.isArray(value)) return value;
+      return String(value || "")
+        .split(/\n/)
+        .map(line => line.trim())
+        .filter(Boolean)
+        .map(line => {
+          const parts = line.split("|").map(p => p.trim());
+          return { name:parts[0] || "Participante", city:parts[1] || "", state:parts[2] || "", tickets:Number(parts[3] || 1) };
+        });
+    }
+
+    function splitTextareaList(value = ""){
+      if(Array.isArray(value)) return value;
+      return String(value || "")
+        .split(/\n|;/)
+        .map(item => item.trim())
+        .filter(Boolean);
+    }
+
+    function statusLabel(status){
+      const value = String(status || "published").toLowerCase();
+      if(value === "finished" || value === "finalizada") return "finalizada";
+      if(value === "hidden") return "oculta";
+      if(value === "draft") return "rascunho";
+      return "ativa";
+    }
+
+    function isEnabled(value){
+      if(value === true) return true;
+      if(value === false || value === null || value === undefined) return false;
+      const normalized = String(value).trim().toLowerCase();
+      return ["true", "1", "yes", "sim", "enabled", "ativo", "ativado", "on", "mercadopago", "mercado_pago"].includes(normalized);
+    }
+
+    function normalizeRaffleStatusValue(value){
+      return String(value || "")
+        .trim()
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/[\s_-]+/g, "_");
+    }
+
+    function collectBuyerStatusValues(buyer = {}){
+      return [
+        buyer.paymentStatus,
+        buyer.reservationStatus,
+        buyer.status,
+        buyer.state,
+        buyer.situation,
+        buyer.payment?.status,
+        buyer.mercadoPago?.status,
+        buyer.mpStatus
+      ].map(normalizeRaffleStatusValue).filter(Boolean);
+    }
+
+    function buyerNumbersList(buyer = {}){
+      return parseNumbers(
+        buyer.numbers ?? buyer.selectedNumbers ?? buyer.tickets ?? buyer.ticketNumbers ?? buyer.number ?? buyer.numero ?? buyer.numeros ?? []
+      );
+    }
+
+    function isBuyerCancelledOrExpired(buyer = {}){
+      const statuses = collectBuyerStatusValues(buyer);
+      return statuses.some(status => [
+        "cancelled", "canceled", "cancelado", "cancelada", "refunded", "estornado",
+        "expired", "expirado", "expirada", "rejected", "rejeitado", "rejeitada",
+        "failure", "failed", "falhou", "erro"
+      ].includes(status));
+    }
+
+    function isBuyerPaidOrConfirmed(buyer = {}){
+      const statuses = collectBuyerStatusValues(buyer);
+      return statuses.some(status => [
+        "paid", "pago", "paga", "approved", "aprovado", "aprovada",
+        "confirmed", "confirmado", "confirmada", "payment_approved", "pagamento_aprovado"
+      ].includes(status));
+    }
+
+    function isBuyerPendingOrReserved(buyer = {}){
+      const statuses = collectBuyerStatusValues(buyer);
+      if(!statuses.length) return true;
+      return statuses.some(status => [
+        "pending", "pendente", "reserved", "reservado", "reservada", "pre_reserva",
+        "pre_reservado", "pre_reservada", "in_process", "processando", "waiting", "aguardando"
+      ].includes(status));
+    }
+
+    function getUnavailableNumbers(raffle = state.currentRaffle){
+      const base = parseNumbers([...(parseNumbers(raffle?.soldNumbers || [])), ...(parseNumbers(raffle?.liveUnavailableNumbers || [])), ...(parseNumbers(raffle?.unavailableNumbers || []))]);
+      const now = Date.now();
+      const blockPending = isEnabled(raffle?.blockBeforePayment ?? raffle?.blockNumbersBeforePayment ?? true);
+      const buyerNumbers = (raffle?.buyers || [])
+        .filter(buyer => {
+          if(isBuyerCancelledOrExpired(buyer)) return false;
+          const expires = buyer.reservationExpiresAt || buyer.expiresAt || buyer.expires_at || "";
+          const expired = expires ? new Date(expires).getTime() < now : false;
+          if(isBuyerPaidOrConfirmed(buyer)) return true;
+          if(expired) return false;
+          return blockPending && isBuyerPendingOrReserved(buyer);
+        })
+        .flatMap(buyer => buyerNumbersList(buyer));
+      return Array.from(new Set([...base, ...buyerNumbers])).sort((a,b) => a-b);
+    }
+
+    function parsePrizeNumbers(value){
+      const prizes = new Map();
+      if(Array.isArray(value)){
+        value.forEach(item => {
+          if(typeof item === "object" && item){
+            const n = Number(item.number || item.numero || item.ticket);
+            const prize = Number(item.prize || item.valor || item.amount || 0);
+            if(Number.isFinite(n) && n > 0 && prize > 0) prizes.set(n, prize);
+          }else{
+            const parts = String(item || "").split(/[|;:=,-]+/).map(v => v.trim()).filter(Boolean);
+            const n = Number(parts[0]);
+            const prize = Number(String(parts[1] || "0").replace(",","."));
+            if(Number.isFinite(n) && n > 0 && prize > 0) prizes.set(n, prize);
+          }
+        });
+        return prizes;
+      }
+      String(value || "").split(/\n+/).forEach(line => {
+        const parts = line.split(/[|;:=,-]+/).map(v => v.trim()).filter(Boolean);
+        const n = Number(parts[0]);
+        const prize = Number(String(parts[1] || "0").replace(",","."));
+        if(Number.isFinite(n) && n > 0 && prize > 0) prizes.set(n, prize);
+      });
+      return prizes;
+    }
+
+    function getPrizeMap(raffle = state.currentRaffle){
+      return parsePrizeNumbers(raffle?.prizeNumbers || raffle?.instantPrizeNumbers || raffle?.premierNumbers || "");
+    }
+
+    function calculateOrderTotals(raffle, numbers){
+      const count = numbers.length;
+      const unit = Number(raffle?.ticketPrice || 0);
+      const subtotal = count * unit;
+      const enabledDiscount = isEnabled(raffle?.discountEnabled);
+      const every = Math.max(0, Number(raffle?.discountEveryTickets || 0));
+      const percentStep = Math.max(0, Number(raffle?.discountPercentPerStep || 0));
+      const maxPercent = Math.max(0, Number(raffle?.discountMaxPercent || 0));
+      let discountPercent = 0;
+      if(enabledDiscount && every > 0 && percentStep > 0 && count >= every){
+        discountPercent = Math.floor(count / every) * percentStep;
+        if(maxPercent > 0) discountPercent = Math.min(discountPercent, maxPercent);
+        discountPercent = Math.min(discountPercent, 95);
+      }
+      const discountAmount = Number((subtotal * (discountPercent / 100)).toFixed(2));
+      const total = Math.max(0, Number((subtotal - discountAmount).toFixed(2)));
+      const prizeMap = getPrizeMap(raffle);
+      const prizeHits = numbers.filter(n => prizeMap.has(Number(n))).map(n => ({ number:Number(n), prize:Number(prizeMap.get(Number(n)) || 0) }));
+      const instantPrizeAmount = Number(prizeHits.reduce((sum,item) => sum + Number(item.prize || 0), 0).toFixed(2));
+      return { count, unit, subtotal, discountPercent, discountAmount, total, prizeHits, instantPrizeAmount };
+    }
+
+    function soldPercent(raffle){
+      const total = Number(raffle?.totalNumbers || 0);
+      if(!total) return 0;
+      return Math.min(100, Math.round((getUnavailableNumbers(raffle).length / total) * 100));
+    }
+
+    function drawDateTime(raffle){
+      if(!raffle?.drawDate) return null;
+      const time = raffle.drawTime || "19:00";
+      const dt = new Date(`${raffle.drawDate}T${time}`);
+      return Number.isNaN(dt.getTime()) ? null : dt;
+    }
+
+    function drawCountdownLabel(raffle){
+      const dt = drawDateTime(raffle);
+      if(!dt) return "Sorteio a definir";
+      const diff = dt.getTime() - Date.now();
+      if(diff <= 0) return "Data do sorteio atingida";
+      const days = Math.floor(diff / 86400000);
+      const hours = Math.floor((diff % 86400000) / 3600000);
+      if(days > 0) return `${days}d ${hours}h para o sorteio`;
+      const mins = Math.floor((diff % 3600000) / 60000);
+      return `${hours}h ${mins}min para o sorteio`;
+    }
+
+    function reservationCode(){
+      return `POG-${Date.now().toString(36).toUpperCase()}-${Math.random().toString(36).slice(2,5).toUpperCase()}`;
+    }
+
+    function applyMessageTemplate(template, order){
+      const customer = order.customer || {};
+      const values = {
+        rifa: state.currentRaffle?.title || "Rifa Pense Offgrid",
+        codigo: order.code || "",
+        numeros: (order.numbers || []).map(pad).join(", "),
+        total: currency(order.amount),
+        nome: customer.name || "",
+        whatsapp: customer.whatsapp || "",
+        email: customer.email || "",
+        cidade: customer.city || "",
+        estado: customer.state || "",
+        cidadeUf: [customer.city, customer.state].filter(Boolean).join("/") || "não informado"
+      };
+      return String(template || "")
+        .replace(/{{\s*rifa\s*}}/gi, values.rifa)
+        .replace(/{{\s*codigo\s*}}/gi, values.codigo)
+        .replace(/{{\s*numeros\s*}}/gi, values.numeros)
+        .replace(/{{\s*total\s*}}/gi, values.total)
+        .replace(/{{\s*nome\s*}}/gi, values.nome)
+        .replace(/{{\s*whatsapp\s*}}/gi, values.whatsapp)
+        .replace(/{{\s*email\s*}}/gi, values.email)
+        .replace(/{{\s*cidadeUf\s*}}/gi, values.cidadeUf)
+        .replace(/{{\s*cidade\s*}}/gi, values.cidade)
+        .replace(/{{\s*estado\s*}}/gi, values.estado);
+    }
+
+    function getRaffleSlug(raffle = state.currentRaffle){
+      return encodeURIComponent(raffle?.slug || raffle?.id || "");
+    }
+
+    function getRaffleShareUrl(raffle = state.currentRaffle){
+      const slug = getRaffleSlug(raffle);
+      if(!slug) return location.href;
+      return `${location.origin}/.netlify/functions/raffle-share?r=${slug}`;
+    }
+
+    function getRaffleReaderUrl(raffle = state.currentRaffle){
+      const slug = getRaffleSlug(raffle);
+      if(!slug) return location.href;
+      return `${location.origin}/rifas/?r=${slug}`;
+    }
+
+    function buildShareText(raffle = state.currentRaffle){
+      const price = raffle?.ticketPrice ? currency(raffle.ticketPrice) : "valor informado na página";
+      return `Olha essa rifa do Pense Offgrid: ${raffle?.title || "Rifa Offgrid"}\nNúmero por ${price}.\n\nAcesse aqui:`;
+    }
+
+    function updateShareButtons(){
+      if(!state.currentRaffle) return;
+      const shareBtn = document.getElementById("shareRaffleBtn");
+      if(shareBtn) shareBtn.title = "Compartilha a rifa específica com imagem, título e descrição próprios.";
+    }
+
+    async function shareCurrentRaffle(){
+      if(!state.currentRaffle) return;
+      const shareUrl = getRaffleShareUrl(state.currentRaffle);
+      const shareText = buildShareText(state.currentRaffle);
+      if(navigator.share){
+        try{
+          await navigator.share({
+            title: state.currentRaffle.title || "Rifa Pense Offgrid",
+            text: shareText,
+            url: shareUrl
+          });
+          return;
+        }catch(error){
+          if(error?.name === "AbortError") return;
+          console.warn("Compartilhamento nativo indisponível.", error);
+        }
+      }
+      const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(`${shareText} ${shareUrl}`)}`;
+      window.open(whatsappUrl, "_blank", "noopener,noreferrer");
+      showToast("Abrindo compartilhamento da rifa no WhatsApp com link da rifa específica.");
+    }
+
+    async function shareRaffleFromCard(event, id){
+      event.preventDefault();
+      event.stopPropagation();
+      const raffle = raffles.find(item => item.id === id || item.slug === id);
+      if(!raffle) return;
+      const previous = state.currentRaffle;
+      state.currentRaffle = raffle;
+      await shareCurrentRaffle();
+      state.currentRaffle = previous;
+    }
+
+    function localReservations(){
+      try{return JSON.parse(localStorage.getItem("pogRaffleReservations") || "[]");}
+      catch(error){return [];}
+    }
+
+    function saveLocalReservation(order){
+      const all = localReservations().filter(item => item.code !== order.code);
+      all.unshift(order);
+      localStorage.setItem("pogRaffleReservations", JSON.stringify(all.slice(0,30)));
+    }
+
+    function findLocalReservation(code){
+      if(!code) return null;
+      return localReservations().find(item => String(item.code || item.orderCode || "") === String(code)) || null;
+    }
+
+    function buildReceiptText(order, raffle, status){
+      const numbers = parseNumbers(order?.numbers || []).map(pad).join(", ") || "não informado";
+      const total = Number(order?.amount || 0) ? currency(order.amount) : "valor informado no checkout";
+      const statusText = status === "approved" ? "PAGAMENTO APROVADO" : status === "pending" ? "PAGAMENTO PENDENTE" : "PAGAMENTO NÃO CONCLUÍDO";
+      return `COMPROVANTE DA RIFA - PENSE OFFGRID\n\nStatus: ${statusText}\nRifa: ${raffle?.title || order?.raffleSlug || "Rifa Pense Offgrid"}\nCódigo: ${order?.code || order?.orderCode || "não informado"}\nNúmeros: ${numbers}\nTotal: ${total}\nNome: ${order?.customer?.name || order?.name || "não informado"}\nWhatsApp: ${order?.customer?.whatsapp || order?.whatsapp || "não informado"}\n\nGuarde esta mensagem para conferência dos seus números.`;
+    }
+
+    async function copyText(text, label = "Texto copiado."){
+      try{
+        await navigator.clipboard?.writeText(text);
+        if(label) showToast(label);
+        return true;
+      }catch(error){
+        console.warn("Não foi possível copiar automaticamente.", error);
+        showToast("Copie manualmente.");
+        return false;
+      }
+    }
+
+    function isSold(num){
+      return getUnavailableNumbers().includes(num);
+    }
+
+    function maskName(name){
+      if(!name) return "Par***";
+      const clean = name.trim();
+      return clean.slice(0,3) + "***";
+    }
+
+    function renderRaffleCards(){
+      const activeRaffles = raffles.filter(raffle => !["hidden", "draft"].includes(String(raffle.status || "").toLowerCase()));
+      document.getElementById("raffleGrid").innerHTML = activeRaffles.map((raffle) => {
+        const sold = getUnavailableNumbers(raffle).length;
+        const available = Math.max(0, raffle.totalNumbers - sold);
+        return `
+          <article class="raffle-card" onclick="openRaffle('${escapeHtml(raffle.id)}')">
+            <div class="raffle-status">${escapeHtml(statusLabel(raffle.status))}</div>
+            <div class="raffle-media">
+              ${raffle.imageUrl ? `<img src="${escapeHtml(raffle.imageUrl)}" alt="${escapeHtml(raffle.title)}" loading="lazy" decoding="async">` : `<span class="emoji">${escapeHtml(raffle.icon || "⚡")}</span>`}
+            </div>
+            <div class="raffle-body">
+              <h2>${escapeHtml(raffle.title)}</h2>
+              <p>${escapeHtml(raffle.description)}</p>
+              <div class="raffle-metrics">
+                <div class="metric"><small>Número</small><b>${currency(raffle.ticketPrice)}</b></div>
+                <div class="metric"><small>Total</small><b>${raffle.totalNumbers}</b></div>
+                <div class="metric"><small>Vendidos</small><b>${sold}</b></div>
+                <div class="metric"><small>Livres</small><b>${available}</b></div>
+              </div>
+              <div class="progress-wrap">
+                <div class="progress-top"><span>${soldPercent(raffle)}% vendido</span><span>${drawCountdownLabel(raffle)}</span></div>
+                <div class="progress-bar"><div class="progress-fill" style="width:${soldPercent(raffle)}%"></div></div>
+              </div>
+              <button class="btn primary" style="width:100%">${String(raffle.status).toLowerCase() === "finished" ? "Ver resultado" : "Escolher números"}</button>
+              <button class="card-share" type="button" onclick="shareRaffleFromCard(event, '${escapeHtml(raffle.id)}')">Compartilhar esta rifa</button>
+            </div>
+          </article>
+        `;
+      }).join("") || `<div class="glass section-card" style="grid-column:1/-1"><h2>Nenhuma rifa ativa</h2><p class="lead">As próximas campanhas aparecerão aqui assim que forem publicadas no painel.</p></div>`;
+    }
+
+    async function refreshRaffleAvailability(raffle){
+      if(!raffle) return raffle;
+      try{
+        const rawKey = raffle.slug || raffle.id || raffle.title || "";
+        const key = encodeURIComponent(rawKey);
+        if(!key) return raffle;
+        const cacheKey = String(rawKey);
+        const cached = state.availabilityCache.get(cacheKey);
+        if(cached && Date.now() - cached.time < 12000){
+          Object.assign(raffle, cached.patch);
+          return raffle;
+        }
+        const response = await fetch(`/.netlify/functions/raffle-status?r=${key}`, { cache:"no-store" });
+        const data = await response.json().catch(() => ({}));
+        if(response.ok && data?.ok){
+          const patch = {
+            liveUnavailableNumbers: parseNumbers(data.unavailableNumbers || []),
+            livePaidNumbers: parseNumbers(data.paidNumbers || []),
+            livePendingNumbers: parseNumbers(data.pendingNumbers || [])
+          };
+          if(Array.isArray(data.buyers) && data.buyers.length){
+            patch.buyers = data.buyers;
+          }
+          Object.assign(raffle, patch);
+          state.availabilityCache.set(cacheKey, { time:Date.now(), patch });
+        }
+      }catch(error){
+        console.warn("Não foi possível atualizar números ocupados da rifa.", error);
+      }
+      return raffle;
+    }
+
+    async function openRaffle(id){
+      const raffle = raffles.find(item => item.id === id || item.slug === id);
+      if(!raffle) return;
+
+      state.currentRaffle = raffle;
+      state.selected.clear();
+      state.unavailableSet = new Set();
+
+      modal.classList.add("active");
+      modal.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+      grid.classList.add("loading");
+      grid.innerHTML = "";
+      setModalBusy(true, "Carregando rifa e conferindo números ocupados...");
+
+      renderDetail();
+      renderRules();
+      renderBuyers();
+      updateSummary();
+
+      await refreshRaffleAvailability(raffle);
+      state.selected.forEach(num => { if(getUnavailableNumbers(raffle).includes(num)) state.selected.delete(num); });
+
+      grid.classList.remove("loading");
+      renderDetail();
+      renderBuyers();
+      renderNumbers();
+      updateSummary(true);
+      setModalBusy(false);
+
+      setTimeout(() => modal.scrollTo({top:0, behavior:"smooth"}), 50);
+    }
+
+    function closeModal(){
+      modal.classList.remove("active");
+      modal.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "auto";
+      setModalBusy(false);
+      setCheckoutBusy(false);
+    }
+
+    function renderDetail(){
+      const raffle = state.currentRaffle;
+      const unavailable = getUnavailableNumbers(raffle);
+      const percent = soldPercent(raffle);
+      document.getElementById("detailTitle").innerHTML = escapeHtml(raffle.headline || raffle.title).replace(/offgrid/ig, "<span>offgrid</span>");
+      document.getElementById("detailDescription").textContent = raffle.description;
+      document.getElementById("ticketPriceLabel").textContent = currency(raffle.ticketPrice);
+      document.getElementById("ticketPrice").textContent = currency(raffle.ticketPrice);
+      document.getElementById("totalNumbersLabel").textContent = raffle.totalNumbers;
+      document.getElementById("availableLabel").textContent = Math.max(0, raffle.totalNumbers - unavailable.length);
+      document.getElementById("detailProgressText").textContent = `${percent}% vendido`;
+      document.getElementById("detailProgressFill").style.width = `${percent}%`;
+      document.getElementById("detailCountdownText").textContent = drawCountdownLabel(raffle);
+
+      const min = Number(raffle.minimumSoldPercent || 0);
+      const alerts = [];
+      if(min) alerts.push(`<div class="alert-chip"><small>Meta mínima</small>${percent >= min ? "Meta atingida" : `${min}% para liberar sorteio`}</div>`);
+      alerts.push(`<div class="alert-chip"><small>Referência</small>${escapeHtml(raffle.drawReference || "Sorteio a definir")}</div>`);
+      if(raffle.winnerName || raffle.winnerNumbers){
+        alerts.push(`<div class="alert-chip"><small>Resultado</small>${escapeHtml(raffle.winnerName || "Ganhador definido")} ${raffle.winnerNumbers ? "• Nº " + escapeHtml(raffle.winnerNumbers) : ""}</div>`);
+      }
+      document.getElementById("detailAlerts").innerHTML = alerts.join("");
+
+      const box = document.getElementById("prizeImageBox");
+      box.innerHTML = raffle.imageUrl
+        ? `<img src="${escapeHtml(raffle.imageUrl)}" alt="${escapeHtml(raffle.title)}" loading="eager" decoding="async">`
+        : `<span class="fallback-icon">${escapeHtml(raffle.icon || "⚡")}</span>`;
+      updateShareButtons();
+
+      renderPaymentBox();
+    }
+
+    function renderRules(){
+      document.getElementById("rulesList").innerHTML = (state.currentRaffle.rules || []).map(rule => `<li>${escapeHtml(rule)}</li>`).join("");
+    }
+
+    function buyerSortDate(buyer = {}){
+      return new Date(
+        buyer.paidAt || buyer.confirmedAt || buyer.paymentApprovedAt || buyer.updatedAt ||
+        buyer.selectedAt || buyer.createdAt || buyer.created_at || 0
+      ).getTime() || 0;
+    }
+
+    function normalizeRecentBuyer(buyer = {}){
+      const numbers = buyerNumbersList(buyer);
+      const ticketCount = Math.max(1, numbers.length || Number(buyer.tickets || buyer.ticketCount || 1));
+      return {
+        name: buyer.name || buyer.customer?.name || buyer.participantName || "Participante",
+        city: buyer.city || buyer.customer?.city || buyer.cidade || "",
+        state: buyer.state || buyer.uf || buyer.customer?.state || buyer.estado || "",
+        tickets: ticketCount,
+        numbers,
+        sortDate: buyerSortDate(buyer)
+      };
+    }
+
+    function getRealRecentBuyers(raffle = state.currentRaffle){
+      const paidBuyers = (raffle?.buyers || [])
+        .filter(buyer => !isBuyerCancelledOrExpired(buyer) && isBuyerPaidOrConfirmed(buyer))
+        .sort((a,b) => buyerSortDate(b) - buyerSortDate(a))
+        .map(normalizeRecentBuyer);
+      if(paidBuyers.length) return paidBuyers.slice(0, 6);
+      return (raffle?.recentBuyers || []).slice(0, 6);
+    }
+
+    function renderBuyers(){
+      const buyers = getRealRecentBuyers(state.currentRaffle);
+      document.getElementById("buyersList").innerHTML = buyers.length ? buyers.map(buyer => {
+        const ticketCount = Math.max(1, Number(buyer.tickets || buyerNumbersList(buyer).length || 1));
+        const numbers = parseNumbers(buyer.numbers || []).slice(0, 6).map(pad).join(", ");
+        return `
+        <div class="buyer">
+          <div class="avatar">${escapeHtml(String(buyer.name || "P").slice(0,1).toUpperCase())}</div>
+          <div>
+            <strong>${escapeHtml(maskName(buyer.name))}</strong>
+            <small>${escapeHtml([buyer.city, buyer.state].filter(Boolean).join("/") || "Participação confirmada")}${numbers ? ` • Nº ${escapeHtml(numbers)}` : ""}</small>
+          </div>
+          <b>${ticketCount} ${ticketCount === 1 ? "bilhete" : "bilhetes"}</b>
+        </div>`;
+      }).join("") : `<p class="notice">As participações confirmadas aparecerão aqui.</p>`;
+    }
+
+    function renderNumbers(){
+      const raffle = state.currentRaffle;
+      if(!raffle) return;
+      const unavailable = getUnavailableNumbers(raffle);
+      state.unavailableSet = new Set(unavailable);
+      state.selected.forEach(num => { if(state.unavailableSet.has(num)) state.selected.delete(num); });
+
+      const finished = String(raffle.status || "").toLowerCase() === "finished";
+      const total = Number(raffle.totalNumbers || 0);
+      const html = [];
+      for(let i = 1; i <= total; i++){
+        const blocked = state.unavailableSet.has(i) || finished;
+        const selected = !blocked && state.selected.has(i);
+        const prizeMap = getPrizeMap(raffle);
+        const isPrize = isEnabled(raffle.showPrizeNumbers ?? true) && prizeMap.has(i);
+        const prizeTitle = isPrize ? ` title="Número premiado: ${currency(prizeMap.get(i))}"` : "";
+        html.push(`<button class="num${blocked ? " sold" : ""}${selected ? " selected" : ""}${isPrize ? " prize" : ""}" type="button" data-number="${i}"${blocked ? ' disabled title="Número indisponível"' : prizeTitle}>${pad(i)}</button>`);
+      }
+      grid.innerHTML = html.join("");
+    }
+
+    function updateSummary(syncGrid = false){
+      const raffle = state.currentRaffle;
+      if(!raffle) return;
+
+      if(syncGrid){
+        const unavailable = getUnavailableNumbers(raffle);
+        state.unavailableSet = new Set(unavailable);
+        state.selected.forEach(num => { if(state.unavailableSet.has(num)) state.selected.delete(num); });
+        const finished = String(raffle.status || "").toLowerCase() === "finished";
+        grid.querySelectorAll(".num").forEach((button) => {
+          const num = Number(button.dataset.number);
+          const blocked = state.unavailableSet.has(num) || finished;
+          button.classList.toggle("sold", blocked);
+          button.disabled = blocked;
+          button.classList.toggle("selected", !blocked && state.selected.has(num));
+        });
+      }
+
+      const selectedArray = Array.from(state.selected).sort((a,b) => a-b);
+      const totals = calculateOrderTotals(raffle, selectedArray);
+      const count = totals.count;
+
+      document.getElementById("selectedCount").textContent = count;
+      document.getElementById("selectedCountLabel").textContent = count;
+      const subtotalRow = document.getElementById("subtotalRow");
+      const discountRow = document.getElementById("discountRow");
+      const subtotalPrice = document.getElementById("subtotalPrice");
+      const discountPrice = document.getElementById("discountPrice");
+      if(subtotalRow && discountRow && subtotalPrice && discountPrice){
+        subtotalRow.style.display = totals.discountAmount > 0 ? "flex" : "none";
+        discountRow.style.display = totals.discountAmount > 0 ? "flex" : "none";
+        subtotalPrice.textContent = currency(totals.subtotal);
+        discountPrice.textContent = `- ${currency(totals.discountAmount)} (${totals.discountPercent}%)`;
+      }
+      document.getElementById("totalPrice").textContent = currency(totals.total);
+      const selectedList = document.getElementById("selectedList");
+      if(selectedList){
+        const lines = [count ? selectedArray.map(pad).join(", ") : "Nenhum número selecionado."];
+        if(totals.discountAmount > 0) lines.push(`<div class="selected-discount">Desconto progressivo: ${currency(totals.discountAmount)} (${totals.discountPercent}%).</div>`);
+        if(totals.prizeHits.length) lines.push(`<div class="selected-prizes">🎁 Prêmio instantâneo: ${totals.prizeHits.map(item => `${pad(item.number)} = ${currency(item.prize)}`).join(" • ")}</div>`);
+        selectedList.innerHTML = lines.join("");
+      }
+    }
+
+    function toggleNumber(num){
+      if(state.unavailableSet.has(num) || isSold(num) || String(state.currentRaffle?.status).toLowerCase() === "finished") return;
+      if(state.selected.has(num)) state.selected.delete(num);
+      else state.selected.add(num);
+      const button = grid.querySelector(`.num[data-number="${num}"]`);
+      if(button) button.classList.toggle("selected", state.selected.has(num));
+      updateSummary(false);
+    }
+
+    function truthy(value){
+      if(value === true) return true;
+      const normalized = String(value ?? "").trim().toLowerCase();
+      return ["true", "1", "yes", "sim", "enabled", "ativo", "ativado", "on", "mercadopago", "mercado_pago"].includes(normalized);
+    }
+
+    function isMercadoPagoRaffle(raffle){
+      if(!raffle) return false;
+      const provider = String(raffle.paymentProvider || raffle.paymentMode || "").toLowerCase();
+      return provider === "mercadopago" || truthy(raffle.mercadoPagoEnabled) || truthy(raffle.useMercadoPago);
+    }
+
+    function renderPaymentBox(){
+      const raffle = state.currentRaffle;
+      const box = document.getElementById("paymentBox");
+      if(!box || !raffle) return;
+      const pix = raffle.pixCopyPaste || raffle.pixKey || "";
+      const automatic = isMercadoPagoRaffle(raffle);
+      const instructions = automatic
+        ? "Ao finalizar, o sistema reserva temporariamente seus números e abre o pagamento seguro pelo Mercado Pago. Assim que o pagamento for aprovado, a reserva será confirmada automaticamente no painel."
+        : (raffle.paymentInstructions || "Após finalizar a pré-reserva, envie o comprovante no WhatsApp para confirmação manual.");
+      box.innerHTML = `
+        <strong>${automatic ? "Pagamento automático Mercado Pago" : "Pagamento/Confirmação"}</strong><br>
+        ${escapeHtml(instructions)}
+        ${automatic ? `<div style="margin-top:8px;color:#86efac;font-weight:900">PIX/cartão via checkout seguro. Token protegido no backend.</div>` : ""}
+        ${pix && !automatic ? `<div class="mini-actions"><button type="button" id="copyPixBtn">Copiar Pix</button></div>` : ""}
+        ${raffle.legalNotice ? `<div style="margin-top:8px">${escapeHtml(raffle.legalNotice)}</div>` : ""}
+      `;
+      const checkoutBtn = document.getElementById("checkoutBtn");
+      if(checkoutBtn) checkoutBtn.textContent = automatic ? "Reservar e pagar agora" : "Finalizar pré-reserva";
+      document.getElementById("copyPixBtn")?.addEventListener("click", () => copyText(pix, "Pix copiado."));
+    }
+
+    function getFormData(){
+      return {
+        name: document.getElementById("name").value.trim(),
+        whatsapp: document.getElementById("whatsapp").value.trim(),
+        email: document.getElementById("email").value.trim(),
+        cpf: document.getElementById("cpf").value.trim(),
+        city: document.getElementById("city").value.trim(),
+        state: document.getElementById("state").value.trim()
+      };
+    }
+
+    function validate(){
+      const data = getFormData();
+      if(String(state.currentRaffle?.status).toLowerCase() === "finished"){
+        showToast("Esta rifa já foi finalizada.");
+        return false;
+      }
+      if(!state.selected.size){
+        showToast("Escolha pelo menos um número.");
+        return false;
+      }
+      const max = Number(state.currentRaffle?.maxTicketsPerOrder || 0);
+      if(max && state.selected.size > max){
+        showToast(`Limite de ${max} número(s) por reserva.`);
+        return false;
+      }
+      if(!data.name || !data.whatsapp || !data.email){
+        showToast("Informe nome, WhatsApp e e-mail.");
+        return false;
+      }
+      return true;
+    }
+
+    function checkoutMessage(order){
+      const template = state.currentRaffle.whatsappMessageTemplate || "Olá! Quero confirmar minha pré-reserva na rifa {{rifa}}.\n\nCódigo: {{codigo}}\nNúmeros: {{numeros}}\nTotal: {{total}}\nNome: {{nome}}\nWhatsApp: {{whatsapp}}\nE-mail: {{email}}\nCidade/UF: {{cidadeUf}}\n\nApós validação do pagamento/comprovante, confirme esses números no painel.";
+      return applyMessageTemplate(template, order);
+    }
+
+    async function createMercadoPagoReservation(orderPreview, message){
+      const response = await fetch("/.netlify/functions/create-raffle-payment", {
+        method: "POST",
+        headers: {"Content-Type":"application/json"},
+        body: JSON.stringify({
+          raffleId: state.currentRaffle.id,
+          raffleSlug: state.currentRaffle.slug || state.currentRaffle.id,
+          numbers: orderPreview.numbers,
+          orderCode: orderPreview.code,
+          customer: orderPreview.customer,
+          subtotalAmount: orderPreview.subtotalAmount,
+          discountAmount: orderPreview.discountAmount,
+          discountPercent: orderPreview.discountPercent,
+          instantPrizeAmount: orderPreview.instantPrizeAmount,
+          instantPrizeNumbers: orderPreview.instantPrizeNumbers,
+          groupMessage: message,
+          returnUrl: `${location.origin}${location.pathname}?r=${encodeURIComponent(state.currentRaffle.slug || state.currentRaffle.id)}`
+        })
+      });
+      const result = await response.json().catch(() => ({}));
+      if(!response.ok || !result.ok){
+        throw new Error(result.message || "Não foi possível iniciar o pagamento automático.");
+      }
+      return result;
+    }
+
+    grid.addEventListener("click", (event) => {
+      const button = event.target.closest(".num");
+      if(!button || button.disabled || !grid.contains(button)) return;
+      toggleNumber(Number(button.dataset.number));
+    });
+
+    document.getElementById("checkoutBtn").addEventListener("click", async () => {
+      if(state.checkoutBusy) return;
+      if(!validate()) return;
+
+      const checkoutBtn = document.getElementById("checkoutBtn");
+      const selectedArray = Array.from(state.selected).sort((a,b) => a-b);
+      const data = getFormData();
+      const code = reservationCode();
+      const expiresAt = new Date(Date.now() + Number(state.currentRaffle.reservationHours || 4) * 3600000).toISOString();
+      const totals = calculateOrderTotals(state.currentRaffle, selectedArray);
+      const orderPreview = {
+        code,
+        raffleId: state.currentRaffle.id,
+        raffleSlug: state.currentRaffle.slug || state.currentRaffle.id,
+        numbers: selectedArray,
+        amount: totals.total,
+        subtotalAmount: totals.subtotal,
+        discountAmount: totals.discountAmount,
+        discountPercent: totals.discountPercent,
+        instantPrizeAmount: totals.instantPrizeAmount,
+        instantPrizeNumbers: totals.prizeHits.map(item => `${pad(item.number)}|${item.prize}`).join(", "),
+        customer: data,
+        paymentStatus: "pending",
+        reservationStatus: "reserved",
+        expiresAt,
+        createdAt: new Date().toISOString()
+      };
+      saveLocalReservation(orderPreview);
+
+      const message = checkoutMessage(orderPreview);
+      orderPreview.groupMessage = message;
+
+      if(isMercadoPagoRaffle(state.currentRaffle)){
+        try{
+          setCheckoutBusy(true, "Gerando pagamento seguro...");
+          const result = await createMercadoPagoReservation(orderPreview, message);
+          showToast("Reserva criada. Abrindo Mercado Pago...");
+          const checkoutUrl = result.checkoutUrl || result.paymentUrl || result.initPoint || result.sandboxInitPoint;
+          if(checkoutUrl){
+            window.location.href = checkoutUrl;
+            return;
+          }
+          throw new Error("Checkout Mercado Pago sem URL de pagamento.");
+        }catch(error){
+          console.warn("Mercado Pago automático falhou. Fluxo manual bloqueado para evitar redirecionamento indevido:", error);
+          showToast(error.message || "Pagamento automático indisponível. Tente novamente ou fale com o organizador.");
+          setCheckoutBusy(false, "Tentar pagamento novamente");
+          return;
+        }
+      }
+
+      try{
+        const { addPublicCollectionDoc } = await import("../assets/js/firebase-public.js");
+        const result = await addPublicCollectionDoc("raffles", "buyers", {
+          raffleId: orderPreview.raffleId,
+          raffleSlug: orderPreview.raffleSlug,
+          name: data.name,
+          whatsapp: data.whatsapp,
+          email: data.email,
+          cpf: data.cpf,
+          city: data.city,
+          state: data.state,
+          numbers: selectedArray.join(", "),
+          amount: orderPreview.amount,
+          subtotalAmount: orderPreview.subtotalAmount,
+          discountAmount: orderPreview.discountAmount,
+          discountPercent: orderPreview.discountPercent,
+          instantPrizeAmount: orderPreview.instantPrizeAmount,
+          instantPrizeNumbers: orderPreview.instantPrizeNumbers,
+          orderCode: code,
+          paymentStatus: "pending",
+          reservationStatus: "reserved",
+          contactStatus: "waiting",
+          paymentProvider: "manual",
+          selectedAt: new Date().toISOString().slice(0,16),
+          reservationExpiresAt: expiresAt.slice(0,16),
+          groupMessage: message,
+          notes: "Pré-reserva criada pela página pública. Aguardando comprovante/confirmação manual."
+        });
+        if(result.ok) showToast("Pré-reserva registrada no painel. Abrindo próximo passo...");
+      }catch(error){
+        console.warn("Pré-reserva ficou apenas local/WhatsApp:", error);
+      }
+
+      if(state.currentRaffle.paymentUrl){
+        window.open(state.currentRaffle.paymentUrl, "_blank", "noopener,noreferrer");
+        showToast("Abrindo pagamento. Envie também o comprovante pelo WhatsApp.");
+        return;
+      }
+      const destinationUrl = state.currentRaffle.groupUrl || state.currentRaffle.whatsappUrl || "";
+      if(destinationUrl){
+        const copied = await copyText(message);
+        const isDirectWhatsapp = /wa\.me|api\.whatsapp\.com|web\.whatsapp\.com/i.test(destinationUrl);
+        const finalUrl = isDirectWhatsapp
+          ? destinationUrl + (destinationUrl.includes("?") ? "&" : "?") + "text=" + encodeURIComponent(message)
+          : destinationUrl;
+        window.open(finalUrl, "_blank", "noopener,noreferrer");
+        showToast(copied ? "Mensagem pronta copiada. Cole no grupo/WhatsApp da rifa." : "Abrindo grupo/WhatsApp da rifa.");
+        return;
+      }
+
+      console.log("Pré-reserva local para conferência manual:", orderPreview);
+      showToast(`Pré-reserva gerada: ${code}. Configure WhatsApp/pagamento no painel para envio automático.`);
+    });
+
+    document.getElementById("clearBtn").addEventListener("click", () => {
+      state.selected.clear();
+      grid.querySelectorAll(".num.selected").forEach(button => button.classList.remove("selected"));
+      updateSummary(false);
+      showToast("Seleção limpa.");
+    });
+
+    document.getElementById("shareRaffleBtn")?.addEventListener("click", shareCurrentRaffle);
+    document.getElementById("copyShareLinkBtn")?.addEventListener("click", async () => {
+      const shareUrl = getRaffleShareUrl(state.currentRaffle);
+      const shareText = buildShareText(state.currentRaffle);
+      const ok = await copyText(`${shareText} ${shareUrl}`);
+      showToast(ok ? "Link da rifa copiado." : "Copie manualmente o link da rifa.");
+    });
+
+    document.getElementById("closeModalBtn").addEventListener("click", closeModal);
+    modal.addEventListener("click", (event) => {
+      if(event.target === modal) closeModal();
+    });
+    document.addEventListener("keydown", (event) => {
+      if(event.key === "Escape" && modal.classList.contains("active")) closeModal();
+    });
+
+    async function connectRafflesToFirebase(){
+      try {
+        const { getSettings, getCollection } = await import("../assets/js/firebase-public.js");
+        const settings = await getSettings("raffles", "main");
+        if (settings) {
+          const h1 = document.querySelector(".page-hero h1");
+          const lead = document.querySelector(".page-hero .lead");
+          if (h1 && settings.title) h1.innerHTML = settings.title;
+          if (lead && settings.subtitle) lead.textContent = settings.subtitle;
+        }
+
+        const [items, buyers] = await Promise.all([
+          getCollection("raffles", "items"),
+          getCollection("raffles", "buyers")
+        ]);
+
+        if (!items.length) return;
+
+        raffles = items.map((item) => {
+          const id = item.slug || item.id;
+          const possibleRaffleKeys = [id, item.id, item.slug, item.title, item.headline].map(value => String(value || "").trim()).filter(Boolean);
+          const rawBuyers = buyers
+            .filter(buyer => {
+              const buyerKeys = [
+                buyer.raffleSlug, buyer.raffleId, buyer.raffle, buyer.raffleKey,
+                buyer.raffleTitle, buyer.campaignSlug, buyer.campaignId
+              ].map(value => String(value || "").trim()).filter(Boolean);
+              return buyerKeys.some(key => possibleRaffleKeys.includes(key));
+            });
+          const itemBuyers = rawBuyers
+            .filter(buyer => !isBuyerCancelledOrExpired(buyer) && isBuyerPaidOrConfirmed(buyer))
+            .sort((a,b) => {
+              const da = new Date(a.paidAt || a.confirmedAt || a.updatedAt || a.selectedAt || a.createdAt || 0).getTime() || 0;
+              const db = new Date(b.paidAt || b.confirmedAt || b.updatedAt || b.selectedAt || b.createdAt || 0).getTime() || 0;
+              return db - da;
+            })
+            .slice(0, 6)
+            .map(buyer => ({
+              name: buyer.name || buyer.customer?.name || "Participante",
+              city: buyer.city || buyer.customer?.city || "",
+              state: buyer.uf || buyer.state || buyer.customer?.state || "",
+              tickets: buyerNumbersList(buyer).length || Number(buyer.tickets || 1),
+              numbers: buyer.numbers || buyer.selectedNumbers || buyer.ticketNumbers || "",
+              paymentStatus: buyer.paymentStatus || buyer.status || "paid",
+              reservationStatus: buyer.reservationStatus || "confirmed"
+            }));
+
+          return {
+            id,
+            slug:id,
+            title: item.title || "Rifa Pense Offgrid",
+            headline: item.headline || item.title || "Rifa Pense Offgrid",
+            description: item.description || "Campanha Pense Offgrid.",
+            icon: item.icon || "⚡",
+            imageUrl: item.imageUrl || "",
+            totalNumbers: Number(item.totalNumbers || 400),
+            ticketPrice: Number(item.ticketPrice || 10),
+            status: item.status === "finished" ? "finished" : (item.status || "published"),
+            paymentUrl: item.paymentUrl || item.checkoutUrl || "",
+            whatsappUrl: item.whatsappUrl || settings?.defaultWhatsappUrl || "",
+            groupUrl: item.groupUrl || settings?.defaultGroupUrl || "",
+            mercadoPagoEnabled: item.mercadoPagoEnabled ?? item.useMercadoPago ?? settings?.mercadoPagoEnabled ?? false,
+            paymentProvider: item.paymentProvider || (item.mercadoPagoEnabled ? "mercadopago" : "manual"),
+            postPaymentMessage: item.postPaymentMessage || settings?.postPaymentMessage || "Pagamento aprovado! Seus números foram confirmados automaticamente. Entre no grupo oficial para acompanhar a rifa.",
+            pendingPaymentMessage: item.pendingPaymentMessage || settings?.pendingPaymentMessage || "Pagamento criado. Assim que o Mercado Pago confirmar, seus números serão liberados como pagos automaticamente.",
+            failedPaymentMessage: item.failedPaymentMessage || settings?.failedPaymentMessage || "O pagamento não foi concluído. Você pode tentar novamente ou falar com a organização.",
+            whatsappMessageTemplate: item.whatsappMessageTemplate || settings?.defaultWhatsappMessage || "",
+            pixKey: item.pixKey || settings?.pixKey || "",
+            pixCopyPaste: item.pixCopyPaste || "",
+            paymentInstructions: item.paymentInstructions || settings?.paymentInstructions || "Após finalizar a pré-reserva, envie o comprovante no WhatsApp para confirmação manual.",
+            legalNotice: item.legalNotice || settings?.legalNotice || "",
+            minimumSoldPercent: Number(item.minimumSoldPercent || 0),
+            maxTicketsPerOrder: Number(item.maxTicketsPerOrder || 0),
+            reservationHours: Number(item.reservationHours || 4),
+            drawDate: item.drawDate || "",
+            drawTime: item.drawTime || "19:00",
+            drawReference: item.drawReference || "Sorteio a definir",
+            winnerName: item.winnerName || "",
+            winnerCity: item.winnerCity || "",
+            winnerNumbers: item.winnerNumbers || "",
+            resultUrl: item.resultUrl || "",
+            soldNumbers: parseNumbers(item.soldNumbers),
+            buyers: rawBuyers,
+            rules: splitTextareaList(item.drawRules || item.rules || settings?.rulesGlobal || "O sorteio será informado oficialmente na página da rifa."),
+            recentBuyers: itemBuyers.length ? itemBuyers : parseBuyerLines(item.recentBuyers)
+          };
+        });
+      } catch (error) {
+        console.warn("Fallback rifas hardcoded:", error);
+      }
+    }
+
+
+    function paymentReturnParams(){
+      const params = new URLSearchParams(location.search);
+      const payment = String(params.get("payment") || params.get("status") || "").toLowerCase();
+      const order = params.get("order") || params.get("external_reference") || "";
+      const raffleKey = params.get("r") || params.get("rifa") || params.get("raffle") || "";
+      return { payment, order, raffleKey };
+    }
+
+    function normalizePaymentStatus(value){
+      const status = String(value || "").toLowerCase();
+      if(["success", "approved", "aprovado"].includes(status)) return "approved";
+      if(["pending", "in_process", "em_processamento"].includes(status)) return "pending";
+      if(["failure", "failed", "rejected", "cancelled", "cancelado"].includes(status)) return "failure";
+      return "";
+    }
+
+    function openPostPaymentModal(status, raffle){
+      const modal = document.getElementById("postPaymentModal");
+      if(!modal || !status) return;
+      const badge = document.getElementById("postPaymentBadge");
+      const title = document.getElementById("postPaymentTitle");
+      const text = document.getElementById("postPaymentText");
+      const groupBtn = document.getElementById("postPaymentGroupBtn");
+      const receipt = document.getElementById("postPaymentReceipt");
+      const copyBtn = document.getElementById("postPaymentCopyReceiptBtn");
+      const groupUrl = raffle?.groupUrl || raffle?.whatsappUrl || "";
+      const { order } = paymentReturnParams();
+      const localOrder = findLocalReservation(order);
+
+      const messages = {
+        approved: { icon:"✓", title:"Pagamento aprovado", text: raffle?.postPaymentMessage || "Pagamento aprovado! Seus números foram confirmados automaticamente. Entre no grupo oficial para acompanhar a rifa." },
+        pending: { icon:"⌛", title:"Pagamento em análise", text: raffle?.pendingPaymentMessage || "Pagamento criado. Assim que o Mercado Pago confirmar, seus números serão liberados como pagos automaticamente." },
+        failure: { icon:"!", title:"Pagamento não concluído", text: raffle?.failedPaymentMessage || "O pagamento não foi concluído. Você pode tentar novamente ou falar com a organização." }
+      };
+      const data = messages[status] || messages.pending;
+      badge.textContent = data.icon;
+      title.textContent = data.title;
+      text.textContent = data.text;
+
+      if(localOrder){
+        const nums = parseNumbers(localOrder.numbers).map(pad).join(", ");
+        receipt.style.display = "block";
+        receipt.innerHTML = `<strong>Seu comprovante</strong><span>Rifa: ${escapeHtml(raffle?.title || localOrder.raffleSlug || "Rifa Pense Offgrid")}</span><span>Código: ${escapeHtml(localOrder.code || localOrder.orderCode || "")}</span><span>Números: ${escapeHtml(nums || "não informado")}</span><span>Total: ${escapeHtml(currency(localOrder.amount || 0))}</span>`;
+        copyBtn.style.display = "inline-flex";
+        copyBtn.onclick = () => copyText(buildReceiptText(localOrder, raffle, status), "Comprovante copiado.");
+      }else{
+        receipt.style.display = "none";
+        receipt.innerHTML = "";
+        copyBtn.style.display = "none";
+      }
+
+      if(groupUrl && status === "approved"){
+        groupBtn.href = groupUrl;
+        groupBtn.style.display = "inline-flex";
+        groupBtn.textContent = "Entrar no grupo da rifa";
+      }else{
+        groupBtn.removeAttribute("href");
+        groupBtn.style.display = "none";
+      }
+
+      modal.classList.add("active");
+      modal.setAttribute("aria-hidden", "false");
+    }
+
+    function closePostPaymentModal(){
+      const modal = document.getElementById("postPaymentModal");
+      if(!modal) return;
+      modal.classList.remove("active");
+      modal.setAttribute("aria-hidden", "true");
+      const url = new URL(location.href);
+      ["payment", "status", "collection_status", "payment_id", "preference_id", "merchant_order_id", "order", "external_reference"].forEach(key => url.searchParams.delete(key));
+      history.replaceState({}, "", url.toString());
+    }
+
+    function handlePostPaymentReturn(){
+      const params = paymentReturnParams();
+      const status = normalizePaymentStatus(params.payment);
+      if(!status) return;
+      const raffle = raffles.find(item => String(item.slug || item.id) === String(params.raffleKey)) || state.currentRaffle || raffles[0];
+      if(raffle) setTimeout(() => openPostPaymentModal(status, raffle), 450);
+    }
+
+    function openRouteRaffle(){
+      const params = new URLSearchParams(location.search);
+      const slug = params.get("r");
+      if(slug) setTimeout(() => openRaffle(slug), 120);
+    }
+
+    document.getElementById("postPaymentCloseBtn")?.addEventListener("click", closePostPaymentModal);
+    document.getElementById("postPaymentModal")?.addEventListener("click", (event) => {
+      if(event.target?.id === "postPaymentModal") closePostPaymentModal();
+    });
+
+    connectRafflesToFirebase().finally(() => {
+      renderRaffleCards();
+      openRouteRaffle();
+      handlePostPaymentReturn();
+    });
+  </script>
+
+<script type="module">
+  import { bootGlobalLinks } from "/assets/js/firebase-public.js";
+  bootGlobalLinks().catch((error) => console.warn("Links globais fallback:", error));
+</script>
+</body>
+</html>

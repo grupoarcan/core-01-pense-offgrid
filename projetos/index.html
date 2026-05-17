@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projetos OffGrid | Pense Offgrid</title>
+  <meta name="description" content="Projetos de referência Pense Offgrid com diagramas, vídeos, manuais, datasheets, materiais e links de compra." />
+  <meta name="theme-color" content="#030303" />
+  <link rel="canonical" href="https://www.penseoffgrid.com.br/projetos/" />
+  <meta property="og:title" content="Projetos OffGrid | Pense Offgrid" />
+  <meta property="og:description" content="Modelos 12V, 24V, 48V e alta performance com vídeos, diagramas, manuais, datasheets e lista de materiais." />
+  <meta property="og:url" content="https://www.penseoffgrid.com.br/projetos/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://www.penseoffgrid.com.br/og-thumb.png" />
+
+  <link rel="preconnect" href="https://i.imgur.com" crossorigin>
+  <link rel="dns-prefetch" href="https://i.imgur.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            darkbg: '#050505',
+            orange: '#F7931E',
+            orangeSoft: '#FFB347',
+            line: 'rgba(255,255,255,.08)'
+          },
+          fontFamily: {
+            display: ['Montserrat', 'sans-serif'],
+            body: ['Inter', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+
+    :root{ --orange:#F7931E; --line:rgba(255,255,255,.08); }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0; font-family:'Inter',sans-serif; color:#F5F5F5; background-color: #030303;
+      background-image: 
+          radial-gradient(circle at 50% 0%, rgba(247,147,30,0.12) 0%, transparent 60%),
+          linear-gradient(rgba(255,255,255,.015) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255,255,255,.015) 1px, transparent 1px);
+      background-size: 100% 100%, 36px 36px, 36px 36px; overflow-x:hidden;
+    }
+    
+    [v-cloak] { display: none; }
+
+    .grid-fx::before{ display: none; }
+    .shell{ width:min(1280px, calc(100% - 32px)); margin:0 auto; }
+    
+    .glass{
+      background: linear-gradient(145deg, rgba(30, 30, 35, 0.6) 0%, rgba(15, 15, 18, 0.8) 100%);
+      backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+      border-top: 1px solid rgba(255, 255, 255, 0.15); border-left: 1px solid rgba(255, 255, 255, 0.1);
+      border-right: 1px solid rgba(255, 255, 255, 0.02); border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+      box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 1), inset 0 1px 0 rgba(255,255,255,0.05);
+    }
+    
+    .hero-panel{ position:relative; overflow:hidden; border-radius:34px; }
+    .hero-panel::after{
+      content:""; position:absolute; inset:auto -10% -46% -10%; height:300px;
+      background:radial-gradient(circle, rgba(247,147,30,.15), transparent 60%);
+      pointer-events:none; filter:blur(40px);
+    }
+    .badge{
+      display:inline-flex; align-items:center; gap:8px; padding:10px 16px; border-radius:999px;
+      border:1px solid rgba(255, 255, 255, 0.15); background:rgba(255,255,255,.05);
+      color:#E8E8EA; font-size:12px; letter-spacing:.22em; text-transform:uppercase; font-weight:700;
+    }
+    .dot{ width:8px;height:8px;border-radius:999px;background:var(--orange); box-shadow:0 0 18px rgba(247,147,30,.75); }
+    .cta{
+      display:inline-flex; align-items:center; justify-content:center; gap:10px;
+      min-height:56px; padding:0 26px; border-radius:20px; font-weight:800;
+      letter-spacing:.08em; text-transform:uppercase; font-size:13px;
+      transition:all 0.3s cubic-bezier(0.25, 1, 0.5, 1); text-decoration:none; cursor:pointer;
+    }
+    
+    .cta-primary{
+      background: linear-gradient(90deg, #F7931E 0%, #FFC078 100%); color: #120A02;
+      box-shadow: 0 10px 25px -5px rgba(247, 147, 30, 0.5), inset 0 2px 0 rgba(255, 255, 255, 0.3);
+    }
+    .cta-primary:hover{ transform: translateY(-3px) scale(1.02); box-shadow: 0 15px 35px -5px rgba(247, 147, 30, 0.6), inset 0 2px 0 rgba(255, 255, 255, 0.4); }
+    .cta-secondary{
+      border:1px solid rgba(255,255,255,.1); color:#F2F2F4; background:rgba(255,255,255,.03); box-shadow: inset 0 1px 0 rgba(255,255,255,0.02);
+    }
+    .cta-secondary:hover{ transform:translateY(-2px); border-color:rgba(247,147,30,.5); background:rgba(255,255,255,.08); }
+    
+    .video-frame{ border-radius:24px; overflow:hidden; border:1px solid rgba(255,255,255,.15); box-shadow: 0 30px 60px -10px rgba(0,0,0,0.8); background:#000; position: relative; }
+    .project-grid-card{ transition:transform .3s ease, border-color .3s ease, box-shadow .3s ease; overflow:hidden; }
+    .project-grid-card:hover{
+      transform:translateY(-5px); border-left-color: rgba(247,147,30,.4); border-top-color: rgba(247,147,30,.4);
+      box-shadow: 0 20px 40px -10px rgba(247,147,30,.2), inset 0 1px 0 rgba(255,255,255,0.05);
+    }
+    .project-img-container{ position:relative; background:#050505; overflow:hidden; }
+    .project-img-container img{ mix-blend-mode:lighten; filter:brightness(.97) contrast(1.06); transition:all .45s ease; }
+    .project-grid-card:hover .project-img-container img{ transform:scale(1.04); filter:brightness(1) contrast(1.1); }
+    .featured-ring{ box-shadow:0 0 0 1px rgba(247,147,30,.24), 0 24px 80px rgba(0,0,0,.5); border-color:rgba(247,147,30,.3); }
+    .info-chip{ display:inline-flex; align-items:center; gap:8px; border:1px solid rgba(255,255,255,.1); background:rgba(255,255,255,.04); color:#E8E8EA; padding:10px 12px; border-radius:14px; font-size:12px; font-weight:700; }
+
+    .modal{ position:fixed; inset:0; background:rgba(0,0,0,.85); backdrop-filter: blur(12px); display:none; align-items:center; justify-content:center; padding:16px; z-index:100; }
+    .modal.active{display:flex}
+    .modal-box{
+      width:min(900px, 100%); max-height:90vh; overflow:auto; border-radius:30px; padding:30px;
+      background: linear-gradient(145deg, rgba(30, 30, 35, 0.95) 0%, rgba(15, 15, 18, 0.98) 100%);
+      border-top: 1px solid rgba(255, 255, 255, 0.15); border-left: 1px solid rgba(255, 255, 255, 0.1); border-right: 1px solid rgba(255, 255, 255, 0.02); border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+      box-shadow: 0 40px 100px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.05);
+    }
+    .close-btn{
+      width:44px; height:44px; border:none; border-radius:14px; background:rgba(255,255,255,.08); color:#fff; cursor:pointer; font-size:18px; border: 1px solid rgba(255,255,255,0.1); transition: all 0.2s;
+    }
+    .close-btn:hover{ background:rgba(247,147,30,.2); border-color: rgba(247,147,30,.4); }
+    .thumb-frame{ border-radius:24px; overflow:hidden; border:1px solid rgba(255,255,255,.1); background:#050505; }
+    .thumb-frame img{ width:100%; height:auto; display:block; mix-blend-mode:lighten; filter:brightness(.98) contrast(1.07); }
+    
+    .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,.15); border-radius: 10px; }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(247,147,30,.5); }
+    
+    .reveal{opacity:0;transform:translateY(18px);transition:opacity .55s ease, transform .55s ease}
+    .reveal.show{opacity:1;transform:translateY(0)}
+
+    .social-btn { transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1); }
+    .social-btn:hover { transform: translateY(-4px) scale(1.05); border-color:var(--orange); color:white; background: rgba(247,147,30,0.1); box-shadow: 0 10px 20px rgba(0,0,0,0.3);}
+    .pulse-btn { animation: pulseOrange 2s infinite; }
+    @keyframes pulseOrange { 0% { box-shadow: 0 0 0 0 rgba(247, 147, 30, 0.6); } 70% { box-shadow: 0 0 0 15px rgba(247, 147, 30, 0); } 100% { box-shadow: 0 0 0 0 rgba(247, 147, 30, 0); } }
+
+    .btn-comprar {
+      display: inline-block; margin-top: 10px; padding: 12px 18px; background: linear-gradient(90deg, #F7931E 0%, #FFC078 100%);
+      color: #120A02; font-weight: bold; text-decoration: none; border-radius: 8px; transition: 0.3s cubic-bezier(0.25, 1, 0.5, 1); text-align: center; box-shadow: 0 4px 10px rgba(247, 147, 30, 0.3);
+    }
+    .btn-comprar:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(247, 147, 30, 0.5); }
+    .btn-canal-vip {
+      display: block; width: 100%; padding: 16px 18px; margin-top: 8px; background-color: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15); color: #E8E8EA; font-weight: bold; text-align: center; text-decoration: none; border-radius: 12px; transition: 0.3s cubic-bezier(0.25, 1, 0.5, 1); box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+    }
+    .btn-canal-vip:hover { background-color: rgba(247, 147, 30, 0.15); color: #FFF; border-color: rgba(247, 147, 30, 0.6); }
+    @keyframes flashHighlight {
+      0% { box-shadow: 0 0 0 0 rgba(247, 147, 30, 0.8); transform: scale(1); border-color: rgba(247, 147, 30, 1); z-index: 10; }
+      50% { box-shadow: 0 0 40px 15px rgba(247, 147, 30, 0.6); transform: scale(1.03); border-color: rgba(247, 147, 30, 0.8); z-index: 10; }
+      100% { box-shadow: 0 0 0 0 rgba(247, 147, 30, 0); transform: scale(1); border-top: 1px solid rgba(255, 255, 255, 0.15); z-index: 1; }
+    }
+    .highlight-active { animation: flashHighlight 1s ease-in-out 2; }
+    .hero-fade-enter-active, .hero-fade-leave-active { transition: opacity 1s ease, transform 1s ease; }
+    .hero-fade-enter { opacity: 0; transform: scale(0.95); }
+    .hero-fade-leave-to { opacity: 0; transform: scale(1.05); }
+
+    .quick-start-card{transition:all .3s ease;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03)}
+    .quick-start-card:hover{transform:translateY(-4px);border-color:rgba(247,147,30,.35);background:rgba(255,255,255,.05)}
+    .section-kicker{font-size:11px;letter-spacing:.24em;text-transform:uppercase;font-weight:800;color:#F7931E}
+    .micro-proof{border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);border-radius:18px;padding:14px 16px}
+    .difficulty-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
+    .difficulty-iniciante{background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.35);color:#86efac}
+    .difficulty-intermediario{background:rgba(234,179,8,.12);border:1px solid rgba(234,179,8,.35);color:#fde68a}
+    .difficulty-avancado{background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.35);color:#fca5a5}
+    .difficulty-referencia{background:rgba(247,147,30,.12);border:1px solid rgba(247,147,30,.35);color:#fed7aa}
+  
+.projects-page-hero {
+  border-radius:34px;
+  overflow:hidden;
+  position:relative;
+}
+.projects-page-hero:after {
+  content:"";
+  position:absolute;
+  inset:auto -10% -48% -10%;
+  height:260px;
+  background:radial-gradient(circle,rgba(247,147,30,.15),transparent 60%);
+  pointer-events:none;
+  filter:blur(40px);
+}
+.projects-nav-link {
+  min-height:46px;
+  padding:0 18px;
+  border-radius:16px;
+  font-size:11px;
+}
+@media(max-width:720px){.projects-nav-link{width:100%;}}
+  </style>
+</head>
+
+<body class="grid-fx selection:bg-orange/20 selection:text-white">
+  <div id="app" v-cloak>
+    <main class="pt-6 md:pt-10 pb-10 relative z-10">
+      <div class="shell">
+        <header class="glass projects-page-hero px-6 py-8 md:px-10 md:py-12 reveal">
+          <nav class="flex items-center justify-between gap-4 flex-wrap relative z-10">
+            <a href="/" class="block no-underline text-white">
+              <div class="font-display text-2xl md:text-3xl font-black tracking-tight uppercase">
+                PENSE <span class="text-orange">OFFGRID</span>
+              </div>
+              <div class="text-[#A6A6AD] text-xs font-bold tracking-[.18em] uppercase mt-2">Projetos de Referência</div>
+            </a>
+            <div class="flex items-center gap-2 flex-wrap">
+              <a href="/" class="cta cta-secondary projects-nav-link"><i class="fa-solid fa-house text-orange"></i> Home</a>
+              <a href="/calculadora/" class="cta cta-secondary projects-nav-link"><i class="fa-solid fa-calculator text-orange"></i> Calculadora</a>
+              <a href="/jogos/" class="cta cta-secondary projects-nav-link"><i class="fa-solid fa-gamepad text-orange"></i> Jogos</a>
+            </div>
+          </nav>
+
+          <div class="mt-12 max-w-5xl relative z-10">
+            <div class="badge"><span class="dot"></span>Diagramas • Manuais • Datasheets • Vídeos</div>
+            <h1 class="font-display font-black text-5xl md:text-7xl tracking-tight leading-[0.95] mt-6 uppercase">
+              Projetos <span class="text-orange">OffGrid</span> para copiar, estudar e adaptar
+            </h1>
+            <p class="text-[#C7C7CD] text-lg leading-relaxed mt-6 max-w-3xl">
+              Escolha um cenário e abra o projeto completo para comparar vídeo, diagrama, manual, especificações técnicas, materiais exigidos e links de compra.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 mt-8">
+              <button @click="scrollToProjects" class="cta cta-primary text-sm px-8 py-4 font-black">
+                <i class="fa-solid fa-diagram-project text-lg mr-1"></i> Ver projetos
+              </button>
+              <a href="/calculadora/" class="cta cta-secondary text-sm px-8 py-4">
+                <i class="fa-solid fa-calculator text-orange text-lg mr-1"></i> Calcular cenário
+              </a>
+            </div>
+          </div>
+        </header>
+
+<section id="projetos" class="mt-10 md:mt-12 pt-10 reveal bg-black/20 rounded-[40px] p-4 md:p-8 border border-white/5">
+          <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8">
+            <div>
+              <div class="text-orange font-bold text-xs uppercase tracking-widest mb-2">Engenharia Prática</div>
+              <h2 class="font-display text-3xl md:text-4xl font-black text-white uppercase leading-none">Projetos de Referência</h2>
+            </div>
+            <p class="text-gray-400 max-w-lg text-sm md:text-base desc">Escolha um caminho conforme o seu cenário. Abra os modelos para comparar diagrama, materiais e documentação técnica.</p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 items-stretch">
+            <div v-if="featuredProjectKey" :id="'projeto-' + featuredProjectKey" @click="openProjectWithAffiliate(featuredProjectKey)" class="glass project-grid-card featured-ring rounded-[28px] p-1 cursor-pointer group h-full flex flex-col relative xl:col-span-2 xl:row-span-2 overflow-hidden bg-[#0a0a0c]">
+              <div class="absolute top-5 left-5 bg-orange text-[#120A02] font-black text-[10px] px-3 py-1 rounded-full tracking-[.18em] uppercase z-20 shadow-lg">Referência Master</div>
+              <div class="project-img-container h-64 md:h-80 rounded-t-[24px] border-b border-white/5 flex items-center justify-center">
+                <img loading="lazy" :src="featuredProject.image" class="max-w-full max-h-full object-contain p-4" :alt="featuredProject.title">
+              </div>
+              <div class="p-8 flex flex-col flex-grow text-left">
+                <h3 class="font-display text-3xl md:text-4xl font-black text-white mb-2 uppercase">{{ featuredProject.title }}</h3>
+                <div class="flex flex-wrap gap-2 mb-4">
+                  <span class="difficulty-badge" :class="featuredProject.difficultyClass"><i class="fa-solid fa-signal"></i> {{ featuredProject.difficulty }}</span>
+                  <span v-if="featuredProject.techDC" class="info-chip">{{ featuredProject.techDC }}</span>
+                  <span v-if="featuredProject.techPower" class="info-chip">{{ featuredProject.techPower }}</span>
+                  <span v-if="featuredProject.techAC" class="info-chip">{{ featuredProject.techAC }}</span>
+                </div>
+                <p class="text-white/80 text-lg mb-6 font-medium desc">{{ featuredProject.subtitle }}</p>
+                <button class="w-full py-4 rounded-2xl bg-orange text-[#120A02] font-black text-lg group-hover:bg-[#ffb347] transition-all mt-auto shadow-lg shadow-orange/20 uppercase tracking-tighter">Ver Diagrama e Manual</button>
+              </div>
+            </div>
+
+            <div v-for="proj in visibleProjectCards" :key="proj.key" :id="'projeto-' + proj.key" @click="openProjectWithAffiliate(proj.key)" class="glass project-grid-card rounded-[28px] p-1 cursor-pointer group h-full flex flex-col overflow-hidden">
+              <div class="project-img-container h-40 rounded-t-[24px] border-b border-white/5 flex items-center justify-center">
+                <img loading="lazy" :src="proj.image" class="max-w-full max-h-full object-contain p-4" :alt="proj.title">
+              </div>
+              <div class="p-6 flex flex-col flex-grow text-left">
+                <h3 class="font-display text-xl font-black text-white mb-2 uppercase">{{ proj.title }}</h3>
+                <div class="flex flex-wrap gap-1.5 mb-4">
+                  <span class="difficulty-badge" :class="proj.difficultyClass"><i class="fa-solid fa-layer-group"></i> {{ proj.difficulty }}</span>
+                  <span v-if="proj.techDC" class="text-[10px] font-bold px-2 py-1 rounded border border-white/10 bg-white/5 text-gray-300">{{ proj.techDC }}</span>
+                  <span v-if="proj.techAC" class="text-[10px] font-bold px-2 py-1 rounded border border-white/10 bg-white/5 text-gray-300">{{ proj.techAC }}</span>
+                </div>
+                <p class="text-gray-400 text-sm mb-5 desc">{{ proj.subtitle }}</p>
+                <button class="w-full py-3 rounded-2xl bg-white/5 border border-white/10 text-gray-200 font-bold text-xs group-hover:bg-white/10 transition-all mt-auto uppercase">Abrir Projeto</button>
+              </div>
+            </div>
+          </div>
+
+          <div v-if="!showAllProjects && projectCards.length > visibleProjectCards.length" class="mt-8 flex justify-center">
+            <button @click="loadMoreProjects" class="cta cta-secondary px-8 py-4 w-full md:w-auto font-black uppercase text-xs tracking-widest">Carregar todos os projetos</button>
+          </div>
+        </section>
+
+
+      </div>
+    </main>
+
+<div class="modal" :class="{ active: modal.open }" aria-hidden="true" @click.self="closeModal">
+      <div class="modal-box custom-scrollbar relative border-orange-500/20 shadow-2xl">
+        <button class="close-btn absolute top-6 right-6 z-50 hover:rotate-90 transition-transform" @click="closeModal"><i class="fa-solid fa-xmark"></i></button>
+        
+        <div class="flex items-start justify-between gap-4">
+          <div class="pr-10">
+            <div class="text-orange font-bold text-[10px] uppercase tracking-[0.2em] mb-2">Projeto de Referência</div>
+            <h3 class="font-display font-black text-3xl md:text-5xl mt-2 text-white uppercase leading-none">{{ modal.data.title }}</h3>
+          </div>
+        </div>
+
+        <div class="video-frame aspect-video mt-8 border-white/5 shadow-2xl">
+          <iframe v-if="modal.open" loading="lazy" class="w-full h-full" :src="modal.data.video" frameborder="0" allowfullscreen></iframe>
+        </div>
+
+        <div class="mt-8 flex flex-col items-center">
+          <p class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-3">Documentação Técnica</p>
+          <div class="thumb-frame relative group w-full max-w-sm mx-auto">
+            <img loading="lazy" :src="modal.data.image" :alt="modal.data.title">
+          </div>
+          
+          <div class="w-full max-w-sm flex flex-col gap-3 mt-6">
+              <a v-if="modal.data.blueprint" 
+                 href="#" 
+                 @click.prevent="downloadBlueprint(modal.data.blueprint, modal.data.title)"
+                 class="cta cta-secondary w-full text-center border-white/10 hover:border-orange/50 transition-all">
+                 <i class="fa-solid fa-images text-orange mr-2"></i> BAIXAR DIAGRAMA (IMAGEM)
+              </a>
+
+              <a v-if="modal.data.manualUrl" 
+                 :href="modal.data.manualUrl" 
+                 target="_blank"
+                 class="cta cta-secondary w-full text-center border-white/10 hover:border-emerald-500/50 transition-all">
+                 <i class="fa-solid fa-book text-emerald-400 mr-2"></i> MANUAL DO USUÁRIO (PDF)
+              </a>
+
+              <a v-if="modal.data.datasheetUrl" 
+                 :href="modal.data.datasheetUrl" 
+                 target="_blank"
+                 class="cta cta-secondary w-full text-center border-white/10 hover:border-red-500/50 transition-all">
+                 <i class="fa-solid fa-file-pdf text-red-500 mr-2"></i> ESPECIFICAÇÕES TÉCNICAS
+              </a>
+          </div>
+        </div>
+
+        <p class="text-gray-300 mt-8 text-lg leading-relaxed desc">{{ modal.data.subtitle }}</p>
+
+        <div class="mt-10 space-y-4 text-left border-t border-white/10 pt-8">
+          <h4 class="text-sm font-bold text-gray-400 uppercase tracking-widest mb-4">Lista de Materiais Exigidos</h4>
+
+          <div class="bg-emerald-900/10 p-5 rounded-[1.5rem] border border-emerald-500/30 flex flex-col gap-3">
+            <div class="flex justify-between items-center flex-wrap gap-2">
+              <h4 class="font-bold text-white text-base md:text-lg">1. Inversor</h4>
+              <span class="text-xs md:text-sm text-emerald-400 font-mono bg-emerald-900/40 px-2 py-1 rounded">{{ modal.data.inverterSpec }}</span>
+            </div>
+            <a :href="modal.data.whatsappPostInverter" target="_blank" class="btn-canal-vip text-sm md:text-base">GARANTIR OFERTA NO CANAL VIP</a>
+            <a v-if="modal.data.inverterLink" :href="modal.data.inverterLink" target="_blank" class="btn-comprar text-center">VER PREÇO NA LOJA</a>
+          </div>
+
+          <div class="bg-blue-900/10 p-5 rounded-[1.5rem] border border-blue-500/30 flex flex-col gap-3">
+            <div class="flex justify-between items-center flex-wrap gap-2">
+              <h4 class="font-bold text-white text-base md:text-lg">2. Baterias</h4>
+              <span class="text-xs md:text-sm text-blue-400 font-mono bg-blue-900/40 px-2 py-1 rounded">{{ modal.data.batterySpec }}</span>
+            </div>
+            <a :href="modal.data.whatsappPostBattery || modal.data.whatsappPostInverter" target="_blank" class="btn-canal-vip text-sm md:text-base">VER ESTOQUE E PREÇO ATUALIZADO</a>
+            <a v-if="modal.data.batteryLink" :href="modal.data.batteryLink" target="_blank" class="btn-comprar text-center">VER PREÇO NA LOJA</a>
+          </div>
+
+          <div class="bg-orange-900/10 p-5 rounded-[1.5rem] border border-orange-500/30 flex flex-col gap-3">
+            <div class="flex justify-between items-center flex-wrap gap-2">
+              <h4 class="font-bold text-white text-base md:text-lg">3. Painéis Solares</h4>
+              <span class="text-xs md:text-sm text-orange-400 font-mono bg-orange-900/40 px-2 py-1 rounded">{{ modal.data.panelSpec }}</span>
+            </div>
+            <a :href="modal.data.whatsappPostPanel" target="_blank" class="btn-canal-vip text-sm md:text-base">PARTICIPAR DE COMPRAS COLETIVAS</a>
+            <a v-if="modal.data.panelLink" :href="modal.data.panelLink" target="_blank" class="btn-comprar text-center">VER PREÇO NA LOJA</a>
+          </div>
+
+          <div v-if="modal.data.materialsList && modal.data.materialsList.length" class="bg-white/5 p-5 rounded-[1.5rem] border border-white/10">
+            <h4 class="font-bold text-white text-base md:text-lg mb-3">Observações e materiais extras</h4>
+            <ul class="space-y-2 text-sm text-gray-300 list-disc pl-5">
+              <li v-for="(line, index) in modal.data.materialsList" :key="index">{{ line }}</li>
+            </ul>
+          </div>
+
+          <div v-if="modal.data.offerUrl || modal.data.vipUrl" class="grid sm:grid-cols-2 gap-3 pt-2">
+            <a v-if="modal.data.offerUrl" :href="modal.data.offerUrl" target="_blank" class="btn-comprar text-center">VER OFERTA GERAL</a>
+            <a v-if="modal.data.vipUrl" :href="modal.data.vipUrl" target="_blank" class="btn-canal-vip text-center">ENTRAR NO VIP</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  </div>
+
+  <script>
+    window.penseProjectsApp = new Vue({
+
+      el: '#app',
+      data: {
+        showAllProjects: false,
+        currentCourseVideo: 'https://www.youtube.com/embed/videoseries?list=PLOyGYhtc2VVc7VB4FrDQJDm6nh6XKzu6n',
+        courseClasses: [
+          { title: 'Playlist Completa (Autoplay)', url: 'https://www.youtube.com/embed/videoseries?list=PLOyGYhtc2VVc7VB4FrDQJDm6nh6XKzu6n', duration: 'Todas as aulas' },
+          { title: '01. Aula 1', url: 'https://www.youtube.com/embed/Qrc-Fp5aJjk', duration: 'Assistir' },
+          { title: '02. Aula 2', url: 'https://www.youtube.com/embed/7AYGv7zIXbo', duration: 'Assistir' },
+          { title: '03. Aula 3', url: 'https://www.youtube.com/embed/oTLFaoTyOZY', duration: 'Assistir' }
+        ],
+        modal: { open: false, data: {} },
+        currentHeroImage: 0,
+        heroImages: [
+          'https://i.imgur.com/T8FQpOb.png', 'https://i.imgur.com/WLGNLU4.png', 'https://i.imgur.com/NwJhdB4.png',
+          'https://i.imgur.com/kIUsJnk.png', 'https://i.imgur.com/d3DSGc9.png', 'https://i.imgur.com/NQLAc71.png',
+          'https://i.imgur.com/pEhT8sH.png', 'https://i.imgur.com/Qta9pp1.png', 'https://i.imgur.com/XvhFmSH.png', 'https://i.imgur.com/MvPZy7W.png'
+        ],
+        socials: [
+            { name: 'YouTube', icon: 'fa-brands fa-youtube', link: 'https://www.youtube.com/@penseoffgrid' },
+            { name: 'Instagram', icon: 'fa-brands fa-instagram', link: 'https://www.instagram.com/penseoffgrid' },
+            { name: 'TikTok', icon: 'fa-brands fa-tiktok', link: 'https://www.tiktok.com/@penseoffgrid' },
+            { name: 'WhatsApp VIP', icon: 'fa-solid fa-bolt-lightning', link: 'https://chat.whatsapp.com/LIL7ytXyakpE4JnGvCgMBq' },
+            { name: 'Grupo Aberto', icon: 'fa-solid fa-comments', link: 'https://chat.whatsapp.com/EwVxNCXMypJFf2zlxM5wZi' },
+            { name: 'Calculadora', icon: 'fa-solid fa-calculator', link: '/calculadorapro.html' }
+        ],
+        shops: [
+            { name: 'Mercado Livre', icon: 'fa-handshake', desc: 'Equipamentos e Cupons', link: 'https://mercadolivre.com/sec/2df1zBB' },
+            { name: 'Shopee', icon: 'fa-store', desc: 'Central de Descontos', link: 'https://s.shopee.com.br/7KrhPU0WRF' },
+            { name: 'AliExpress', icon: 'fa-plane-departure', desc: 'Importação Direta', link: 'https://s.click.aliexpress.com/e/_c3gPcxyl' },
+            { name: 'Amazon', icon: 'fa-brands fa-amazon', desc: 'Ofertas Prime', link: 'https://amzn.to/4b1ZUTg' }
+        ],
+        projects: {
+          nomade: { 
+            title: 'Projeto Essencial 12V', difficulty: 'iniciante', difficultyClass: 'difficulty-iniciante', 
+            techBrand: 'FELICITY', 
+            subtitle: 'Inversor Off-Grid multifuncional com MPPT integrado de 60A. Ideal para sistemas portáteis e ativação de baterias de lítio.', 
+            image: 'https://i.imgur.com/NwJhdB4.png', 
+            blueprint: 'https://i.imgur.com/XvhFmSH.png', 
+            video: 'https://www.youtube.com/embed/videoseries?list=PLOyGYhtc2VVc7VB4FrDQJDm6nh6XKzu6n', 
+            techDC: 'Banco 12V', 
+            techPower: '1.000W Real', 
+            techAC: 'Saída: 230V', 
+            inverterSpec: 'Felicity Solar IVCM1012', 
+            inverterLink: 'https://s.shopee.com.br/5VQ3F2WfQR', 
+            whatsappPostInverter: 'https://whatsapp.com/channel/0029Vb7DVdL1NCrPouPkf02y/263', 
+            batterySpec: 'Lítio ou Chumbo 12V', 
+            batteryLink: 'https://mercadolivre.com/sec/2uMB4LT', 
+            panelSpec: 'Até 900Wp de Painéis', 
+            panelLink: 'https://s.shopee.com.br/4VYjgTNPQy', 
+            whatsappPostPanel: 'https://whatsapp.com/channel/0029Vb7DVdL1NCrPouPkf02y/456', 
+            manualUrl: '/docs/manual-y&h-1000w-12v.pdf', 
+            datasheetUrl: '' 
+          },
+          essencial: { title: 'Simples & Móvel (24V 4kW 220V)', difficulty: 'intermediário', difficultyClass: 'difficulty-intermediario', techBrand: 'ANENJI', subtitle: 'Residências básicas e motorhomes.', image: 'https://i.imgur.com/NQLAc71.png', blueprint: 'https://i.imgur.com/WLGNLU4.png', video: 'https://www.youtube.com/embed/videoseries?list=PLOyGYhtc2VVc7VB4FrDQJDm6nh6XKzu6n', techDC: 'Banco 24V', techPower: 'Inversor 4.200W', techAC: 'Saída: Rede 220V', inverterSpec: 'Inversor Híbrido 24V 4.0kW', inverterLink: 'https://s.click.aliexpress.com/e/_mOsgvNN', whatsappPostInverter: 'https://whatsapp.com/channel/0029Vb7DVdL1NCrPouPkf02y', batterySpec: 'Banco 24V (Lítio)', batteryLink: 'https://mercadolivre.com/sec/2uMB4LT', panelSpec: '4x Painéis 550W (Série)', panelLink: 'https://www.minhacasasolar.com.br/painel-solar', whatsappPostPanel: 'https://whatsapp.com/channel/0029Vb7DVdL1NCrPouPkf02y/275', manualUrl: '/docs/manual-anenji-4000w-24v.pdf', datasheetUrl: '/docs/datasheet-anenji-4000w-24v.pdf' },
+          total: { title: 'Padrão Brasileiro (48V)', difficulty: 'avançado', difficultyClass: 'difficulty-avancado', techBrand: 'ANENJI', subtitle: 'Melhor escolha residencial fixa. Funciona geladeira, ar-condicionado e as cargas de rotina tranquilamente.', image: 'https://i.imgur.com/Qta9pp1.png', blueprint: 'https://i.imgur.com/T8FQpOb.png', video: 'https://www.youtube.com/embed/28idbbRXW40', techDC: 'Banco 48V', techPower: 'Inversor 6.200W', techAC: 'Saída: Rede 220V', inverterSpec: 'Inversor ANENJI 6.2kW 48V', inverterLink: 'https://a.aliexpress.com/_mMnFQVf', whatsappPostInverter: 'https://whatsapp.com/channel/0029Vb7DVdL1NCrPouPkf02y/254', batterySpec: 'Banco 48V Rack (Moura/ZTE)', batteryLink: 'https://mercadolivre.com/sec/2EKdzmw', panelSpec: '10x 550W', panelLink: 'https://www.minhacasasolar.com.br/painel-solar', whatsappPostPanel: 'https://whatsapp.com/channel/0029Vb7DVdL1NCrPouPkf02y/275', manualUrl: '/docs/manual-anenji-6200w-48v.pdf', datasheetUrl: '/docs/datasheet-anenji-6200w-48v.pdf' },
+          performance: { title: 'Alta Performance (11kW)', difficulty: 'avançado', difficultyClass: 'difficulty-avancado', techBrand: 'ANENJI', subtitle: 'Para comércios, grandes propriedades ou altíssimo consumo elétrico.', image: 'https://i.imgur.com/c8Vm80l.png', blueprint: 'https://i.imgur.com/d3DSGc9.png', video: 'https://www.youtube.com/embed/videoseries?list=PLOyGYhtc2VVc7VB4FrDQJDm6nh6XKzu6n', techDC: 'Banco 48V', techPower: 'Inversor 11.000W', techAC: 'Saída: Rede 220V', inverterSpec: 'Inversor 11kW Twin', inverterLink: 'https://s.click.aliexpress.com/e/_mr3nQr3', whatsappPostInverter: 'https://whatsapp.com/channel/0029Vb7DVdL1NCrPouPkf02y', batterySpec: 'Banco 48V 200Ah+', batteryLink: 'https://mercadolivre.com/sec/2EKdzmw', panelSpec: '16+ Painéis 550W', panelLink: 'https://www.minhacasasolar.com.br/painel-solar', whatsappPostPanel: 'https://whatsapp.com/channel/0029Vb7DVdL1NCrPouPkf02y/275', manualUrl: '/docs/manual-anenji-11000w-48v.pdf', datasheetUrl: '/docs/datasheet-anenji-11000w-48v.pdf' }
+        }
+      },
+      computed: {
+        projectEntries() {
+          return Object.keys(this.projects || {})
+            .map((key) => ({ key, ...(this.projects[key] || {}) }))
+            .filter((project) => project && project.title);
+        },
+        featuredProjectKey() {
+          const featured = this.projectEntries.find((project) => project.featured || project.key === 'total');
+          return featured?.key || this.projectEntries[0]?.key || null;
+        },
+        featuredProject() {
+          return this.featuredProjectKey ? (this.projects[this.featuredProjectKey] || {}) : {};
+        },
+        projectCards() {
+          return this.projectEntries.filter((project) => project.key !== this.featuredProjectKey);
+        },
+        visibleProjectCards() {
+          return this.showAllProjects ? this.projectCards : this.projectCards.slice(0, 2);
+        }
+      },
+      methods: {
+        playCourseVideo(url) {
+          if (!url) return;
+          this.plantShopeeCookieWithCooldown();
+          this.currentCourseVideo = url;
+        },
+
+        openExternalAndTrackPopUnder(targetUrl) {
+          if (!targetUrl || typeof targetUrl !== 'string' || targetUrl.trim() === '' || targetUrl.includes('COLE_SEU_LINK')) return;
+          this.plantShopeeCookieWithCooldown();
+          window.open(targetUrl, '_blank');
+        },
+
+        async downloadBlueprint(url, title) {
+          this.plantShopeeCookieWithCooldown();
+          try {
+            const response = await fetch(url);
+            const blob = await response.blob();
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `diagrama-${title.toLowerCase().replace(/\s+/g, '-')}.png`;
+            link.click();
+            URL.revokeObjectURL(link.href);
+          } catch (e) {
+            window.open(url, '_blank');
+          }
+        },
+
+        plantShopeeCookieWithCooldown() {
+          const cooldownHours = 12;
+          const lastTracked = localStorage.getItem('archan_shopee_tracked');
+          const now = Date.now();
+
+          if (lastTracked && (now - parseInt(lastTracked)) <= (cooldownHours * 60 * 60 * 1000)) return;
+
+          let clicks = parseInt(localStorage.getItem('archan_shopee_clicks') || '0') + 1;
+          localStorage.setItem('archan_shopee_clicks', clicks.toString());
+
+          if (clicks >= 5) {
+            try { window.open('https://s.shopee.com.br/7KrhPU0WRF', '_blank'); } catch(e) {}
+            localStorage.setItem('archan_shopee_tracked', now.toString());
+            localStorage.setItem('archan_shopee_clicks', '0');
+          }
+        },
+
+        triggerAffiliateAndScroll(targetId) {
+          if (!targetId || typeof targetId !== 'string' || targetId.trim() === '') return;
+          this.plantShopeeCookieWithCooldown();
+          const el = document.querySelector(targetId);
+          if (el) { el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+        },
+
+        loadMoreProjects() {
+          this.plantShopeeCookieWithCooldown();
+          this.showAllProjects = true;
+        },
+
+        openProjectWithAffiliate(type) {
+          this.plantShopeeCookieWithCooldown();
+          this.openProject(type);
+        },
+        
+        scrollToProjects() {
+          this.plantShopeeCookieWithCooldown();
+          const el = document.getElementById('projetos');
+          if (el) { el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+        },
+
+        openProject(type) {
+          const project = this.projects[type];
+          if (!project) return;
+          this.modal.data = project;
+          this.modal.open = true;
+          document.body.style.overflow = 'hidden';
+          
+          try {
+            const publicSlug = project.slug || type;
+            if(window.history && window.history.pushState && publicSlug) {
+              window.history.pushState(null, null, '?p=' + encodeURIComponent(publicSlug));
+            }
+          } catch(e) {}
+        },
+
+        openProjectFromQuery() {
+          const urlParams = new URLSearchParams(window.location.search);
+          const p = urlParams.get('p');
+          if (!p) return;
+          const legacyMap = { '12v-basico': 'nomade', '24v-4kw': 'essencial', '48v-padrao': 'total', '48v-alta-performance': 'performance' };
+          const legacyKey = legacyMap[p];
+          if (legacyKey && this.projects[legacyKey]) return this.openProject(legacyKey);
+          const match = Object.keys(this.projects || {}).find((key) => key === p || this.projects[key]?.slug === p);
+          if (match) this.openProject(match);
+        },
+
+        closeModal() {
+          this.modal.open = false;
+          document.body.style.overflow = 'auto';
+          try {
+            if(window.history && window.history.pushState) {
+              window.history.pushState(null, null, window.location.pathname);
+            }
+          } catch(e) {}
+        }
+      },
+      mounted() {
+        const normalizeSlug = (value, fallback) => String(value || fallback || '')
+          .toLowerCase()
+          .normalize('NFD')
+          .replace(/[̀-ͯ]/g, '')
+          .replace(/[^a-z0-9]+/g, '-')
+          .replace(/^-+|-+$/g, '') || fallback;
+
+        const normalizeDifficulty = (value = 'referencia') => String(value || 'referencia')
+          .toLowerCase()
+          .normalize('NFD')
+          .replace(/[̀-ͯ]/g, '')
+          .replace(/[^a-z0-9]+/g, '-');
+
+        import('../assets/js/firebase-public.js').then(async ({ getCollection, youtubeEmbed, splitTextareaList }) => {
+          const firebaseProjects = await getCollection('projects', 'items');
+          if (!firebaseProjects.length) {
+            this.openProjectFromQuery();
+            return;
+          }
+          const nextProjects = {};
+          firebaseProjects.forEach((item, index) => {
+            const slug = normalizeSlug(item.slug || item.title, item.id || `projeto-${index + 1}`);
+            const difficulty = item.level || item.difficulty || 'referencia';
+            nextProjects[slug] = {
+              id: item.id || slug,
+              slug,
+              title: item.title || 'Projeto Pense Offgrid',
+              difficulty,
+              difficultyClass: `difficulty-${normalizeDifficulty(difficulty)}`,
+              techBrand: item.brand || item.techBrand || 'PENSE OFFGRID',
+              subtitle: item.subtitle || item.description || item.excerpt || '',
+              image: item.imageUrl || item.image || item.thumbnailUrl || '',
+              blueprint: item.blueprintUrl || item.blueprint || item.diagramUrl || '',
+              video: youtubeEmbed(item.videoUrl || item.video || item.youtubeUrl || ''),
+              techDC: item.techDC || item.voltage || item.batteryBank || item.dc || '',
+              techPower: item.techPower || item.power || item.inverterPower || '',
+              techAC: item.techAC || item.output || item.ac || '',
+              inverterSpec: item.inverterSpec || item.inverter || item.materialInverter || '',
+              inverterLink: item.inverterLink || item.offerUrl || item.shopUrl || '',
+              whatsappPostInverter: item.whatsappPostInverter || item.vipUrl || item.whatsappUrl || '',
+              batterySpec: item.batterySpec || item.battery || item.materialBattery || '',
+              batteryLink: item.batteryLink || '',
+              whatsappPostBattery: item.whatsappPostBattery || item.vipUrl || item.whatsappUrl || '',
+              panelSpec: item.panelSpec || item.panels || item.materialPanels || '',
+              panelLink: item.panelLink || '',
+              whatsappPostPanel: item.whatsappPostPanel || item.vipUrl || item.whatsappUrl || '',
+              manualUrl: item.manualUrl || '',
+              datasheetUrl: item.datasheetUrl || '',
+              offerUrl: item.offerUrl || '',
+              vipUrl: item.vipUrl || '',
+              materials: item.materials || '',
+              materialsList: splitTextareaList(item.materials || ''),
+              featured: item.featured === true || String(item.featured).toLowerCase() === 'true'
+            };
+          });
+          this.projects = nextProjects;
+          this.showAllProjects = false;
+          const firebaseImages = Object.values(nextProjects).map(p => p.image).filter(Boolean);
+          if (firebaseImages.length) this.heroImages = firebaseImages;
+          this.openProjectFromQuery();
+        }).catch((error) => {
+          console.warn('Fallback projetos hardcoded:', error);
+          this.openProjectFromQuery();
+        });
+
+        setInterval(() => {
+          if (!this.heroImages.length) return;
+          this.currentHeroImage = (this.currentHeroImage + 1) % this.heroImages.length;
+        }, 3500);
+
+        this.openProjectFromQuery();
+      }
+    
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('show'), i * 50);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    window.addEventListener('load', () => {
+      document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    });
+  </script>
+
+<script type="module">
+  import { bootGlobalLinks } from "/assets/js/firebase-public.js";
+  bootGlobalLinks().catch((error) => console.warn("Links globais fallback:", error));
+</script>
+</body>
+</html>

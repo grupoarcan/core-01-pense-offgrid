@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Solano Painel | Personagens Funcional</title>
+  <meta name="theme-color" content="#050505" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root{--orange:#ff8a1f;--bg:#050505;--panel:#10151d;--line:rgba(255,255,255,.12);--muted:#9ca3af}
+    *{box-sizing:border-box}
+    body{margin:0;background:radial-gradient(circle at top,rgba(255,138,31,.14),transparent 35%),#050505;color:#fff;font-family:Inter,system-ui,Arial,sans-serif}
+    input,select,textarea{background:#070a0f;border:1px solid var(--line);border-radius:14px;color:#fff;padding:12px;width:100%;outline:none}
+    textarea{min-height:90px;resize:vertical}
+    label{font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:#fbbf24;font-weight:800}
+    .card{background:linear-gradient(145deg,rgba(20,26,36,.92),rgba(8,10,15,.96));border:1px solid var(--line);border-radius:24px;padding:18px;box-shadow:0 20px 60px rgba(0,0,0,.35)}
+    .btn{border:0;border-radius:14px;padding:12px 15px;font-weight:900;cursor:pointer;text-transform:uppercase;font-size:12px}
+    .primary{background:linear-gradient(90deg,#ff7a18,#ffb13b);color:#160800}
+    .ghost{background:#111827;color:#fff;border:1px solid var(--line)}
+    .danger{background:#3b0a0a;color:#fecaca;border:1px solid rgba(239,68,68,.35)}
+    .tab.active{background:linear-gradient(90deg,#ff7a18,#ffb13b);color:#160800}
+    .hidden{display:none!important}
+    .pill{border:1px solid var(--line);border-radius:999px;padding:5px 9px;font-size:11px;color:#d1d5db;background:rgba(255,255,255,.04)}
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    @media(max-width:800px){.grid2{grid-template-columns:1fr}.layout{grid-template-columns:1fr!important}.sidebar{position:sticky;top:0;z-index:20}.tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px}}
+  </style>
+</head>
+<body>
+  <main class="max-w-[1320px] mx-auto p-4 md:p-6">
+    <header class="card mb-5 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+      <div>
+        <div class="pill inline-block mb-2">V5.23.2 • Personagens funcionais</div>
+        <h1 class="text-3xl md:text-5xl font-black tracking-tight">Painel Solano</h1>
+        <p class="text-gray-400 mt-2">Controle itens, imagens, campanhas, ranking e publicação Firebase sem mexer em código.</p>
+      </div>
+      <div class="flex gap-2 flex-wrap">
+        <a class="btn ghost no-underline" href="./index.html" target="_blank">Abrir jogo</a>
+        <button class="btn primary" id="publishBtn">Publicar alterações</button>
+      </div>
+    </header>
+
+    <section class="card mb-5" id="authBox">
+      <div class="grid2 items-end">
+        <div>
+          <h2 class="text-xl font-black mb-2">Firebase Auth</h2>
+          <p class="text-gray-400 text-sm">Entre com um usuário cadastrado no Firebase Authentication.</p>
+        </div>
+        <div class="grid2">
+          <div><label>E-mail</label><input id="email" type="email" placeholder="admin@email.com"></div>
+          <div><label>Senha</label><input id="password" type="password" placeholder="senha"></div>
+        </div>
+      </div>
+      <div class="flex gap-2 mt-4 flex-wrap">
+        <button class="btn primary" id="loginBtn">Entrar</button>
+        <button class="btn ghost" id="googleBtn">Entrar com Google</button>
+        <button class="btn ghost" id="logoutBtn">Sair</button>
+        <span class="pill" id="authStatus">Offline</span>
+      </div>
+    </section>
+
+    <div class="layout grid grid-cols-[250px,1fr] gap-5">
+      <aside class="sidebar card h-fit">
+        <nav class="tabs flex flex-col gap-2">
+          <button class="btn ghost tab active" data-tab="items">Loja / Itens</button>
+          <button class="btn ghost tab" data-tab="rules">Regras da Usina</button>
+          <button class="btn ghost tab" data-tab="campaigns">Campanhas CTA</button>
+          <button class="btn ghost tab" data-tab="characters">Personagens</button>
+          <button class="btn ghost tab" data-tab="ranking">Ranking</button>
+          <button class="btn ghost tab" data-tab="backup">Backup</button>
+        </nav>
+        <div class="mt-5 text-xs text-gray-400 leading-relaxed">
+          Caminho Firestore usado:<br>
+          <b class="text-orange-300">games/solano/config/public</b>
+        </div>
+      </aside>
+
+      <section class="space-y-5">
+        <div class="tabPanel" id="items">
+          <div class="card mb-5">
+            <h2 class="text-2xl font-black mb-1">Editor de item</h2>
+            <p class="text-gray-400 text-sm mb-4">Crie painéis, inversores, baterias, proteções e ferramentas. A imagem pode ser URL externa ou upload para Firebase Storage.</p>
+            <input type="hidden" id="itemDocId">
+            <div class="grid2">
+              <div><label>ID interno</label><input id="itemId" placeholder="painel_700wp"><small class="text-gray-500">Sem espaço. Ex: painel_700wp, string_box, dr_63a.</small></div>
+              <div><label>Nome público</label><input id="itemName" placeholder="Painel Solar 700Wp"></div>
+              <div><label>Categoria</label><select id="itemCategory"><option value="painel">Painel</option><option value="inversor">Inversor</option><option value="bateria">Bateria</option><option value="protecao">Proteção</option><option value="ferramenta">Ferramenta</option><option value="personagem">Personagem</option></select></div>
+              <div><label>Raridade</label><select id="itemRarity"><option value="comum">Comum</option><option value="colecionavel">Colecionável</option><option value="raro">Raro</option><option value="epico">Épico</option></select></div>
+              <div><label>Preço CPO</label><input id="itemPrice" type="number" value="0"></div>
+              <div><label>Status</label><select id="itemStatus"><option value="ativo">Ativo</option><option value="oculto">Oculto</option></select></div>
+              <div><label>URL da imagem</label><input id="itemImage" placeholder="https://i.imgur.com/...png"></div>
+              <div><label>Upload de imagem</label><input id="itemUpload" type="file" accept="image/*"></div>
+              <div><label>Potência / capacidade / efeito numérico</label><input id="itemPower" type="number" value="0"></div>
+              <div><label>Tensão</label><input id="itemVoltage" type="number" value="0"></div>
+              <div><label>Máximo por string</label><input id="itemMaxString" type="number" value="10"></div>
+              <div><label>Severidade</label><select id="itemSeverity"><option value="aviso">Aviso</option><option value="penalidade">Penalidade</option><option value="trava">Trava</option><option value="critico">Risco crítico</option></select></div>
+              <div><label>Descrição</label><textarea id="itemDesc" placeholder="Explique o item para o jogador"></textarea></div>
+              <div><label>Efeito no jogo</label><textarea id="itemEffect" placeholder="+700Wp de geração, +armazenamento, proteção etc."></textarea></div>
+            </div>
+            <div class="flex gap-2 mt-4 flex-wrap">
+              <button class="btn primary" id="saveItemBtn">Salvar item</button>
+              <button class="btn ghost" id="newItemBtn">Novo</button>
+              <button class="btn danger" id="deleteItemBtn">Excluir item</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="flex flex-col md:flex-row gap-3 md:items-end md:justify-between mb-4">
+              <div><h2 class="text-2xl font-black">Itens cadastrados</h2><p class="text-gray-400 text-sm">Clique em editar para carregar no formulário.</p></div>
+              <div class="grid2 md:min-w-[430px]">
+                <div><label>Buscar</label><input id="itemSearch" placeholder="nome ou categoria"></div>
+                <div><label>Categoria</label><select id="itemFilter"><option value="">Todas</option><option value="painel">Painel</option><option value="inversor">Inversor</option><option value="bateria">Bateria</option><option value="protecao">Proteção</option><option value="ferramenta">Ferramenta</option></select></div>
+              </div>
+            </div>
+            <div id="itemsList" class="grid md:grid-cols-2 xl:grid-cols-3 gap-3"></div>
+          </div>
+        </div>
+
+        <div class="tabPanel hidden" id="rules">
+          <div class="card">
+            <h2 class="text-2xl font-black mb-2">Regras da Usina</h2>
+            <p class="text-gray-400 text-sm mb-4">Use para controlar travas, penalidades, strings e realismo didático.</p>
+            <div class="grid2">
+              <div><label>Não misturar Wp diferente</label><select id="ruleNoMix"><option value="true">Ativo</option><option value="false">Inativo</option></select><small class="text-gray-500">Se ativo, painéis de potência diferente geram alerta/trava.</small></div>
+              <div><label>Modo de incompatibilidade</label><select id="ruleMixSeverity"><option value="aviso">Aviso</option><option value="penalidade">Penalidade</option><option value="trava">Trava</option><option value="critico">Risco crítico</option></select></div>
+              <div><label>Limite padrão por string</label><input id="ruleMaxString" type="number" value="10"></div>
+              <div><label>Penalidade sem String Box (%)</label><input id="ruleStringPenalty" type="number" value="5"></div>
+              <div><label>Penalidade sem DR (%)</label><input id="ruleDrPenalty" type="number" value="3"></div>
+              <div><label>Travar tensão inversor/bateria</label><select id="ruleVoltageLock"><option value="false">Não</option><option value="true">Sim</option></select></div>
+            </div>
+            <button class="btn primary mt-4" id="saveRulesBtn">Salvar regras</button>
+          </div>
+        </div>
+
+        <div class="tabPanel hidden" id="campaigns">
+          <div class="card">
+            <h2 class="text-2xl font-black mb-2">Campanhas CTA</h2>
+            <p class="text-gray-400 text-sm mb-4">Crie popups e mensagens de campanha para links afiliados ou grupo.</p>
+            <div class="grid2">
+              <div><label>Título</label><input id="campTitle" placeholder="Oferta de inversor"></div>
+              <div><label>Tipo</label><select id="campType"><option>WhatsApp</option><option>Shopee</option><option>AliExpress</option><option>Mercado Livre</option></select></div>
+              <div><label>Link</label><input id="campLink" placeholder="https://..."></div>
+              <div><label>Imagem</label><input id="campImage" placeholder="https://i.imgur.com/..."></div>
+              <div><label>Texto</label><textarea id="campText" placeholder="Mensagem do CTA"></textarea></div>
+              <div><label>Status</label><select id="campStatus"><option value="ativo">Ativo</option><option value="oculto">Oculto</option></select></div>
+            </div>
+            <button class="btn primary mt-4" id="saveCampaignBtn">Salvar campanha</button>
+          </div>
+          <div id="campaignsList" class="grid md:grid-cols-2 gap-3 mt-5"></div>
+        </div>
+
+
+        <div class="tabPanel hidden" id="characters">
+          <div class="card mb-5">
+            <h2 class="text-2xl font-black mb-1">Personagens / Bonecos do Runner</h2>
+            <p class="text-gray-400 text-sm mb-4">Crie bonecos jogáveis com PNG próprio e atributos. O jogo pode usar animação simples sobre o PNG: balanço, pulo, sombra e movimento simulado.</p>
+            <input type="hidden" id="charDocId">
+            <div class="grid2">
+              <div>
+                <label>ID interno</label>
+                <input id="charId" placeholder="solano_padrao">
+                <small class="text-gray-500">Sem espaço. Ex: solano_padrao, tecnico_epico.</small>
+              </div>
+              <div>
+                <label>Nome público</label>
+                <input id="charName" placeholder="Solano Técnico">
+              </div>
+              <div>
+                <label>Raridade</label>
+                <select id="charRarity">
+                  <option value="comum">Comum</option>
+                  <option value="colecionavel">Colecionável</option>
+                  <option value="raro">Raro</option>
+                  <option value="epico">Épico</option>
+                </select>
+              </div>
+              <div>
+                <label>Status</label>
+                <select id="charStatus">
+                  <option value="ativo">Ativo</option>
+                  <option value="oculto">Oculto</option>
+                </select>
+              </div>
+              <div>
+                <label>Imagem PNG do boneco</label>
+                <input id="charImage" placeholder="https://.../boneco.png">
+                <small class="text-gray-500">Use PNG com fundo transparente. Também pode enviar arquivo abaixo.</small>
+              </div>
+              <div>
+                <label>Upload PNG</label>
+                <input id="charUpload" type="file" accept="image/png,image/webp,image/*">
+              </div>
+              <div>
+                <label>Velocidade</label>
+                <input id="charSpeed" type="number" step="0.1" value="1">
+                <small class="text-gray-500">1.0 = padrão. Acima disso corre mais rápido.</small>
+              </div>
+              <div>
+                <label>Força do pulo</label>
+                <input id="charJump" type="number" step="0.1" value="1">
+                <small class="text-gray-500">1.0 = padrão. Acima disso pula mais alto.</small>
+              </div>
+              <div>
+                <label>Estabilidade</label>
+                <input id="charStability" type="number" step="0.1" value="1">
+                <small class="text-gray-500">Ajuda a reduzir punição/erro em obstáculos futuros.</small>
+              </div>
+              <div>
+                <label>Resistência</label>
+                <input id="charResistance" type="number" step="0.1" value="1">
+                <small class="text-gray-500">Pode aumentar vida, proteção ou tolerância a dano.</small>
+              </div>
+              <div>
+                <label>Bônus de coleta (%)</label>
+                <input id="charLootBonus" type="number" step="1" value="0">
+                <small class="text-gray-500">Aumenta chance/valor de itens coletados.</small>
+              </div>
+              <div>
+                <label>Personagem padrão</label>
+                <select id="charDefault">
+                  <option value="false">Não</option>
+                  <option value="true">Sim</option>
+                </select>
+              </div>
+              <div>
+                <label>Descrição</label>
+                <textarea id="charDesc" placeholder="Descrição do personagem"></textarea>
+              </div>
+              <div>
+                <label>Observações de arte</label>
+                <textarea id="charArtNotes" placeholder="Ex: PNG frontal, capacete amarelo, mochila azul, fundo transparente."></textarea>
+              </div>
+            </div>
+            <div class="flex gap-2 mt-4 flex-wrap">
+              <button class="btn primary" id="saveCharBtn">Salvar personagem</button>
+              <button class="btn ghost" id="newCharBtn">Novo</button>
+              <button class="btn danger" id="deleteCharBtn">Excluir personagem</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <h2 class="text-2xl font-black mb-3">Personagens cadastrados</h2>
+            <div id="charactersList" class="grid md:grid-cols-2 xl:grid-cols-3 gap-3"></div>
+          </div>
+        </div>
+
+        <div class="tabPanel hidden" id="ranking">
+          <div class="card">
+            <h2 class="text-2xl font-black mb-2">Ranking Firebase</h2>
+            <p class="text-gray-400 text-sm mb-4">Remova jogadores, zere ranking ou exporte backup.</p>
+            <div class="flex gap-2 flex-wrap mb-4">
+              <button class="btn ghost" id="loadRankingBtn">Carregar ranking</button>
+              <button class="btn danger" id="resetRankingBtn">Resetar ranking</button>
+            </div>
+            <div id="rankingList" class="space-y-2"></div>
+          </div>
+        </div>
+
+        <div class="tabPanel hidden" id="backup">
+          <div class="card">
+            <h2 class="text-2xl font-black mb-2">Backup JSON</h2>
+            <p class="text-gray-400 text-sm mb-4">Exporte a configuração atual ou cole um JSON para restaurar.</p>
+            <button class="btn ghost" id="exportBtn">Exportar local</button>
+            <textarea id="backupText" class="mt-4" placeholder="JSON de backup"></textarea>
+            <button class="btn primary mt-3" id="importBtn">Importar JSON</button>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+import { getFirestore, doc, setDoc, getDoc, collection, addDoc, getDocs, deleteDoc, updateDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-storage.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCd8GfbF2MHAwe8OMWtb3t_hnsw9XOS3Qo",
+  authDomain: "simulador-pense-offgrid.firebaseapp.com",
+  projectId: "simulador-pense-offgrid",
+  storageBucket: "simulador-pense-offgrid.firebasestorage.app",
+  messagingSenderId: "769349304562",
+  appId: "1:769349304562:web:09020b10e57724905b906b",
+  measurementId: "G-3X1NM12RLR"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+const storage = getStorage(app);
+
+const $ = id => document.getElementById(id);
+let state = {
+  items: JSON.parse(localStorage.getItem("solano_items")||"[]"),
+  rules: JSON.parse(localStorage.getItem("solano_rules")||"{}"),
+  campaigns: JSON.parse(localStorage.getItem("solano_campaigns")||"[]"),
+  characters: JSON.parse(localStorage.getItem("solano_characters")||"[]")
+};
+
+function toast(msg){ alert(msg); }
+function saveLocal(){
+  localStorage.setItem("solano_items", JSON.stringify(state.items));
+  localStorage.setItem("solano_rules", JSON.stringify(state.rules));
+  localStorage.setItem("solano_campaigns", JSON.stringify(state.campaigns));
+  localStorage.setItem("solano_characters", JSON.stringify(state.characters));
+}
+async function publish(){
+  saveLocal();
+  await setDoc(doc(db,"games","solano","config","public"), {
+    ...state,
+    updatedAt: serverTimestamp()
+  }, {merge:true});
+  toast("Publicado no Firebase.");
+}
+async function loadRemote(){
+  const snap = await getDoc(doc(db,"games","solano","config","public"));
+  if(snap.exists()){
+    const d = snap.data();
+    state.items = d.items || state.items;
+    state.rules = d.rules || state.rules;
+    state.campaigns = d.campaigns || state.campaigns;
+    state.characters = d.characters || state.characters;
+    saveLocal(); renderItems(); renderCampaigns(); renderCharacters(); loadRulesToForm();
+    toast("Config remota carregada.");
+  }
+}
+function cleanId(v){
+  return String(v||"").trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/\s+/g,"_").replace(/[^a-z0-9_-]/g,"");
+}
+
+onAuthStateChanged(auth, user=>{
+  $("authStatus").textContent = user ? "Online: " + (user.email||"Google") : "Offline";
+});
+$("loginBtn").onclick = ()=>signInWithEmailAndPassword(auth,$("email").value,$("password").value).catch(e=>toast(e.message));
+$("googleBtn").onclick = ()=>signInWithPopup(auth,new GoogleAuthProvider()).catch(e=>toast(e.message));
+$("logoutBtn").onclick = ()=>signOut(auth);
+$("publishBtn").onclick = publish;
+
+document.querySelectorAll(".tab").forEach(btn=>{
+  btn.onclick=()=>{
+    document.querySelectorAll(".tab").forEach(b=>b.classList.remove("active"));
+    document.querySelectorAll(".tabPanel").forEach(p=>p.classList.add("hidden"));
+    btn.classList.add("active");
+    $(btn.dataset.tab).classList.remove("hidden");
+  };
+});
+
+async function maybeUpload(file, folder){
+  if(!file) return "";
+  const name = Date.now()+"_"+cleanId(file.name);
+  const r = ref(storage, folder+"/"+name);
+  await uploadBytes(r,file);
+  return await getDownloadURL(r);
+}
+
+function getItemFromForm(){
+  const id = cleanId($("itemId").value);
+  if(!id) throw new Error("ID interno inválido.");
+  return {
+    id,
+    nome: $("itemName").value.trim(),
+    categoria: $("itemCategory").value,
+    raridade: $("itemRarity").value,
+    preco: Number($("itemPrice").value||0),
+    status: $("itemStatus").value,
+    imagem: $("itemImage").value.trim(),
+    power: Number($("itemPower").value||0),
+    voltage: Number($("itemVoltage").value||0),
+    maxPorString: Number($("itemMaxString").value||10),
+    severity: $("itemSeverity").value,
+    descricao: $("itemDesc").value,
+    efeito: $("itemEffect").value,
+    updatedAt: Date.now()
+  };
+}
+function fillItemForm(item){
+  $("itemDocId").value=item.id||"";
+  $("itemId").value=item.id||"";
+  $("itemName").value=item.nome||"";
+  $("itemCategory").value=item.categoria||"painel";
+  $("itemRarity").value=item.raridade||"comum";
+  $("itemPrice").value=item.preco||0;
+  $("itemStatus").value=item.status||"ativo";
+  $("itemImage").value=item.imagem||"";
+  $("itemPower").value=item.power||0;
+  $("itemVoltage").value=item.voltage||0;
+  $("itemMaxString").value=item.maxPorString||10;
+  $("itemSeverity").value=item.severity||"aviso";
+  $("itemDesc").value=item.descricao||"";
+  $("itemEffect").value=item.efeito||"";
+}
+$("newItemBtn").onclick=()=>fillItemForm({});
+$("saveItemBtn").onclick=async()=>{
+  try{
+    const item = getItemFromForm();
+    const file = $("itemUpload").files[0];
+    const uploaded = await maybeUpload(file,"solano/items");
+    if(uploaded) item.imagem = uploaded;
+    const idx = state.items.findIndex(i=>i.id===item.id);
+    if(idx>=0) state.items[idx]=item; else state.items.push(item);
+    saveLocal(); renderItems(); await publish(); fillItemForm({});
+  }catch(e){ toast(e.message); }
+};
+$("deleteItemBtn").onclick=async()=>{
+  const id=cleanId($("itemId").value);
+  if(!id || !confirm("Excluir item "+id+"?")) return;
+  state.items=state.items.filter(i=>i.id!==id);
+  saveLocal(); renderItems(); await publish(); fillItemForm({});
+};
+$("itemSearch").oninput=renderItems;
+$("itemFilter").onchange=renderItems;
+
+function renderItems(){
+  const q=($("itemSearch").value||"").toLowerCase();
+  const f=$("itemFilter").value;
+  const list=state.items.filter(i=>(!f||i.categoria===f) && JSON.stringify(i).toLowerCase().includes(q));
+  $("itemsList").innerHTML=list.map(i=>`
+    <div class="card !p-4">
+      ${i.imagem?`<img src="${i.imagem}" style="width:100%;height:120px;object-fit:contain;background:#020617;border-radius:14px;margin-bottom:10px">`:""}
+      <h3 class="font-black text-lg">${i.nome||i.id}</h3>
+      <div class="flex gap-1 flex-wrap my-2"><span class="pill">${i.categoria}</span><span class="pill">${i.raridade}</span><span class="pill">${i.preco||0} CPO</span></div>
+      <p class="text-sm text-gray-400">${i.descricao||""}</p>
+      <button class="btn ghost mt-3" data-edit="${i.id}">Editar</button>
+    </div>`).join("") || "<p class='text-gray-400'>Nenhum item cadastrado.</p>";
+  document.querySelectorAll("[data-edit]").forEach(b=>b.onclick=()=>fillItemForm(state.items.find(i=>i.id===b.dataset.edit)||{}));
+}
+
+function loadRulesToForm(){
+  $("ruleNoMix").value=String(state.rules.noMixWp ?? true);
+  $("ruleMixSeverity").value=state.rules.mixSeverity||"trava";
+  $("ruleMaxString").value=state.rules.maxPanelsPerString||10;
+  $("ruleStringPenalty").value=state.rules.stringBoxPenalty||5;
+  $("ruleDrPenalty").value=state.rules.drPenalty||3;
+  $("ruleVoltageLock").value=String(state.rules.voltageLock ?? false);
+}
+$("saveRulesBtn").onclick=async()=>{
+  state.rules={
+    noMixWp:$("ruleNoMix").value==="true",
+    mixSeverity:$("ruleMixSeverity").value,
+    maxPanelsPerString:Number($("ruleMaxString").value||10),
+    stringBoxPenalty:Number($("ruleStringPenalty").value||5),
+    drPenalty:Number($("ruleDrPenalty").value||3),
+    voltageLock:$("ruleVoltageLock").value==="true"
+  };
+  saveLocal(); await publish();
+};
+
+$("saveCampaignBtn").onclick=async()=>{
+  state.campaigns.push({
+    id:"camp_"+Date.now(),
+    titulo:$("campTitle").value,
+    tipo:$("campType").value,
+    link:$("campLink").value,
+    imagem:$("campImage").value,
+    texto:$("campText").value,
+    status:$("campStatus").value,
+    createdAt:Date.now()
+  });
+  saveLocal(); renderCampaigns(); await publish();
+};
+function renderCampaigns(){
+  $("campaignsList").innerHTML=state.campaigns.map(c=>`
+    <div class="card"><h3 class="font-black">${c.titulo}</h3><p class="text-gray-400">${c.texto||""}</p><div class="pill inline-block mt-2">${c.tipo}</div></div>
+  `).join("") || "";
+}
+
+
+function getCharFromForm(){
+  const id = cleanId($("charId").value);
+  if(!id) throw new Error("ID interno do personagem inválido.");
+  return {
+    id,
+    nome: $("charName").value.trim(),
+    raridade: $("charRarity").value,
+    status: $("charStatus").value,
+    imagem: $("charImage").value.trim(),
+    speed: Number($("charSpeed").value||1),
+    jump: Number($("charJump").value||1),
+    stability: Number($("charStability").value||1),
+    resistance: Number($("charResistance").value||1),
+    lootBonus: Number($("charLootBonus").value||0),
+    default: $("charDefault").value==="true",
+    descricao: $("charDesc").value,
+    artNotes: $("charArtNotes").value,
+    updatedAt: Date.now()
+  };
+}
+function fillCharForm(c){
+  $("charDocId").value=c.id||"";
+  $("charId").value=c.id||"";
+  $("charName").value=c.nome||"";
+  $("charRarity").value=c.raridade||"comum";
+  $("charStatus").value=c.status||"ativo";
+  $("charImage").value=c.imagem||"";
+  $("charSpeed").value=c.speed||1;
+  $("charJump").value=c.jump||1;
+  $("charStability").value=c.stability||1;
+  $("charResistance").value=c.resistance||1;
+  $("charLootBonus").value=c.lootBonus||0;
+  $("charDefault").value=String(!!c.default);
+  $("charDesc").value=c.descricao||"";
+  $("charArtNotes").value=c.artNotes||"";
+}
+$("newCharBtn").onclick=()=>fillCharForm({});
+$("saveCharBtn").onclick=async()=>{
+  try{
+    const c = getCharFromForm();
+    const file = $("charUpload").files[0];
+    const uploaded = await maybeUpload(file,"solano/characters");
+    if(uploaded) c.imagem = uploaded;
+    if(c.default) state.characters = state.characters.map(x=>({...x, default:false}));
+    const idx = state.characters.findIndex(x=>x.id===c.id);
+    if(idx>=0) state.characters[idx]=c; else state.characters.push(c);
+    saveLocal(); renderCharacters(); await publish(); fillCharForm({});
+  }catch(e){ toast(e.message); }
+};
+$("deleteCharBtn").onclick=async()=>{
+  const id=cleanId($("charId").value);
+  if(!id || !confirm("Excluir personagem "+id+"?")) return;
+  state.characters=state.characters.filter(c=>c.id!==id);
+  saveLocal(); renderCharacters(); await publish(); fillCharForm({});
+};
+function renderCharacters(){
+  $("charactersList").innerHTML=(state.characters||[]).map(c=>`
+    <div class="card !p-4">
+      ${c.imagem?`<img src="${c.imagem}" style="width:100%;height:160px;object-fit:contain;background:#020617;border-radius:14px;margin-bottom:10px">`:""}
+      <h3 class="font-black text-lg">${c.nome||c.id}</h3>
+      <div class="flex gap-1 flex-wrap my-2"><span class="pill">${c.raridade}</span><span class="pill">${c.status}</span>${c.default?`<span class="pill">Padrão</span>`:""}</div>
+      <p class="text-sm text-gray-400">${c.descricao||""}</p>
+      <div class="grid grid-cols-2 gap-2 text-xs text-gray-300 mt-3">
+        <div>Velocidade: <b>${c.speed||1}</b></div>
+        <div>Pulo: <b>${c.jump||1}</b></div>
+        <div>Estabilidade: <b>${c.stability||1}</b></div>
+        <div>Coleta: <b>${c.lootBonus||0}%</b></div>
+      </div>
+      <button class="btn ghost mt-3" data-editchar="${c.id}">Editar</button>
+    </div>`).join("") || "<p class='text-gray-400'>Nenhum personagem cadastrado.</p>";
+  document.querySelectorAll("[data-editchar]").forEach(b=>b.onclick=()=>fillCharForm(state.characters.find(c=>c.id===b.dataset.editchar)||{}));
+}
+
+$("loadRankingBtn").onclick=loadRanking;
+async function loadRanking(){
+  const snap=await getDocs(collection(db,"games","solano","ranking"));
+  const arr=[]; snap.forEach(d=>arr.push({docId:d.id,...d.data()}));
+  arr.sort((a,b)=>(b.distance||0)-(a.distance||0));
+  $("rankingList").innerHTML=arr.map(r=>`
+    <div class="card !p-3 flex justify-between gap-3 items-center">
+      <div><b>${r.name||r.nome||"Jogador"}</b><br><small class="text-gray-400">${r.city||r.cidade||""}/${r.uf||""} • ${r.distance||0}m</small></div>
+      <button class="btn danger" data-delrank="${r.docId}">Remover</button>
+    </div>`).join("") || "<p class='text-gray-400'>Ranking vazio.</p>";
+  document.querySelectorAll("[data-delrank]").forEach(b=>b.onclick=async()=>{if(confirm("Remover jogador?")){await deleteDoc(doc(db,"games","solano","ranking",b.dataset.delrank));loadRanking();}});
+}
+$("resetRankingBtn").onclick=async()=>{
+  if(!confirm("Resetar ranking inteiro?")) return;
+  const snap=await getDocs(collection(db,"games","solano","ranking"));
+  for(const d of snap.docs) await deleteDoc(d.ref);
+  loadRanking(); toast("Ranking resetado.");
+};
+
+$("exportBtn").onclick=()=>{$("backupText").value=JSON.stringify(state,null,2)};
+$("importBtn").onclick=async()=>{
+  try{ state=JSON.parse($("backupText").value); saveLocal(); renderItems(); renderCampaigns(); renderCharacters(); loadRulesToForm(); await publish(); }
+  catch(e){ toast("JSON inválido."); }
+};
+
+renderItems(); renderCampaigns(); renderCharacters(); loadRulesToForm();
+loadRemote().catch(()=>{});
+</script>
+</body>
+</html>

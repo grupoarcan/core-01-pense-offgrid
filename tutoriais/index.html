@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Tutoriais Offgrid | Pense Offgrid</title>
+  <meta name="description" content="Tutoriais Pense Offgrid: adaptações, pequenos ajustes, soluções práticas e melhorias para sistemas offgrid." />
+  <meta name="theme-color" content="#030303" />
+
+  <meta property="og:title" content="Tutoriais Offgrid | Pense Offgrid" />
+  <meta property="og:description" content="Em breve: tutoriais de adaptações, pequenos ajustes e soluções práticas para seu sistema offgrid." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://www.penseoffgrid.com.br/og-thumb.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800;900&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --orange:#F7931E;
+      --orange2:#FFC078;
+      --bg:#030303;
+      --line:rgba(255,255,255,.1);
+      --muted:#AEB7C6;
+      --green:#22c55e;
+      --cyan:#00e5ff;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      color:#fff;
+      font-family:Inter,system-ui,sans-serif;
+      background:
+        radial-gradient(circle at 18% 0%,rgba(247,147,30,.13),transparent 42%),
+        radial-gradient(circle at 92% 8%,rgba(0,229,255,.07),transparent 34%),
+        linear-gradient(rgba(255,255,255,.016) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.016) 1px,transparent 1px),
+        var(--bg);
+      background-size:100% 100%,100% 100%,36px 36px,36px 36px;
+      overflow-x:hidden;
+    }
+
+    a{text-decoration:none;color:inherit}
+    .shell{width:min(1180px,calc(100% - 28px));margin:0 auto}
+
+    .glass{
+      background:linear-gradient(145deg,rgba(30,30,35,.62),rgba(12,13,17,.9));
+      backdrop-filter:blur(22px);
+      border-top:1px solid rgba(255,255,255,.15);
+      border-left:1px solid rgba(255,255,255,.09);
+      border-right:1px solid rgba(255,255,255,.04);
+      border-bottom:1px solid rgba(255,255,255,.04);
+      box-shadow:0 28px 70px -18px rgba(0,0,0,.92),inset 0 1px 0 rgba(255,255,255,.04);
+    }
+
+    .topbar{
+      margin-top:18px;
+      border-radius:24px;
+      padding:14px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:14px;
+      flex-wrap:wrap;
+    }
+
+    .brand{
+      font-family:Montserrat,sans-serif;
+      font-size:22px;
+      font-weight:900;
+      letter-spacing:-.05em;
+      text-transform:uppercase;
+    }
+    .brand span{color:var(--orange)}
+
+    .nav{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+
+    .nav a{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.045);
+      border-radius:14px;
+      padding:10px 12px;
+      font-size:11px;
+      font-weight:900;
+      text-transform:uppercase;
+      transition:.2s;
+    }
+
+    .nav a:hover{
+      border-color:rgba(247,147,30,.45);
+      background:rgba(247,147,30,.1);
+    }
+
+    .internal-layout{
+      display:grid;
+      grid-template-columns:.75fr 1.25fr;
+      gap:18px;
+      align-items:stretch;
+      margin-top:18px;
+    }
+
+    .side-panel{
+      border-radius:28px;
+      padding:24px;
+      min-height:440px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .side-panel:after{
+      content:"";
+      position:absolute;
+      right:-80px;
+      bottom:-100px;
+      width:260px;
+      height:260px;
+      border-radius:50%;
+      background:radial-gradient(circle,rgba(247,147,30,.16),transparent 65%);
+      pointer-events:none;
+      filter:blur(12px);
+    }
+
+    .badge{
+      display:inline-flex;
+      width:max-content;
+      align-items:center;
+      gap:8px;
+      border:1px solid rgba(247,147,30,.35);
+      border-radius:999px;
+      padding:8px 12px;
+      color:#ffd08a;
+      background:rgba(247,147,30,.08);
+      font-size:11px;
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:.12em;
+    }
+
+    .dot{
+      width:8px;
+      height:8px;
+      border-radius:999px;
+      background:var(--orange);
+      box-shadow:0 0 18px rgba(247,147,30,.8);
+    }
+
+    h1{
+      font-family:Montserrat,sans-serif;
+      font-size:clamp(32px,5vw,54px);
+      line-height:.96;
+      letter-spacing:-.065em;
+      margin:20px 0 14px;
+      text-transform:uppercase;
+      position:relative;
+      z-index:2;
+    }
+
+    h1 span{color:var(--orange)}
+
+    .lead{
+      color:#D1D7E4;
+      font-size:16px;
+      line-height:1.65;
+      margin:0;
+      position:relative;
+      z-index:2;
+    }
+
+    .actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:22px;
+      position:relative;
+      z-index:2;
+    }
+
+    .btn{
+      min-height:50px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      border-radius:16px;
+      padding:0 18px;
+      font-weight:950;
+      text-transform:uppercase;
+      letter-spacing:.055em;
+      font-size:12px;
+      transition:.2s;
+      cursor:pointer;
+    }
+
+    .btn:hover{transform:translateY(-2px)}
+
+    .primary{
+      background:linear-gradient(90deg,var(--orange),var(--orange2));
+      color:#120700;
+      box-shadow:0 16px 34px rgba(247,147,30,.22);
+    }
+
+    .ghost{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.05);
+      color:white;
+    }
+
+    .content-panel{
+      border-radius:28px;
+      padding:22px;
+      display:grid;
+      gap:16px;
+      align-content:start;
+    }
+
+    .status-card{
+      border-radius:24px;
+      padding:22px;
+      background:
+        radial-gradient(circle at 0% 0%,rgba(247,147,30,.14),transparent 34%),
+        linear-gradient(145deg,rgba(255,255,255,.05),rgba(255,255,255,.02));
+      border:1px solid rgba(247,147,30,.16);
+      display:grid;
+      grid-template-columns:auto 1fr;
+      gap:18px;
+      align-items:center;
+    }
+
+    .status-icon{
+      width:74px;
+      height:74px;
+      display:grid;
+      place-items:center;
+      border-radius:24px;
+      background:linear-gradient(135deg,var(--orange),var(--orange2));
+      color:#160800;
+      font-size:36px;
+      box-shadow:0 18px 42px rgba(247,147,30,.22);
+    }
+
+    .status-card h2{
+      font-family:Montserrat,sans-serif;
+      font-size:28px;
+      line-height:1;
+      letter-spacing:-.05em;
+      text-transform:uppercase;
+      margin:0 0 8px;
+    }
+
+    .status-card p{
+      color:var(--muted);
+      line-height:1.55;
+      margin:0;
+    }
+
+    .placeholder-grid{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:12px;
+    }
+
+    .placeholder{
+      min-height:130px;
+      border-radius:22px;
+      padding:18px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.035);
+      position:relative;
+      overflow:hidden;
+    }
+
+    .placeholder:after{
+      content:"";
+      position:absolute;
+      inset:auto -40px -60px auto;
+      width:120px;
+      height:120px;
+      border-radius:50%;
+      background:radial-gradient(circle,rgba(247,147,30,.1),transparent 70%);
+    }
+
+    .placeholder strong{
+      display:block;
+      font-family:Montserrat,sans-serif;
+      text-transform:uppercase;
+      letter-spacing:-.035em;
+      font-size:18px;
+      margin-bottom:8px;
+    }
+
+    .placeholder p{
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.45;
+      margin:0;
+    }
+
+    .empty-list{
+      border:1px dashed rgba(255,255,255,.16);
+      border-radius:24px;
+      padding:22px;
+      color:var(--muted);
+      text-align:center;
+      background:rgba(0,0,0,.18);
+    }
+
+    .empty-list b{
+      display:block;
+      color:#fff;
+      font-family:Montserrat,sans-serif;
+      text-transform:uppercase;
+      margin-bottom:6px;
+    }
+
+
+    .tutorial-toolbar{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin:4px 0 10px;
+    }
+
+    .tutorial-search, .tutorial-filter{
+      min-height:46px;
+      border:1px solid var(--line);
+      border-radius:16px;
+      background:rgba(0,0,0,.28);
+      color:#fff;
+      padding:0 14px;
+      font-weight:800;
+      outline:none;
+    }
+
+    .tutorial-search{flex:1;min-width:220px}
+
+    .tutorial-card{
+      margin-top:12px;
+      border:1px solid rgba(255,255,255,.1);
+      border-radius:24px;
+      background:linear-gradient(145deg,rgba(255,255,255,.055),rgba(255,255,255,.025));
+      overflow:hidden;
+      transition:.2s;
+    }
+
+    .tutorial-card:hover{
+      border-color:rgba(247,147,30,.35);
+      transform:translateY(-2px);
+    }
+
+    .tutorial-cover{
+      width:100%;
+      aspect-ratio:16/8;
+      object-fit:cover;
+      display:block;
+      background:rgba(255,255,255,.04);
+    }
+
+    .tutorial-card-body{padding:18px}
+
+    .tutorial-meta{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-bottom:10px;
+      color:#ffd08a;
+      font-size:11px;
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+    }
+
+    .tutorial-card h3, .tutorial-detail h2{
+      font-family:Montserrat,sans-serif;
+      margin:0 0 8px;
+      letter-spacing:-.04em;
+      text-transform:uppercase;
+      line-height:1;
+    }
+
+    .tutorial-card p{color:var(--muted);line-height:1.55;margin:0}
+
+    .tutorial-detail{
+      border:1px solid rgba(247,147,30,.22);
+      border-radius:26px;
+      padding:20px;
+      background:radial-gradient(circle at 100% 0%,rgba(247,147,30,.12),transparent 36%),rgba(0,0,0,.18);
+    }
+
+    .tutorial-detail-cover{
+      width:100%;
+      max-height:420px;
+      object-fit:cover;
+      border-radius:22px;
+      border:1px solid rgba(255,255,255,.1);
+      margin:14px 0;
+    }
+
+    .markdown-body{
+      color:#d9e1ee;
+      line-height:1.72;
+      font-size:15px;
+    }
+
+    .markdown-body p{margin:0 0 14px;color:#d9e1ee}
+    .markdown-body strong{color:#fff}
+    .markdown-body a{color:#FFC078;text-decoration:underline;font-weight:900}
+    .markdown-body img{max-width:100%;border-radius:18px;border:1px solid rgba(255,255,255,.1);display:block;margin:12px 0}
+    .markdown-body figure{margin:18px 0}
+    .markdown-body figcaption{color:var(--muted);font-size:12px;margin-top:6px}
+
+    .footer{
+      margin:18px 0 30px;
+      border-radius:26px;
+      padding:22px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:16px;
+      flex-wrap:wrap;
+    }
+
+    .footer p{
+      color:var(--muted);
+      margin:6px 0 0;
+      line-height:1.5;
+    }
+
+    .hidden{display:none!important}
+
+    @media(max-width:940px){
+      .internal-layout{grid-template-columns:1fr}
+      .side-panel{min-height:auto}
+    }
+
+    @media(max-width:680px){
+      .shell{width:min(100% - 18px,1180px)}
+      .topbar{margin-top:8px;border-radius:20px}
+      .nav{width:100%;display:grid;grid-template-columns:1fr 1fr}
+      .nav a{text-align:center}
+      .actions .btn{width:100%}
+      .status-card{grid-template-columns:1fr}
+      .placeholder-grid{grid-template-columns:1fr}
+  
+    .tutorial-toolbar{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin:4px 0 10px;
+    }
+
+    .tutorial-search, .tutorial-filter{
+      min-height:46px;
+      border:1px solid var(--line);
+      border-radius:16px;
+      background:rgba(0,0,0,.28);
+      color:#fff;
+      padding:0 14px;
+      font-weight:800;
+      outline:none;
+    }
+
+    .tutorial-search{flex:1;min-width:220px}
+
+    .tutorial-card{
+      margin-top:12px;
+      border:1px solid rgba(255,255,255,.1);
+      border-radius:24px;
+      background:linear-gradient(145deg,rgba(255,255,255,.055),rgba(255,255,255,.025));
+      overflow:hidden;
+      transition:.2s;
+    }
+
+    .tutorial-card:hover{
+      border-color:rgba(247,147,30,.35);
+      transform:translateY(-2px);
+    }
+
+    .tutorial-cover{
+      width:100%;
+      aspect-ratio:16/8;
+      object-fit:cover;
+      display:block;
+      background:rgba(255,255,255,.04);
+    }
+
+    .tutorial-card-body{padding:18px}
+
+    .tutorial-meta{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-bottom:10px;
+      color:#ffd08a;
+      font-size:11px;
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+    }
+
+    .tutorial-card h3, .tutorial-detail h2{
+      font-family:Montserrat,sans-serif;
+      margin:0 0 8px;
+      letter-spacing:-.04em;
+      text-transform:uppercase;
+      line-height:1;
+    }
+
+    .tutorial-card p{color:var(--muted);line-height:1.55;margin:0}
+
+    .tutorial-detail{
+      border:1px solid rgba(247,147,30,.22);
+      border-radius:26px;
+      padding:20px;
+      background:radial-gradient(circle at 100% 0%,rgba(247,147,30,.12),transparent 36%),rgba(0,0,0,.18);
+    }
+
+    .tutorial-detail-cover{
+      width:100%;
+      max-height:420px;
+      object-fit:cover;
+      border-radius:22px;
+      border:1px solid rgba(255,255,255,.1);
+      margin:14px 0;
+    }
+
+    .markdown-body{
+      color:#d9e1ee;
+      line-height:1.72;
+      font-size:15px;
+    }
+
+    .markdown-body p{margin:0 0 14px;color:#d9e1ee}
+    .markdown-body strong{color:#fff}
+    .markdown-body a{color:#FFC078;text-decoration:underline;font-weight:900}
+    .markdown-body img{max-width:100%;border-radius:18px;border:1px solid rgba(255,255,255,.1);display:block;margin:12px 0}
+    .markdown-body figure{margin:18px 0}
+    .markdown-body figcaption{color:var(--muted);font-size:12px;margin-top:6px}
+
+    .footer{display:block}
+      .footer .actions{margin-top:14px}
+    }
+  </style>
+</head>
+
+<body>
+  <main class="shell">
+    <header class="topbar glass">
+      <a href="/" class="brand">PENSE <span>OFFGRID</span></a>
+      <nav class="nav">
+        <a href="/">Home</a>
+        <a href="/projetos/">Projetos</a>
+        <a href="/calculadora/">Calculadora</a>
+        <a href="/cursos/">Cursos</a>
+      </nav>
+    </header>
+
+    <section class="internal-layout">
+      <aside class="side-panel glass">
+        <div>
+          <div class="badge"><span class="dot"></span>Aba de tutoriais</div>
+          <h1>Pequenos ajustes para sua vida <span>offgrid</span> decolar</h1>
+          <p class="lead">
+            Em breve, esta área vai reunir tutoriais práticos de adaptações, melhorias simples, soluções rápidas e ajustes úteis para sistemas offgrid.
+          </p>
+
+          <div class="actions">
+            <a class="btn primary" href="/cursos/">Ver cursos</a>
+            <a class="btn ghost" href="/projetos/">Projetos prontos</a>
+          </div>
+        </div>
+
+        <div class="actions">
+          <a class="btn ghost" href="https://chat.whatsapp.com/LIL7ytXyakpE4JnGvCgMBq">Grupo VIP</a>
+        </div>
+      </aside>
+
+      <section class="content-panel glass">
+        <article class="status-card">
+          <div class="status-icon">🛠️</div>
+          <div>
+            <h2>Em breve</h2>
+            <p>
+              Os tutoriais serão publicados aos poucos, organizados por tema e disponíveis para consulta rápida.
+              Quando houver conteúdo cadastrado, esta página poderá carregar tudo automaticamente.
+            </p>
+          </div>
+        </article>
+
+        <div class="placeholder-grid" id="tutorialCategories">
+          <article class="placeholder">
+            <strong>Categorias modulares</strong>
+            <p>Os temas poderão ser adicionados pelo painel conforme novos tutoriais forem surgindo.</p>
+          </article>
+
+          <article class="placeholder">
+            <strong>Passo a passo</strong>
+            <p>Conteúdos em formato simples, direto, visual e fácil de seguir no celular.</p>
+          </article>
+
+          <article class="placeholder">
+            <strong>Texto, imagem ou PDF</strong>
+            <p>A estrutura está preparada para tutoriais com descrição, fotos, links e arquivos de apoio.</p>
+          </article>
+
+          <article class="placeholder">
+            <strong>Consulta rápida</strong>
+            <p>A ideia é ajudar quem está montando, ajustando ou melhorando um sistema offgrid na prática.</p>
+          </article>
+        </div>
+
+        <div class="empty-list" id="tutorialList">
+          <b>Nenhum tutorial publicado ainda</b>
+          Assim que os primeiros conteúdos forem cadastrados, eles aparecerão aqui.
+        </div>
+      </section>
+    </section>
+
+    <footer class="footer glass">
+      <div>
+        <strong>Pense Offgrid Tutoriais</strong>
+        <p>Adaptações, ajustes e soluções práticas para sistemas offgrid.</p>
+      </div>
+      <div class="actions" style="margin-top:0">
+        <a class="btn primary" href="/">Voltar para Home</a>
+        <a class="btn ghost" href="/noticias/">Notícias</a>
+        <a class="btn ghost" href="/cursos/">Cursos</a>
+      </div>
+    </footer>
+  </main>
+
+  <script type="module">
+    import { getSettings, getCollection } from "../assets/js/firebase-public.js";
+
+    const state = {settings:null, categories:[], items:[], selectedSlug:""};
+
+    function escapeHtml(str){
+      return String(str ?? "").replace(/[&<>"']/g, (m) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
+    }
+
+    function isPublic(item){
+      const status = String(item?.status || "published").toLowerCase();
+      return ["published","active"].includes(status);
+    }
+
+    function normalizeSlug(text){
+      return String(text || "").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().trim().replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"");
+    }
+
+    function safeUrl(url){
+      return /^(https?:\/\/|\/)/i.test(String(url || ""));
+    }
+
+    function markdownToHtml(input = ""){
+      return String(input || "").split(/\n{2,}/).map(block => block.trim()).filter(Boolean).map(block => {
+        const imageMatch = block.match(/^!\[([^\]]*)\]\(([^)\s]+)\)$/);
+        if(imageMatch && safeUrl(imageMatch[2])){
+          return `<figure><img src="${escapeHtml(imageMatch[2])}" alt="${escapeHtml(imageMatch[1])}" loading="lazy"><figcaption>${escapeHtml(imageMatch[1])}</figcaption></figure>`;
+        }
+        let html = escapeHtml(block);
+        html = html.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+        html = html.replace(/\[([^\]]+)\]\((https?:\/\/[^)\s]+|\/[^)\s]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
+        html = html.replace(/!\[([^\]]*)\]\((https?:\/\/[^)\s]+|\/[^)\s]+)\)/g, '<img src="$2" alt="$1" loading="lazy">');
+        return `<p>${html.replace(/\n/g,"<br>")}</p>`;
+      }).join("");
+    }
+
+    function galleryHtml(item){
+      const urls = String(item.galleryUrls || "").split(/[\n,]+/).map(v => v.trim()).filter(safeUrl);
+      if(!urls.length) return "";
+      return `<div class="placeholder-grid" style="margin-top:14px">${urls.map((url, index) => `<article class="placeholder"><img src="${escapeHtml(url)}" alt="Imagem ${index+1} do tutorial" loading="lazy" style="width:100%;border-radius:16px;margin-bottom:10px"><strong>Imagem ${index+1}</strong></article>`).join("")}</div>`;
+    }
+
+    function categoryLabel(slug){
+      const found = state.categories.find(c => c.slug === slug || normalizeSlug(c.title) === slug);
+      return found?.title || slug || "Tutorial";
+    }
+
+    function card(title, description){
+      return `<article class="placeholder"><strong>${escapeHtml(title)}</strong><p>${escapeHtml(description || "")}</p></article>`;
+    }
+
+    function renderCategories(){
+      if(state.categories.length){
+        document.getElementById("tutorialCategories").innerHTML = state.categories.map((item) => card(item.title, item.description)).join("");
+      }
+    }
+
+    function renderToolbar(){
+      const list = document.getElementById("tutorialList");
+      const categories = state.categories.filter(isPublic);
+      list.classList.remove("empty-list");
+      list.innerHTML = `
+        <div class="tutorial-toolbar">
+          <input id="tutorialSearch" class="tutorial-search" placeholder="Buscar tutorial...">
+          <select id="tutorialCategoryFilter" class="tutorial-filter">
+            <option value="">Todas categorias</option>
+            ${categories.map(c => `<option value="${escapeHtml(c.slug || normalizeSlug(c.title))}">${escapeHtml(c.title)}</option>`).join("")}
+          </select>
+        </div>
+        <div id="tutorialCards"></div>
+      `;
+      list.querySelector("#tutorialSearch")?.addEventListener("input", renderCards);
+      list.querySelector("#tutorialCategoryFilter")?.addEventListener("change", renderCards);
+    }
+
+    function renderCards(){
+      const cardsBox = document.getElementById("tutorialCards");
+      if(!cardsBox) return;
+      const q = String(document.getElementById("tutorialSearch")?.value || "").toLowerCase();
+      const cat = String(document.getElementById("tutorialCategoryFilter")?.value || "");
+      let items = state.items.filter(isPublic);
+      if(cat) items = items.filter(item => String(item.category || "") === cat || normalizeSlug(item.category) === cat);
+      if(q) items = items.filter(item => [item.title,item.excerpt,item.content,item.category,item.level].join(" ").toLowerCase().includes(q));
+      items.sort((a,b) => Number(a.order || 999) - Number(b.order || 999));
+      if(!items.length){
+        cardsBox.innerHTML = `<div class="empty-list"><b>Nenhum tutorial publicado ainda</b>Assim que os primeiros conteúdos forem cadastrados, eles aparecerão aqui.</div>`;
+        return;
+      }
+      cardsBox.innerHTML = items.map((item) => {
+        const slug = item.slug || item.id || normalizeSlug(item.title);
+        return `<article class="tutorial-card">
+          ${item.imageUrl ? `<img class="tutorial-cover" src="${escapeHtml(item.imageUrl)}" alt="${escapeHtml(item.title || "Tutorial")}" loading="lazy">` : ""}
+          <div class="tutorial-card-body">
+            <div class="tutorial-meta"><span>${escapeHtml(categoryLabel(item.category))}</span><span>${escapeHtml(item.level || "iniciante")}</span>${item.readTime ? `<span>${escapeHtml(item.readTime)}</span>` : ""}</div>
+            <h3>${escapeHtml(item.title || "Tutorial")}</h3>
+            <p>${escapeHtml(item.excerpt || "Tutorial Pense Offgrid.")}</p>
+            <div class="actions" style="margin-top:14px">
+              <a class="btn primary" href="?t=${encodeURIComponent(slug)}">Abrir tutorial</a>
+              ${item.videoUrl ? `<a class="btn ghost" href="${escapeHtml(item.videoUrl)}" target="_blank" rel="noopener">Ver vídeo</a>` : ""}
+              ${item.pdfUrl ? `<a class="btn ghost" href="${escapeHtml(item.pdfUrl)}" target="_blank" rel="noopener">PDF</a>` : ""}
+            </div>
+          </div>
+        </article>`;
+      }).join("");
+    }
+
+    function renderDetail(item){
+      const list = document.getElementById("tutorialList");
+      list.classList.remove("empty-list");
+      const body = item.content || item.fullDescription || item.excerpt || "";
+      list.innerHTML = `<article class="tutorial-detail">
+        <a class="btn ghost" href="/tutoriais/" style="margin-bottom:14px">← Voltar aos tutoriais</a>
+        <div class="tutorial-meta"><span>${escapeHtml(categoryLabel(item.category))}</span><span>${escapeHtml(item.level || "iniciante")}</span>${item.readTime ? `<span>${escapeHtml(item.readTime)}</span>` : ""}</div>
+        <h2>${escapeHtml(item.title || "Tutorial")}</h2>
+        <p class="lead" style="font-size:15px;margin-bottom:10px">${escapeHtml(item.excerpt || "")}</p>
+        ${item.imageUrl ? `<img class="tutorial-detail-cover" src="${escapeHtml(item.imageUrl)}" alt="${escapeHtml(item.title || "Tutorial")}" loading="lazy">` : ""}
+        <div class="markdown-body">${markdownToHtml(body)}</div>
+        ${galleryHtml(item)}
+        <div class="actions">
+          ${item.ctaUrl ? `<a class="btn primary" href="${escapeHtml(item.ctaUrl)}" target="${String(item.ctaUrl).startsWith("http") ? "_blank" : "_self"}" rel="noopener">${escapeHtml(item.ctaText || "Acessar")}</a>` : ""}
+          ${item.videoUrl ? `<a class="btn ghost" href="${escapeHtml(item.videoUrl)}" target="_blank" rel="noopener">Ver vídeo</a>` : ""}
+          ${item.pdfUrl ? `<a class="btn ghost" href="${escapeHtml(item.pdfUrl)}" target="_blank" rel="noopener">Abrir PDF</a>` : ""}
+          ${item.vipUrl ? `<a class="btn ghost" href="${escapeHtml(item.vipUrl)}" target="_blank" rel="noopener">Grupo VIP</a>` : ""}
+        </div>
+      </article>`;
+    }
+
+    async function connectTutorialsToFirebase(){
+      const settings = await getSettings("tutorials", "main");
+      state.settings = settings || null;
+      if (settings) {
+        const h1 = document.querySelector(".side-panel h1");
+        const lead = document.querySelector(".side-panel .lead");
+        const statusText = document.querySelector(".status-card p");
+        if (h1 && settings.title) h1.innerHTML = settings.title;
+        if (lead && settings.subtitle) lead.textContent = settings.subtitle;
+        if (statusText && settings.statusText) statusText.textContent = settings.statusText;
+      }
+
+      state.categories = (await getCollection("tutorials", "categories")).filter(isPublic);
+      state.items = (await getCollection("tutorials", "items")).filter(isPublic);
+      renderCategories();
+
+      const slug = new URLSearchParams(location.search).get("t") || "";
+      state.selectedSlug = slug;
+      const selected = slug ? state.items.find(item => [item.slug,item.id,normalizeSlug(item.title)].includes(slug)) : null;
+      if(selected) renderDetail(selected);
+      else { renderToolbar(); renderCards(); }
+    }
+
+    connectTutorialsToFirebase().catch((error) => console.warn("Fallback tutoriais estático:", error));
+  </script>
+
+<script type="module">
+  import { bootGlobalLinks } from "/assets/js/firebase-public.js";
+  bootGlobalLinks().catch((error) => console.warn("Links globais fallback:", error));
+</script>
+</body>
+</html>

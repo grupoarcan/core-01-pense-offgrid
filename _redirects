@@ -1,0 +1,7 @@
+/Solano/*  /jogos/solano/:splat  301
+/solano/*  /jogos/solano/:splat  301
+/calculadorapro.html  /calculadora/  301
+/admin/solano  /jogos/solano/painel.html  301
+/sitemap.xml  /.netlify/functions/sitemap  200
+/robots.txt  /.netlify/functions/robots  200
+/share  /.netlify/functions/seo-share  200

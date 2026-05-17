@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Documentos Offgrid | Pense Offgrid</title>
+  <meta name="description" content="Biblioteca Pense Offgrid com manuais, datasheets, checklists e materiais técnicos para sistemas offgrid." />
+  <meta name="theme-color" content="#030303" />
+  <meta property="og:title" content="Documentos Offgrid | Pense Offgrid" />
+  <meta property="og:description" content="Baixe manuais, datasheets e materiais técnicos para sistemas offgrid." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://www.penseoffgrid.com.br/og-thumb.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root{--orange:#F7931E;--orange2:#FFC078;--bg:#030303;--card:#111217;--line:rgba(255,255,255,.11);--muted:#AEB7C6;--green:#22c55e;--cyan:#00e5ff}
+    *{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;color:#fff;font-family:Inter,system-ui,sans-serif;background:radial-gradient(circle at 15% 0%,rgba(247,147,30,.14),transparent 38%),radial-gradient(circle at 90% 10%,rgba(0,229,255,.08),transparent 30%),linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px),var(--bg);background-size:100% 100%,100% 100%,36px 36px,36px 36px;overflow-x:hidden}
+    a{text-decoration:none;color:inherit}.shell{width:min(1180px,calc(100% - 28px));margin:0 auto}.glass{background:linear-gradient(145deg,rgba(30,30,35,.66),rgba(12,13,17,.92));border:1px solid var(--line);box-shadow:0 28px 70px -18px rgba(0,0,0,.92),inset 0 1px 0 rgba(255,255,255,.04);backdrop-filter:blur(20px)}
+    .topbar{margin-top:18px;border-radius:24px;padding:14px;display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}.brand{font-family:Montserrat,sans-serif;font-weight:900;font-size:22px;letter-spacing:-.05em;text-transform:uppercase}.brand span{color:var(--orange)}.nav{display:flex;gap:8px;flex-wrap:wrap}.nav a{border:1px solid var(--line);background:rgba(255,255,255,.045);border-radius:14px;padding:10px 12px;font-size:11px;font-weight:900;text-transform:uppercase}.nav a:hover{border-color:rgba(247,147,30,.5);background:rgba(247,147,30,.11)}
+    .hero{margin-top:18px;border-radius:30px;padding:28px;min-height:360px;display:grid;grid-template-columns:1.15fr .85fr;gap:24px;align-items:center;overflow:hidden;position:relative}.hero:after{content:"";position:absolute;right:-80px;bottom:-120px;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(247,147,30,.22),transparent 65%);filter:blur(18px);pointer-events:none}.badge{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(247,147,30,.38);border-radius:999px;padding:8px 12px;color:#ffd08a;background:rgba(247,147,30,.08);font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.12em}.dot{width:8px;height:8px;border-radius:999px;background:var(--orange);box-shadow:0 0 18px rgba(247,147,30,.8)}h1{font-family:Montserrat,sans-serif;font-size:clamp(34px,6vw,68px);line-height:.92;letter-spacing:-.08em;margin:18px 0 14px;text-transform:uppercase}h1 span{color:var(--orange)}p{color:var(--muted);line-height:1.6}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid var(--line);border-radius:16px;padding:13px 16px;font-size:12px;font-weight:900;text-transform:uppercase;background:rgba(255,255,255,.055);cursor:pointer}.btn.primary{background:linear-gradient(135deg,var(--orange),var(--orange2));color:#120b04;border:0}.btn:hover{transform:translateY(-1px)}.hero-card{border-radius:28px;padding:20px;position:relative;z-index:1}.hero-card strong{font-size:36px;font-family:Montserrat,sans-serif}.hero-stat{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}.stat{border:1px solid var(--line);border-radius:20px;padding:14px;background:rgba(0,0,0,.22)}.stat small{display:block;color:var(--muted);font-weight:800;text-transform:uppercase;font-size:10px;letter-spacing:.12em}.stat b{font-size:24px}
+    .section-head{margin:32px 0 16px;display:grid;grid-template-columns:1fr auto;gap:14px;align-items:end}.kicker{color:var(--orange);font-size:11px;font-weight:900;letter-spacing:.18em;text-transform:uppercase}.section-head h2{font-family:Montserrat,sans-serif;font-size:clamp(28px,4vw,44px);margin:6px 0 0;letter-spacing:-.06em;text-transform:uppercase}.filters{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}.filter{border:1px solid var(--line);border-radius:999px;padding:10px 12px;background:rgba(255,255,255,.045);color:#fff;font-weight:900;font-size:11px;text-transform:uppercase;cursor:pointer}.filter.active{background:rgba(247,147,30,.16);border-color:rgba(247,147,30,.55);color:#ffd08a}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:34px}.doc-card{border-radius:24px;overflow:hidden;display:flex;flex-direction:column;min-height:100%;position:relative}.doc-img{height:160px;background:linear-gradient(135deg,rgba(247,147,30,.16),rgba(0,229,255,.08));display:flex;align-items:center;justify-content:center;font-size:44px}.doc-img img{width:100%;height:100%;object-fit:cover}.doc-body{padding:18px;display:flex;flex-direction:column;gap:12px;flex:1}.pill{width:max-content;max-width:100%;border:1px solid rgba(247,147,30,.32);border-radius:999px;padding:7px 10px;color:#ffd08a;background:rgba(247,147,30,.08);font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.1em}.doc-card h3{font-family:Montserrat,sans-serif;margin:0;font-size:20px;letter-spacing:-.04em}.doc-card p{margin:0;font-size:14px}.meta{display:flex;gap:8px;flex-wrap:wrap;color:var(--muted);font-size:12px}.doc-actions{margin-top:auto;display:flex;gap:8px;flex-wrap:wrap}.empty{border:1px dashed rgba(255,255,255,.18);border-radius:24px;padding:28px;text-align:center;color:var(--muted);grid-column:1/-1}.footer{margin:28px 0 18px;border-radius:24px;padding:16px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:var(--muted);font-size:13px}
+    @media(max-width:860px){.hero{grid-template-columns:1fr}.grid{grid-template-columns:1fr}.section-head{grid-template-columns:1fr}.filters{justify-content:flex-start}.hero-stat{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar glass">
+      <a class="brand" href="/">Pense <span>Offgrid</span></a>
+      <nav class="nav" aria-label="Navegação principal">
+        <a href="/">Home</a><a href="/projetos/">Projetos</a><a href="/noticias/">Notícias</a><a href="/cursos/">Cursos</a><a href="/tutoriais/">Tutoriais</a>
+      </nav>
+    </header>
+
+    <section class="hero glass">
+      <div>
+        <div class="badge"><span class="dot"></span><span id="badgeText">Biblioteca técnica</span></div>
+        <h1 id="heroTitle">Documentos, manuais e materiais <span>offgrid</span></h1>
+        <p id="heroSubtitle">Baixe manuais, datasheets, checklists e materiais de apoio para projetos de energia offgrid.</p>
+        <div class="actions">
+          <a class="btn primary" id="primaryCta" href="#documentos">Ver documentos</a>
+          <a class="btn" id="secondaryCta" href="/projetos/">Ver projetos</a>
+        </div>
+      </div>
+      <aside class="hero-card glass">
+        <span class="pill">Acervo Pense Offgrid</span>
+        <p>Use esta área para centralizar PDFs, manuais, diagramas, planilhas e materiais técnicos baixáveis.</p>
+        <div class="hero-stat">
+          <div class="stat"><small>Documentos</small><b id="totalDocs">0</b></div>
+          <div class="stat"><small>Categorias</small><b id="totalCats">0</b></div>
+        </div>
+      </aside>
+    </section>
+
+    <section id="documentos">
+      <div class="section-head">
+        <div><div class="kicker">Materiais</div><h2>Documentos disponíveis</h2></div>
+        <div class="filters" id="filters"></div>
+      </div>
+      <div class="grid" id="docsGrid"><div class="empty">Carregando documentos...</div></div>
+    </section>
+
+    <footer class="footer glass">
+      <span>Pense Offgrid Documentos</span>
+      <span>Materiais técnicos, manuais e apoio para comunidade offgrid.</span>
+    </footer>
+  </main>
+
+  <script type="module">
+    import { getSettings, getCollection } from "../assets/js/firebase-public.js";
+
+    const fallbackDocs = [
+      {title:"Manual Anenji 11.000W 48V", slug:"manual-anenji-11000w-48v", category:"manual", description:"Manual técnico do inversor Anenji 11kW 48V.", fileUrl:"/docs/manual-anenji-11000w-48v.pdf", order:1, status:"published"},
+      {title:"Datasheet Anenji 11.000W 48V", slug:"datasheet-anenji-11000w-48v", category:"datasheet", description:"Ficha técnica do inversor Anenji 11kW 48V.", fileUrl:"/docs/datasheet-anenji-11000w-48v.pdf", order:2, status:"published"},
+      {title:"Manual Anenji 6.200W 48V", slug:"manual-anenji-6200w-48v", category:"manual", description:"Manual técnico do inversor Anenji 6.2kW 48V.", fileUrl:"/docs/manual-anenji-6200w-48v.pdf", order:3, status:"published"},
+      {title:"Datasheet Anenji 6.200W 48V", slug:"datasheet-anenji-6200w-48v", category:"datasheet", description:"Ficha técnica do inversor Anenji 6.2kW 48V.", fileUrl:"/docs/datasheet-anenji-6200w-48v.pdf", order:4, status:"published"},
+      {title:"Manual Anenji 4.000W 24V", slug:"manual-anenji-4000w-24v", category:"manual", description:"Manual técnico do inversor Anenji 4kW 24V.", fileUrl:"/docs/manual-anenji-4000w-24v.pdf", order:5, status:"published"},
+      {title:"Manual Felicity 8.000W 48V", slug:"manual-felicity-8000w-48v", category:"manual", description:"Manual técnico do inversor Felicity 8kW 48V.", fileUrl:"/docs/manual-felicity-8000w-48v.pdf", order:6, status:"published"},
+      {title:"Manual Y&H 1.000W 12V", slug:"manual-yh-1000w-12v", category:"manual", description:"Manual técnico do inversor Y&H 1000W 12V.", fileUrl:"/docs/manual-y&h-1000w-12v.pdf", order:7, status:"published"}
+    ];
+
+    const grid = document.getElementById("docsGrid");
+    const filters = document.getElementById("filters");
+    let docs = [];
+    let currentCategory = "todos";
+
+    function esc(value){return String(value ?? "").replace(/[&<>\"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[c]));}
+    function labelCategory(cat="outro"){
+      const map = {manual:"Manual", datasheet:"Datasheet", diagram:"Diagrama", pdf:"PDF", planilha:"Planilha", checklist:"Checklist", outro:"Outro"};
+      return map[String(cat).toLowerCase()] || cat;
+    }
+    function iconFor(cat=""){
+      const map = {manual:"📘", datasheet:"📄", diagram:"⚡", pdf:"📑", planilha:"📊", checklist:"✅", outro:"📚"};
+      return map[String(cat).toLowerCase()] || "📚";
+    }
+    function maskVip(doc){ return doc.vipOnly ? "VIP" : doc.isFree === false ? "Premium" : "Gratuito"; }
+
+    function renderFilters(){
+      const cats = [...new Set(docs.map(d => d.category || "outro"))];
+      filters.innerHTML = [`<button class="filter ${currentCategory === "todos" ? "active" : ""}" data-cat="todos">Todos</button>`, ...cats.map(cat => `<button class="filter ${currentCategory === cat ? "active" : ""}" data-cat="${esc(cat)}">${esc(labelCategory(cat))}</button>`)].join("");
+      filters.querySelectorAll(".filter").forEach(btn => btn.addEventListener("click", () => {currentCategory = btn.dataset.cat || "todos"; render();}));
+    }
+
+    function render(){
+      renderFilters();
+      const visible = currentCategory === "todos" ? docs : docs.filter(d => String(d.category || "outro") === currentCategory);
+      document.getElementById("totalDocs").textContent = docs.length;
+      document.getElementById("totalCats").textContent = new Set(docs.map(d => d.category || "outro")).size;
+      if(!visible.length){
+        grid.innerHTML = `<div class="empty">Nenhum documento encontrado nesta categoria.</div>`;
+        return;
+      }
+      grid.innerHTML = visible.map(doc => {
+        const img = doc.imageUrl ? `<img src="${esc(doc.imageUrl)}" alt="${esc(doc.title)}" loading="lazy">` : `<span>${iconFor(doc.category)}</span>`;
+        const file = doc.fileUrl || doc.url || "#";
+        return `<article class="doc-card glass">
+          <div class="doc-img">${img}</div>
+          <div class="doc-body">
+            <span class="pill">${esc(labelCategory(doc.category))} • ${esc(maskVip(doc))}</span>
+            <h3>${esc(doc.title || "Documento")}</h3>
+            <p>${esc(doc.description || doc.fullDescription || "Material técnico Pense Offgrid.")}</p>
+            <div class="meta"><span>${doc.relatedModule ? "Módulo: " + esc(doc.relatedModule) : "Biblioteca"}</span>${doc.featured ? "<span>• Destaque</span>" : ""}</div>
+            <div class="doc-actions">
+              <a class="btn primary" href="${esc(file)}" target="_blank" rel="noopener noreferrer">${esc(doc.buttonText || "Baixar documento")}</a>
+              <button class="btn" type="button" data-copy="${esc(file)}">Copiar link</button>
+            </div>
+          </div>
+        </article>`;
+      }).join("");
+      grid.querySelectorAll("[data-copy]").forEach(btn => btn.addEventListener("click", async () => {
+        try{ await navigator.clipboard.writeText(btn.dataset.copy || ""); btn.textContent = "Link copiado"; setTimeout(()=>btn.textContent="Copiar link",1400); }catch(e){ alert("Link: " + (btn.dataset.copy || "")); }
+      }));
+    }
+
+    async function init(){
+      const settings = await getSettings("docs", "main");
+      if(settings){
+        document.getElementById("badgeText").textContent = settings.badgeText || "Biblioteca técnica";
+        document.getElementById("heroTitle").innerHTML = esc(settings.title || "Documentos, manuais e materiais offgrid").replace(/offgrid/i, "<span>offgrid</span>");
+        document.getElementById("heroSubtitle").textContent = settings.subtitle || "Baixe manuais, datasheets, checklists e materiais de apoio para projetos de energia offgrid.";
+        document.getElementById("primaryCta").textContent = settings.primaryCtaText || "Ver documentos";
+        document.getElementById("primaryCta").href = settings.primaryCtaUrl || "#documentos";
+        document.getElementById("secondaryCta").textContent = settings.secondaryCtaText || "Ver projetos";
+        document.getElementById("secondaryCta").href = settings.secondaryCtaUrl || "/projetos/";
+      }
+      const firebaseDocs = await getCollection("docs", "documents");
+      docs = (firebaseDocs && firebaseDocs.length ? firebaseDocs : fallbackDocs).sort((a,b)=>Number(a.order||999)-Number(b.order||999));
+      render();
+    }
+    init().catch(error => {console.warn(error); docs = fallbackDocs; render();});
+  </script>
+</body>
+</html>

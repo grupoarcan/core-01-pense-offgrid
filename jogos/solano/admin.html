@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Solano Admin | Painel Definitivo</title>
+  <meta name="theme-color" content="#050505" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root{--orange:#ff8a1f;--bg:#050505;--panel:#10151d;--line:rgba(255,255,255,.12);--muted:#9ca3af}
+    *{box-sizing:border-box}
+    body{margin:0;background:radial-gradient(circle at top,rgba(255,138,31,.14),transparent 35%),#050505;color:#fff;font-family:Inter,system-ui,Arial,sans-serif}
+    input,select,textarea{background:#070a0f;border:1px solid var(--line);border-radius:14px;color:#fff;padding:12px;width:100%;outline:none}
+    textarea{min-height:90px;resize:vertical}
+    label{font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:#fbbf24;font-weight:800}
+    .card{background:linear-gradient(145deg,rgba(20,26,36,.92),rgba(8,10,15,.96));border:1px solid var(--line);border-radius:24px;padding:18px;box-shadow:0 20px 60px rgba(0,0,0,.35)}
+    .btn{border:0;border-radius:14px;padding:12px 15px;font-weight:900;cursor:pointer;text-transform:uppercase;font-size:12px}
+    .primary{background:linear-gradient(90deg,#ff7a18,#ffb13b);color:#160800}
+    .ghost{background:#111827;color:#fff;border:1px solid var(--line)}
+    .danger{background:#3b0a0a;color:#fecaca;border:1px solid rgba(239,68,68,.35)}
+    .tab.active{background:linear-gradient(90deg,#ff7a18,#ffb13b);color:#160800}
+    .hidden{display:none!important}
+    .pill{border:1px solid var(--line);border-radius:999px;padding:5px 9px;font-size:11px;color:#d1d5db;background:rgba(255,255,255,.04)}
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    @media(max-width:800px){.grid2{grid-template-columns:1fr}.layout{grid-template-columns:1fr!important}.sidebar{position:sticky;top:0;z-index:20}.tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px}}
+  </style>
+</head>
+<body>
+  <main class="max-w-[1320px] mx-auto p-4 md:p-6">
+    <header class="card mb-5 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+      <div>
+        <div class="pill inline-block mb-2">V5.23 • Painel definitivo operacional</div>
+        <h1 class="text-3xl md:text-5xl font-black tracking-tight">Solano Admin</h1>
+        <p class="text-gray-400 mt-2">Controle itens, imagens, campanhas, ranking e publicação Firebase sem mexer em código.</p>
+      </div>
+      <div class="flex gap-2 flex-wrap">
+        <a class="btn ghost no-underline" href="./index.html" target="_blank">Abrir jogo</a>
+        <button class="btn primary" id="publishBtn">Publicar alterações</button>
+      </div>
+    </header>
+
+    <section class="card mb-5" id="authBox">
+      <div class="grid2 items-end">
+        <div>
+          <h2 class="text-xl font-black mb-2">Firebase Auth</h2>
+          <p class="text-gray-400 text-sm">Entre com um usuário cadastrado no Firebase Authentication.</p>
+        </div>
+        <div class="grid2">
+          <div><label>E-mail</label><input id="email" type="email" placeholder="admin@email.com"></div>
+          <div><label>Senha</label><input id="password" type="password" placeholder="senha"></div>
+        </div>
+      </div>
+      <div class="flex gap-2 mt-4 flex-wrap">
+        <button class="btn primary" id="loginBtn">Entrar</button>
+        <button class="btn ghost" id="googleBtn">Entrar com Google</button>
+        <button class="btn ghost" id="logoutBtn">Sair</button>
+        <span class="pill" id="authStatus">Offline</span>
+      </div>
+    </section>
+
+    <div class="layout grid grid-cols-[250px,1fr] gap-5">
+      <aside class="sidebar card h-fit">
+        <nav class="tabs flex flex-col gap-2">
+          <button class="btn ghost tab active" data-tab="items">Loja / Itens</button>
+          <button class="btn ghost tab" data-tab="rules">Regras da Usina</button>
+          <button class="btn ghost tab" data-tab="campaigns">Campanhas CTA</button>
+          <button class="btn ghost tab" data-tab="ranking">Ranking</button>
+          <button class="btn ghost tab" data-tab="backup">Backup</button>
+        </nav>
+        <div class="mt-5 text-xs text-gray-400 leading-relaxed">
+          Caminho Firestore usado:<br>
+          <b class="text-orange-300">games/solano/config/public</b>
+        </div>
+      </aside>
+
+      <section class="space-y-5">
+        <div class="tabPanel" id="items">
+          <div class="card mb-5">
+            <h2 class="text-2xl font-black mb-1">Editor de item</h2>
+            <p class="text-gray-400 text-sm mb-4">Crie painéis, inversores, baterias, proteções e ferramentas. A imagem pode ser URL externa ou upload para Firebase Storage.</p>
+            <input type="hidden" id="itemDocId">
+            <div class="grid2">
+              <div><label>ID interno</label><input id="itemId" placeholder="painel_700wp"><small class="text-gray-500">Sem espaço. Ex: painel_700wp, string_box, dr_63a.</small></div>
+              <div><label>Nome público</label><input id="itemName" placeholder="Painel Solar 700Wp"></div>
+              <div><label>Categoria</label><select id="itemCategory"><option value="painel">Painel</option><option value="inversor">Inversor</option><option value="bateria">Bateria</option><option value="protecao">Proteção</option><option value="ferramenta">Ferramenta</option><option value="personagem">Personagem</option></select></div>
+              <div><label>Raridade</label><select id="itemRarity"><option value="comum">Comum</option><option value="colecionavel">Colecionável</option><option value="raro">Raro</option><option value="epico">Épico</option></select></div>
+              <div><label>Preço CPO</label><input id="itemPrice" type="number" value="0"></div>
+              <div><label>Status</label><select id="itemStatus"><option value="ativo">Ativo</option><option value="oculto">Oculto</option></select></div>
+              <div><label>URL da imagem</label><input id="itemImage" placeholder="https://i.imgur.com/...png"></div>
+              <div><label>Upload de imagem</label><input id="itemUpload" type="file" accept="image/*"></div>
+              <div><label>Potência / capacidade / efeito numérico</label><input id="itemPower" type="number" value="0"></div>
+              <div><label>Tensão</label><input id="itemVoltage" type="number" value="0"></div>
+              <div><label>Máximo por string</label><input id="itemMaxString" type="number" value="10"></div>
+              <div><label>Severidade</label><select id="itemSeverity"><option value="aviso">Aviso</option><option value="penalidade">Penalidade</option><option value="trava">Trava</option><option value="critico">Risco crítico</option></select></div>
+              <div><label>Descrição</label><textarea id="itemDesc" placeholder="Explique o item para o jogador"></textarea></div>
+              <div><label>Efeito no jogo</label><textarea id="itemEffect" placeholder="+700Wp de geração, +armazenamento, proteção etc."></textarea></div>
+            </div>
+            <div class="flex gap-2 mt-4 flex-wrap">
+              <button class="btn primary" id="saveItemBtn">Salvar item</button>
+              <button class="btn ghost" id="newItemBtn">Novo</button>
+              <button class="btn danger" id="deleteItemBtn">Excluir item</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="flex flex-col md:flex-row gap-3 md:items-end md:justify-between mb-4">
+              <div><h2 class="text-2xl font-black">Itens cadastrados</h2><p class="text-gray-400 text-sm">Clique em editar para carregar no formulário.</p></div>
+              <div class="grid2 md:min-w-[430px]">
+                <div><label>Buscar</label><input id="itemSearch" placeholder="nome ou categoria"></div>
+                <div><label>Categoria</label><select id="itemFilter"><option value="">Todas</option><option value="painel">Painel</option><option value="inversor">Inversor</option><option value="bateria">Bateria</option><option value="protecao">Proteção</option><option value="ferramenta">Ferramenta</option></select></div>
+              </div>
+            </div>
+            <div id="itemsList" class="grid md:grid-cols-2 xl:grid-cols-3 gap-3"></div>
+          </div>
+        </div>
+
+        <div class="tabPanel hidden" id="rules">
+          <div class="card">
+            <h2 class="text-2xl font-black mb-2">Regras da Usina</h2>
+            <p class="text-gray-400 text-sm mb-4">Use para controlar travas, penalidades, strings e realismo didático.</p>
+            <div class="grid2">
+              <div><label>Não misturar Wp diferente</label><select id="ruleNoMix"><option value="true">Ativo</option><option value="false">Inativo</option></select><small class="text-gray-500">Se ativo, painéis de potência diferente geram alerta/trava.</small></div>
+              <div><label>Modo de incompatibilidade</label><select id="ruleMixSeverity"><option value="aviso">Aviso</option><option value="penalidade">Penalidade</option><option value="trava">Trava</option><option value="critico">Risco crítico</option></select></div>
+              <div><label>Limite padrão por string</label><input id="ruleMaxString" type="number" value="10"></div>
+              <div><label>Penalidade sem String Box (%)</label><input id="ruleStringPenalty" type="number" value="5"></div>
+              <div><label>Penalidade sem DR (%)</label><input id="ruleDrPenalty" type="number" value="3"></div>
+              <div><label>Travar tensão inversor/bateria</label><select id="ruleVoltageLock"><option value="false">Não</option><option value="true">Sim</option></select></div>
+            </div>
+            <button class="btn primary mt-4" id="saveRulesBtn">Salvar regras</button>
+          </div>
+        </div>
+
+        <div class="tabPanel hidden" id="campaigns">
+          <div class="card">
+            <h2 class="text-2xl font-black mb-2">Campanhas CTA</h2>
+            <p class="text-gray-400 text-sm mb-4">Crie popups e mensagens de campanha para links afiliados ou grupo.</p>
+            <div class="grid2">
+              <div><label>Título</label><input id="campTitle" placeholder="Oferta de inversor"></div>
+              <div><label>Tipo</label><select id="campType"><option>WhatsApp</option><option>Shopee</option><option>AliExpress</option><option>Mercado Livre</option></select></div>
+              <div><label>Link</label><input id="campLink" placeholder="https://..."></div>
+              <div><label>Imagem</label><input id="campImage" placeholder="https://i.imgur.com/..."></div>
+              <div><label>Texto</label><textarea id="campText" placeholder="Mensagem do CTA"></textarea></div>
+              <div><label>Status</label><select id="campStatus"><option value="ativo">Ativo</option><option value="oculto">Oculto</option></select></div>
+            </div>
+            <button class="btn primary mt-4" id="saveCampaignBtn">Salvar campanha</button>
+          </div>
+          <div id="campaignsList" class="grid md:grid-cols-2 gap-3 mt-5"></div>
+        </div>
+
+        <div class="tabPanel hidden" id="ranking">
+          <div class="card">
+            <h2 class="text-2xl font-black mb-2">Ranking Firebase</h2>
+            <p class="text-gray-400 text-sm mb-4">Remova jogadores, zere ranking ou exporte backup.</p>
+            <div class="flex gap-2 flex-wrap mb-4">
+              <button class="btn ghost" id="loadRankingBtn">Carregar ranking</button>
+              <button class="btn danger" id="resetRankingBtn">Resetar ranking</button>
+            </div>
+            <div id="rankingList" class="space-y-2"></div>
+          </div>
+        </div>
+
+        <div class="tabPanel hidden" id="backup">
+          <div class="card">
+            <h2 class="text-2xl font-black mb-2">Backup JSON</h2>
+            <p class="text-gray-400 text-sm mb-4">Exporte a configuração atual ou cole um JSON para restaurar.</p>
+            <button class="btn ghost" id="exportBtn">Exportar local</button>
+            <textarea id="backupText" class="mt-4" placeholder="JSON de backup"></textarea>
+            <button class="btn primary mt-3" id="importBtn">Importar JSON</button>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+import { getFirestore, doc, setDoc, getDoc, collection, addDoc, getDocs, deleteDoc, updateDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-storage.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCd8GfbF2MHAwe8OMWtb3t_hnsw9XOS3Qo",
+  authDomain: "simulador-pense-offgrid.firebaseapp.com",
+  projectId: "simulador-pense-offgrid",
+  storageBucket: "simulador-pense-offgrid.firebasestorage.app",
+  messagingSenderId: "769349304562",
+  appId: "1:769349304562:web:09020b10e57724905b906b",
+  measurementId: "G-3X1NM12RLR"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+const storage = getStorage(app);
+
+const $ = id => document.getElementById(id);
+let state = {
+  items: JSON.parse(localStorage.getItem("solano_items")||"[]"),
+  rules: JSON.parse(localStorage.getItem("solano_rules")||"{}"),
+  campaigns: JSON.parse(localStorage.getItem("solano_campaigns")||"[]")
+};
+
+function toast(msg){ alert(msg); }
+function saveLocal(){
+  localStorage.setItem("solano_items", JSON.stringify(state.items));
+  localStorage.setItem("solano_rules", JSON.stringify(state.rules));
+  localStorage.setItem("solano_campaigns", JSON.stringify(state.campaigns));
+}
+async function publish(){
+  saveLocal();
+  await setDoc(doc(db,"games","solano","config","public"), {
+    ...state,
+    updatedAt: serverTimestamp()
+  }, {merge:true});
+  toast("Publicado no Firebase.");
+}
+async function loadRemote(){
+  const snap = await getDoc(doc(db,"games","solano","config","public"));
+  if(snap.exists()){
+    const d = snap.data();
+    state.items = d.items || state.items;
+    state.rules = d.rules || state.rules;
+    state.campaigns = d.campaigns || state.campaigns;
+    saveLocal(); renderItems(); renderCampaigns(); loadRulesToForm();
+    toast("Config remota carregada.");
+  }
+}
+function cleanId(v){
+  return String(v||"").trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/\s+/g,"_").replace(/[^a-z0-9_-]/g,"");
+}
+
+onAuthStateChanged(auth, user=>{
+  $("authStatus").textContent = user ? "Online: " + (user.email||"Google") : "Offline";
+});
+$("loginBtn").onclick = ()=>signInWithEmailAndPassword(auth,$("email").value,$("password").value).catch(e=>toast(e.message));
+$("googleBtn").onclick = ()=>signInWithPopup(auth,new GoogleAuthProvider()).catch(e=>toast(e.message));
+$("logoutBtn").onclick = ()=>signOut(auth);
+$("publishBtn").onclick = publish;
+
+document.querySelectorAll(".tab").forEach(btn=>{
+  btn.onclick=()=>{
+    document.querySelectorAll(".tab").forEach(b=>b.classList.remove("active"));
+    document.querySelectorAll(".tabPanel").forEach(p=>p.classList.add("hidden"));
+    btn.classList.add("active");
+    $(btn.dataset.tab).classList.remove("hidden");
+  };
+});
+
+async function maybeUpload(file, folder){
+  if(!file) return "";
+  const name = Date.now()+"_"+cleanId(file.name);
+  const r = ref(storage, folder+"/"+name);
+  await uploadBytes(r,file);
+  return await getDownloadURL(r);
+}
+
+function getItemFromForm(){
+  const id = cleanId($("itemId").value);
+  if(!id) throw new Error("ID interno inválido.");
+  return {
+    id,
+    nome: $("itemName").value.trim(),
+    categoria: $("itemCategory").value,
+    raridade: $("itemRarity").value,
+    preco: Number($("itemPrice").value||0),
+    status: $("itemStatus").value,
+    imagem: $("itemImage").value.trim(),
+    power: Number($("itemPower").value||0),
+    voltage: Number($("itemVoltage").value||0),
+    maxPorString: Number($("itemMaxString").value||10),
+    severity: $("itemSeverity").value,
+    descricao: $("itemDesc").value,
+    efeito: $("itemEffect").value,
+    updatedAt: Date.now()
+  };
+}
+function fillItemForm(item){
+  $("itemDocId").value=item.id||"";
+  $("itemId").value=item.id||"";
+  $("itemName").value=item.nome||"";
+  $("itemCategory").value=item.categoria||"painel";
+  $("itemRarity").value=item.raridade||"comum";
+  $("itemPrice").value=item.preco||0;
+  $("itemStatus").value=item.status||"ativo";
+  $("itemImage").value=item.imagem||"";
+  $("itemPower").value=item.power||0;
+  $("itemVoltage").value=item.voltage||0;
+  $("itemMaxString").value=item.maxPorString||10;
+  $("itemSeverity").value=item.severity||"aviso";
+  $("itemDesc").value=item.descricao||"";
+  $("itemEffect").value=item.efeito||"";
+}
+$("newItemBtn").onclick=()=>fillItemForm({});
+$("saveItemBtn").onclick=async()=>{
+  try{
+    const item = getItemFromForm();
+    const file = $("itemUpload").files[0];
+    const uploaded = await maybeUpload(file,"solano/items");
+    if(uploaded) item.imagem = uploaded;
+    const idx = state.items.findIndex(i=>i.id===item.id);
+    if(idx>=0) state.items[idx]=item; else state.items.push(item);
+    saveLocal(); renderItems(); await publish(); fillItemForm({});
+  }catch(e){ toast(e.message); }
+};
+$("deleteItemBtn").onclick=async()=>{
+  const id=cleanId($("itemId").value);
+  if(!id || !confirm("Excluir item "+id+"?")) return;
+  state.items=state.items.filter(i=>i.id!==id);
+  saveLocal(); renderItems(); await publish(); fillItemForm({});
+};
+$("itemSearch").oninput=renderItems;
+$("itemFilter").onchange=renderItems;
+
+function renderItems(){
+  const q=($("itemSearch").value||"").toLowerCase();
+  const f=$("itemFilter").value;
+  const list=state.items.filter(i=>(!f||i.categoria===f) && JSON.stringify(i).toLowerCase().includes(q));
+  $("itemsList").innerHTML=list.map(i=>`
+    <div class="card !p-4">
+      ${i.imagem?`<img src="${i.imagem}" style="width:100%;height:120px;object-fit:contain;background:#020617;border-radius:14px;margin-bottom:10px">`:""}
+      <h3 class="font-black text-lg">${i.nome||i.id}</h3>
+      <div class="flex gap-1 flex-wrap my-2"><span class="pill">${i.categoria}</span><span class="pill">${i.raridade}</span><span class="pill">${i.preco||0} CPO</span></div>
+      <p class="text-sm text-gray-400">${i.descricao||""}</p>
+      <button class="btn ghost mt-3" data-edit="${i.id}">Editar</button>
+    </div>`).join("") || "<p class='text-gray-400'>Nenhum item cadastrado.</p>";
+  document.querySelectorAll("[data-edit]").forEach(b=>b.onclick=()=>fillItemForm(state.items.find(i=>i.id===b.dataset.edit)||{}));
+}
+
+function loadRulesToForm(){
+  $("ruleNoMix").value=String(state.rules.noMixWp ?? true);
+  $("ruleMixSeverity").value=state.rules.mixSeverity||"trava";
+  $("ruleMaxString").value=state.rules.maxPanelsPerString||10;
+  $("ruleStringPenalty").value=state.rules.stringBoxPenalty||5;
+  $("ruleDrPenalty").value=state.rules.drPenalty||3;
+  $("ruleVoltageLock").value=String(state.rules.voltageLock ?? false);
+}
+$("saveRulesBtn").onclick=async()=>{
+  state.rules={
+    noMixWp:$("ruleNoMix").value==="true",
+    mixSeverity:$("ruleMixSeverity").value,
+    maxPanelsPerString:Number($("ruleMaxString").value||10),
+    stringBoxPenalty:Number($("ruleStringPenalty").value||5),
+    drPenalty:Number($("ruleDrPenalty").value||3),
+    voltageLock:$("ruleVoltageLock").value==="true"
+  };
+  saveLocal(); await publish();
+};
+
+$("saveCampaignBtn").onclick=async()=>{
+  state.campaigns.push({
+    id:"camp_"+Date.now(),
+    titulo:$("campTitle").value,
+    tipo:$("campType").value,
+    link:$("campLink").value,
+    imagem:$("campImage").value,
+    texto:$("campText").value,
+    status:$("campStatus").value,
+    createdAt:Date.now()
+  });
+  saveLocal(); renderCampaigns(); await publish();
+};
+function renderCampaigns(){
+  $("campaignsList").innerHTML=state.campaigns.map(c=>`
+    <div class="card"><h3 class="font-black">${c.titulo}</h3><p class="text-gray-400">${c.texto||""}</p><div class="pill inline-block mt-2">${c.tipo}</div></div>
+  `).join("") || "";
+}
+
+$("loadRankingBtn").onclick=loadRanking;
+async function loadRanking(){
+  const snap=await getDocs(collection(db,"games","solano","ranking"));
+  const arr=[]; snap.forEach(d=>arr.push({docId:d.id,...d.data()}));
+  arr.sort((a,b)=>(b.distance||0)-(a.distance||0));
+  $("rankingList").innerHTML=arr.map(r=>`
+    <div class="card !p-3 flex justify-between gap-3 items-center">
+      <div><b>${r.name||r.nome||"Jogador"}</b><br><small class="text-gray-400">${r.city||r.cidade||""}/${r.uf||""} • ${r.distance||0}m</small></div>
+      <button class="btn danger" data-delrank="${r.docId}">Remover</button>
+    </div>`).join("") || "<p class='text-gray-400'>Ranking vazio.</p>";
+  document.querySelectorAll("[data-delrank]").forEach(b=>b.onclick=async()=>{if(confirm("Remover jogador?")){await deleteDoc(doc(db,"games","solano","ranking",b.dataset.delrank));loadRanking();}});
+}
+$("resetRankingBtn").onclick=async()=>{
+  if(!confirm("Resetar ranking inteiro?")) return;
+  const snap=await getDocs(collection(db,"games","solano","ranking"));
+  for(const d of snap.docs) await deleteDoc(d.ref);
+  loadRanking(); toast("Ranking resetado.");
+};
+
+$("exportBtn").onclick=()=>{$("backupText").value=JSON.stringify(state,null,2)};
+$("importBtn").onclick=async()=>{
+  try{ state=JSON.parse($("backupText").value); saveLocal(); renderItems(); renderCampaigns(); loadRulesToForm(); await publish(); }
+  catch(e){ toast("JSON inválido."); }
+};
+
+renderItems(); renderCampaigns(); loadRulesToForm();
+loadRemote().catch(()=>{});
+</script>
+</body>
+</html>

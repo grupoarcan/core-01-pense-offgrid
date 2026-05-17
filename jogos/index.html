@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Jogos Offgrid | Pense Offgrid</title>
+  <meta name="description" content="Jogos e experiências interativas do ecossistema Pense Offgrid. Aprenda energia solar, autonomia e tecnologia de forma divertida." />
+  <meta name="theme-color" content="#030303" />
+
+  <meta property="og:title" content="Jogos Offgrid | Pense Offgrid" />
+  <meta property="og:description" content="Aprenda offgrid jogando. Conheça o Solano Runner e futuras experiências do Pense Offgrid." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://www.penseoffgrid.com.br/og-thumb.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800;900&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --orange:#F7931E;
+      --orange2:#FFC078;
+      --bg:#030303;
+      --line:rgba(255,255,255,.1);
+      --muted:#AEB7C6;
+      --green:#22c55e;
+      --cyan:#00e5ff;
+      --purple:#a855f7;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      color:#fff;
+      font-family:Inter,system-ui,sans-serif;
+      background:
+        radial-gradient(circle at 18% 0%,rgba(247,147,30,.16),transparent 42%),
+        radial-gradient(circle at 90% 8%,rgba(0,229,255,.08),transparent 34%),
+        linear-gradient(rgba(255,255,255,.017) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.017) 1px,transparent 1px),
+        var(--bg);
+      background-size:100% 100%,100% 100%,36px 36px,36px 36px;
+      overflow-x:hidden;
+    }
+
+    a{text-decoration:none;color:inherit}
+    .shell{width:min(1220px,calc(100% - 28px));margin:0 auto}
+
+    .glass{
+      background:linear-gradient(145deg,rgba(30,30,35,.66),rgba(12,13,17,.92));
+      backdrop-filter:blur(22px);
+      border-top:1px solid rgba(255,255,255,.16);
+      border-left:1px solid rgba(255,255,255,.1);
+      border-right:1px solid rgba(255,255,255,.04);
+      border-bottom:1px solid rgba(255,255,255,.04);
+      box-shadow:0 30px 70px -16px rgba(0,0,0,.95),inset 0 1px 0 rgba(255,255,255,.05);
+    }
+
+    .topbar{
+      margin-top:18px;
+      border-radius:24px;
+      padding:14px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:14px;
+      flex-wrap:wrap;
+    }
+
+    .brand{
+      font-family:Montserrat,sans-serif;
+      font-size:22px;
+      font-weight:900;
+      letter-spacing:-.05em;
+      text-transform:uppercase;
+    }
+
+    .brand span{color:var(--orange)}
+
+    .nav{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+
+    .nav a{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.045);
+      border-radius:14px;
+      padding:10px 12px;
+      font-size:11px;
+      font-weight:900;
+      text-transform:uppercase;
+      transition:.2s;
+    }
+
+    .nav a:hover{
+      border-color:rgba(247,147,30,.45);
+      background:rgba(247,147,30,.1);
+    }
+
+    .hero{
+      margin-top:18px;
+      border-radius:32px;
+      padding:28px;
+      position:relative;
+      overflow:hidden;
+      display:grid;
+      grid-template-columns:1.05fr .95fr;
+      gap:22px;
+      align-items:center;
+    }
+
+    .hero:after{
+      content:"";
+      position:absolute;
+      right:-100px;
+      bottom:-140px;
+      width:380px;
+      height:380px;
+      border-radius:50%;
+      background:radial-gradient(circle,rgba(247,147,30,.18),transparent 68%);
+      pointer-events:none;
+      filter:blur(12px);
+    }
+
+    .badge{
+      display:inline-flex;
+      width:max-content;
+      align-items:center;
+      gap:8px;
+      border:1px solid rgba(247,147,30,.35);
+      border-radius:999px;
+      padding:8px 12px;
+      color:#ffd08a;
+      background:rgba(247,147,30,.08);
+      font-size:11px;
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:.12em;
+    }
+
+    .dot{
+      width:8px;
+      height:8px;
+      border-radius:999px;
+      background:var(--orange);
+      box-shadow:0 0 18px rgba(247,147,30,.8);
+    }
+
+    h1{
+      font-family:Montserrat,sans-serif;
+      font-size:clamp(38px,6vw,72px);
+      line-height:.94;
+      letter-spacing:-.075em;
+      margin:20px 0 14px;
+      text-transform:uppercase;
+      position:relative;
+      z-index:2;
+    }
+
+    h1 span{color:var(--orange)}
+
+    .lead{
+      color:#D1D7E4;
+      font-size:17px;
+      line-height:1.65;
+      max-width:760px;
+      margin:0;
+      position:relative;
+      z-index:2;
+    }
+
+    .hero-art{
+      min-height:330px;
+      border-radius:28px;
+      border:1px solid rgba(247,147,30,.24);
+      background:
+        radial-gradient(circle at 50% 42%,rgba(247,147,30,.22),transparent 38%),
+        radial-gradient(circle at 78% 15%,rgba(0,229,255,.12),transparent 30%),
+        linear-gradient(145deg,#151922,#07090d);
+      display:grid;
+      place-items:center;
+      position:relative;
+      overflow:hidden;
+      z-index:2;
+    }
+
+    .hero-art:before{
+      content:"";
+      position:absolute;
+      inset:18px;
+      border-radius:22px;
+      border:1px solid rgba(255,255,255,.08);
+      background:
+        linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.02) 1px,transparent 1px);
+      background-size:28px 28px;
+    }
+
+    .hero-icon{
+      position:relative;
+      z-index:2;
+      font-size:140px;
+      filter:drop-shadow(0 0 44px rgba(247,147,30,.35));
+      animation:float 3.4s ease-in-out infinite;
+    }
+
+    @keyframes float{
+      0%,100%{transform:translateY(0)}
+      50%{transform:translateY(-12px)}
+    }
+
+    .actions{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-top:24px;
+      position:relative;
+      z-index:2;
+    }
+
+    .btn{
+      min-height:52px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      border-radius:18px;
+      padding:0 20px;
+      font-weight:950;
+      text-transform:uppercase;
+      letter-spacing:.055em;
+      font-size:12px;
+      transition:.2s;
+      cursor:pointer;
+    }
+
+    .btn:hover{transform:translateY(-2px)}
+
+    .primary{
+      background:linear-gradient(90deg,var(--orange),var(--orange2));
+      color:#120700;
+      box-shadow:0 18px 40px rgba(247,147,30,.24);
+    }
+
+    .ghost{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.05);
+      color:white;
+    }
+
+    .section-title{
+      margin-top:34px;
+      display:flex;
+      justify-content:space-between;
+      align-items:end;
+      gap:16px;
+      flex-wrap:wrap;
+    }
+
+    .kicker{
+      color:var(--orange);
+      font-size:11px;
+      font-weight:950;
+      text-transform:uppercase;
+      letter-spacing:.22em;
+      margin-bottom:8px;
+    }
+
+    .section-title h2{
+      font-family:Montserrat,sans-serif;
+      text-transform:uppercase;
+      letter-spacing:-.055em;
+      line-height:1;
+      font-size:clamp(28px,4vw,44px);
+      margin:0;
+    }
+
+    .section-title p{
+      color:var(--muted);
+      margin:0;
+      max-width:600px;
+      line-height:1.55;
+    }
+
+    .games-grid{
+      margin-top:18px;
+      display:grid;
+      grid-template-columns:1.15fr .85fr;
+      gap:16px;
+      align-items:stretch;
+    }
+
+    .game-card{
+      border-radius:30px;
+      overflow:hidden;
+      min-height:430px;
+      position:relative;
+      transition:.25s;
+      border:1px solid rgba(255,255,255,.09);
+    }
+
+    .game-card:hover{
+      transform:translateY(-5px);
+      border-color:rgba(247,147,30,.5);
+      box-shadow:0 24px 70px rgba(247,147,30,.12),0 30px 80px rgba(0,0,0,.45);
+    }
+
+    .main-game{
+      background:
+        linear-gradient(to top,rgba(0,0,0,.94),rgba(0,0,0,.5),rgba(0,0,0,.12)),
+        radial-gradient(circle at 80% 12%,rgba(247,147,30,.26),transparent 34%),
+        linear-gradient(145deg,#151922,#07090d);
+      padding:24px;
+      display:flex;
+      align-items:end;
+    }
+
+    .game-bg-icon{
+      position:absolute;
+      inset:0;
+      display:grid;
+      place-items:center;
+      font-size:210px;
+      opacity:.28;
+      filter:drop-shadow(0 0 44px rgba(247,147,30,.28));
+      pointer-events:none;
+    }
+
+    .game-content{
+      position:relative;
+      z-index:2;
+      max-width:760px;
+    }
+
+    .pill{
+      display:inline-flex;
+      border:1px solid rgba(247,147,30,.35);
+      background:rgba(247,147,30,.11);
+      color:#ffd08a;
+      border-radius:999px;
+      padding:7px 10px;
+      font-size:11px;
+      font-weight:950;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      margin:0 6px 8px 0;
+    }
+
+    .game-content h3{
+      font-family:Montserrat,sans-serif;
+      font-size:clamp(30px,4vw,54px);
+      line-height:1;
+      letter-spacing:-.06em;
+      text-transform:uppercase;
+      margin:8px 0 12px;
+    }
+
+    .game-content p{
+      color:#d4d9e5;
+      line-height:1.58;
+      margin:0;
+      max-width:690px;
+    }
+
+    .side-games{
+      display:grid;
+      gap:16px;
+    }
+
+    .mini-game{
+      border-radius:30px;
+      padding:22px;
+      min-height:207px;
+      position:relative;
+      overflow:hidden;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+    }
+
+    .mini-game:after{
+      content:"";
+      position:absolute;
+      right:-50px;
+      bottom:-70px;
+      width:180px;
+      height:180px;
+      border-radius:50%;
+      background:radial-gradient(circle,rgba(247,147,30,.15),transparent 68%);
+      pointer-events:none;
+    }
+
+    .mini-game h3{
+      font-family:Montserrat,sans-serif;
+      font-size:25px;
+      line-height:1;
+      letter-spacing:-.05em;
+      text-transform:uppercase;
+      margin:10px 0 8px;
+      position:relative;
+      z-index:2;
+    }
+
+    .mini-game p{
+      color:var(--muted);
+      line-height:1.5;
+      font-size:14px;
+      margin:0;
+      position:relative;
+      z-index:2;
+    }
+
+    .locked{
+      opacity:.84;
+    }
+
+    .locked .badge{
+      border-color:rgba(255,255,255,.14);
+      background:rgba(255,255,255,.05);
+      color:#d1d5db;
+    }
+
+    .quick-links{
+      margin-top:18px;
+      border-radius:28px;
+      padding:18px;
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:10px;
+    }
+
+    .quick-links a{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.045);
+      border-radius:18px;
+      padding:16px;
+      transition:.2s;
+      min-height:98px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+    }
+
+    .quick-links a:hover{
+      transform:translateY(-3px);
+      border-color:rgba(247,147,30,.45);
+      background:rgba(247,147,30,.08);
+    }
+
+    .quick-links strong{
+      font-family:Montserrat,sans-serif;
+      text-transform:uppercase;
+      letter-spacing:-.035em;
+      font-size:17px;
+    }
+
+    .quick-links small{
+      color:var(--muted);
+      line-height:1.35;
+      margin-top:8px;
+    }
+
+    .footer{
+      margin:28px 0 30px;
+      border-radius:30px;
+      padding:26px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:16px;
+      flex-wrap:wrap;
+    }
+
+    .footer p{
+      color:var(--muted);
+      margin:6px 0 0;
+      line-height:1.5;
+    }
+
+    @media(max-width:980px){
+      .hero,.games-grid{grid-template-columns:1fr}
+      .quick-links{grid-template-columns:repeat(2,1fr)}
+    }
+
+    @media(max-width:680px){
+      .shell{width:min(100% - 18px,1220px)}
+      .topbar{margin-top:8px;border-radius:20px}
+      .nav{width:100%;display:grid;grid-template-columns:1fr 1fr}
+      .nav a{text-align:center}
+      .hero{border-radius:24px;padding:22px}
+      .hero-art{min-height:250px}
+      .hero-icon{font-size:105px}
+      .actions .btn{width:100%}
+      .quick-links{grid-template-columns:1fr}
+      .main-game{min-height:380px}
+      .game-bg-icon{font-size:160px}
+      .footer{display:block}
+      .footer .actions{margin-top:14px}
+    }
+  </style>
+</head>
+
+<body>
+  <main class="shell">
+    <header class="topbar glass">
+      <a href="/" class="brand">PENSE <span>OFFGRID</span></a>
+      <nav class="nav">
+        <a href="/">Home</a>
+        <a href="/calculadora/">Calculadora</a>
+        <a href="/projetos/">Projetos</a>
+        <a href="/noticias/">Notícias</a>
+      </nav>
+    </header>
+
+    <section class="hero glass">
+      <div>
+        <div class="badge"><span class="dot"></span>Jogos e experiências</div>
+        <h1>Aprenda energia <span>offgrid</span> jogando</h1>
+        <p class="lead">
+          Um espaço para experiências interativas do Pense Offgrid. Comece pelo Solano Runner e acompanhe os próximos jogos educativos do ecossistema.
+        </p>
+
+        <div class="actions">
+          <a class="btn primary" href="/jogos/solano/">Jogar Solano</a>
+          <a class="btn ghost" href="/calculadora/">Abrir calculadora</a>
+        </div>
+      </div>
+
+      <div class="hero-art">
+        <div class="hero-icon">⚡</div>
+      </div>
+    </section>
+
+    <section class="section-title">
+      <div>
+        <div class="kicker">Biblioteca de jogos</div>
+        <h2>Escolha uma experiência</h2>
+      </div>
+      <p>
+        Novos jogos serão adicionados aqui conforme o ecossistema evoluir.
+      </p>
+    </section>
+
+    <section class="games-grid">
+      <a class="game-card main-game glass" href="/jogos/solano/">
+        <div class="game-bg-icon">🏃</div>
+        <div class="game-content">
+          <span class="pill">Disponível</span>
+          <span class="pill">Runner Offgrid</span>
+          <h3>Solano Runner</h3>
+          <p>
+            Corra, colete energia, evolua sua jornada e entre no universo Pense Offgrid de um jeito leve, divertido e viciante.
+          </p>
+          <div class="actions">
+            <span class="btn primary">Jogar agora</span>
+            <span class="btn ghost">Abrir jogo</span>
+          </div>
+        </div>
+      </a>
+
+      <div class="side-games">
+        <article class="mini-game glass locked">
+          <div>
+            <div class="badge">Em breve</div>
+            <h3>Desafio da Usina</h3>
+            <p>Monte sistemas, evite erros de dimensionamento e aprenda lógica offgrid na prática.</p>
+          </div>
+          <span class="btn ghost">Aguardando</span>
+        </article>
+
+        <article class="mini-game glass locked">
+          <div>
+            <div class="badge">Em breve</div>
+            <h3>Missão Bateria</h3>
+            <p>Uma experiência focada em autonomia, consumo, banco de baterias e decisões inteligentes.</p>
+          </div>
+          <span class="btn ghost">Aguardando</span>
+        </article>
+      </div>
+    </section>
+
+    <section class="quick-links glass">
+      <a href="/calculadora/">
+        <strong>Calculadora</strong>
+        <small>Dimensione seu sistema offgrid.</small>
+      </a>
+
+      <a href="/projetos/">
+        <strong>Projetos</strong>
+        <small>Veja modelos prontos e materiais de apoio.</small>
+      </a>
+
+      <a href="/cursos/">
+        <strong>Cursos</strong>
+        <small>Aprenda com aulas organizadas.</small>
+      </a>
+
+      <a href="/rifas/">
+        <strong>Rifas</strong>
+        <small>Concorra a equipamentos e oportunidades.</small>
+      </a>
+    </section>
+
+    <footer class="footer glass">
+      <div>
+        <strong>Pense Offgrid Jogos</strong>
+        <p>Experiências interativas para aprender, simular e evoluir no mundo offgrid.</p>
+      </div>
+
+      <div class="actions" style="margin-top:0">
+        <a class="btn primary" href="/">Voltar para Home</a>
+        <a class="btn ghost" href="/calculadora/">Calculadora</a>
+      </div>
+    </footer>
+  </main>
+</body>
+</html>

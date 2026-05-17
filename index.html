@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pense OffGrid | O caminho da independência</title>
+  <meta name="description" content="Curso gratuito, projetos prontos, calculadora, simulador, notícias e comunidade para montar seu sistema off-grid."/>
+  <meta name="theme-color" content="#030303"/>
+  <meta property="og:title" content="Pense OffGrid | O caminho da independência"/>
+  <meta property="og:description" content="Curso gratuito, projetos prontos, calculadora, simulador e comunidade para montar seu sistema off-grid."/>
+  <meta property="og:image" content="https://www.penseoffgrid.com.br/og-thumb.png"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js"></script>
+  <link rel="preconnect" href="https://i.imgur.com" crossorigin>
+  <link rel="dns-prefetch" href="https://i.imgur.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800;900&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+:root{
+  --orange:#F7931E;
+  --orange2:#FFC078;
+  --line:rgba(255,255,255,.09);
+  --muted:#B8BAC4;
+  --bg:#030303;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  color:#F5F5F5;
+  background-color:var(--bg);
+  font-family:Inter,system-ui,sans-serif;
+  overflow-x:hidden;
+  background-image:
+    radial-gradient(circle at 50% 0%,rgba(247,147,30,.14),transparent 58%),
+    radial-gradient(circle at 90% 10%,rgba(255,193,120,.07),transparent 36%),
+    linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);
+  background-size:100% 100%,100% 100%,36px 36px,36px 36px;
+}
+a{text-decoration:none;color:inherit}
+img{max-width:100%;display:block}
+.shell{width:min(1280px,calc(100% - 32px));margin:0 auto}
+.glass{
+  background:linear-gradient(145deg,rgba(30,30,35,.62),rgba(15,15,18,.86));
+  backdrop-filter:blur(24px);
+  border-top:1px solid rgba(255,255,255,.16);
+  border-left:1px solid rgba(255,255,255,.1);
+  border-right:1px solid rgba(255,255,255,.03);
+  border-bottom:1px solid rgba(255,255,255,.03);
+  box-shadow:0 30px 60px -15px rgba(0,0,0,1),inset 0 1px 0 rgba(255,255,255,.05);
+}
+.hero-panel{position:relative;overflow:hidden;border-radius:34px}
+.hero-panel:after{
+  content:"";position:absolute;inset:auto -10% -46% -10%;height:300px;
+  background:radial-gradient(circle,rgba(247,147,30,.16),transparent 62%);
+  pointer-events:none;filter:blur(40px);
+}
+.badge{
+  display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:999px;
+  border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.05);
+  color:#E8E8EA;font-size:12px;letter-spacing:.2em;text-transform:uppercase;font-weight:800;
+}
+.dot{width:8px;height:8px;border-radius:999px;background:var(--orange);box-shadow:0 0 18px rgba(247,147,30,.75)}
+.cta{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:56px;
+  padding:0 26px;border-radius:20px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;
+  font-size:13px;transition:all .3s cubic-bezier(.25,1,.5,1);cursor:pointer;
+}
+.cta-primary{
+  background:linear-gradient(90deg,#F7931E,#FFC078);color:#120A02;
+  box-shadow:0 10px 25px -5px rgba(247,147,30,.48),inset 0 2px 0 rgba(255,255,255,.28);
+}
+.cta-primary:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 15px 35px -5px rgba(247,147,30,.62)}
+.cta-secondary{
+  border:1px solid rgba(255,255,255,.1);color:#F2F2F4;background:rgba(255,255,255,.035);
+}
+.cta-secondary:hover{transform:translateY(-2px);border-color:rgba(247,147,30,.5);background:rgba(255,255,255,.08)}
+.section-kicker{font-size:11px;letter-spacing:.24em;text-transform:uppercase;font-weight:900;color:var(--orange)}
+.micro-proof{border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.035);border-radius:18px;padding:14px 16px}
+.quick-card{transition:all .3s ease;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.035)}
+.quick-card:hover{transform:translateY(-4px);border-color:rgba(247,147,30,.35);background:rgba(255,255,255,.055)}
+.project-card{transition:transform .3s ease,border-color .3s ease,box-shadow .3s ease;overflow:hidden;cursor:pointer}
+.project-card:hover{transform:translateY(-5px);border-left-color:rgba(247,147,30,.4);border-top-color:rgba(247,147,30,.4);box-shadow:0 20px 40px -10px rgba(247,147,30,.2),inset 0 1px 0 rgba(255,255,255,.05)}
+.project-img{position:relative;background:#050505;overflow:hidden}
+.project-img img{mix-blend-mode:lighten;filter:brightness(.97) contrast(1.06);transition:all .45s ease}
+.project-card:hover .project-img img{transform:scale(1.04);filter:brightness(1) contrast(1.1)}
+.featured-ring{box-shadow:0 0 0 1px rgba(247,147,30,.24),0 24px 80px rgba(0,0,0,.5);border-color:rgba(247,147,30,.3)}
+.chip{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:#E8E8EA;padding:8px 10px;border-radius:14px;font-size:12px;font-weight:800}
+.level{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;font-size:10px;font-weight:900;letter-spacing:.12em;text-transform:uppercase}
+.green{background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.35);color:#86efac}
+.yellow{background:rgba(234,179,8,.12);border:1px solid rgba(234,179,8,.35);color:#fde68a}
+.red{background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.35);color:#fca5a5}
+.orange{background:rgba(247,147,30,.15);border:1px solid rgba(247,147,30,.45);color:#ffd08a}
+.social-btn{transition:all .3s cubic-bezier(.25,1,.5,1)}
+.social-btn:hover{transform:translateY(-4px) scale(1.05);border-color:var(--orange);background:rgba(247,147,30,.1)}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.84);backdrop-filter:blur(12px);display:none;align-items:center;justify-content:center;padding:16px;z-index:100}
+.modal.active{display:flex}
+.modal-box{width:min(900px,100%);max-height:90vh;overflow:auto;border-radius:30px;padding:30px;background:linear-gradient(145deg,rgba(30,30,35,.95),rgba(15,15,18,.98));border:1px solid rgba(255,255,255,.12);box-shadow:0 40px 100px rgba(0,0,0,.8)}
+.close-btn{width:44px;height:44px;border:none;border-radius:14px;background:rgba(255,255,255,.08);color:#fff;cursor:pointer;font-size:24px}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .55s ease,transform .55s ease}
+.reveal.show{opacity:1;transform:translateY(0)}
+@keyframes floatGlow{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.floating{animation:floatGlow 4s ease-in-out infinite}
+@media(max-width:780px){
+  .shell{width:min(100% - 18px,1280px)}
+  .hero-panel{border-radius:24px}
+  .cta{width:100%}
+}
+
+.ecosystem-wrap{
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:34px;
+  padding:18px;
+  background:
+    radial-gradient(circle at 10% 0%,rgba(247,147,30,.11),transparent 34%),
+    linear-gradient(145deg,rgba(255,255,255,.035),rgba(255,255,255,.015));
+}
+.ecosystem-title{
+  display:flex;
+  align-items:end;
+  justify-content:space-between;
+  gap:18px;
+  flex-wrap:wrap;
+  margin-bottom:18px;
+}
+.ecosystem-title h2{
+  margin:0;
+  font-family:Montserrat,sans-serif;
+  font-weight:900;
+  text-transform:uppercase;
+  letter-spacing:-.05em;
+  font-size:clamp(28px,4vw,44px);
+}
+.ecosystem-title p{
+  margin:6px 0 0;
+  color:#aeb7c6;
+  max-width:700px;
+  line-height:1.55;
+}
+.ecosystem-tag{
+  border:1px solid rgba(247,147,30,.28);
+  background:rgba(247,147,30,.08);
+  color:#ffd08a;
+  border-radius:999px;
+  padding:8px 12px;
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:.18em;
+  font-weight:900;
+}
+.quick-card{
+  min-height:172px;
+  position:relative;
+  overflow:hidden;
+}
+.quick-card:after{
+  content:"";
+  position:absolute;
+  right:-45px;
+  bottom:-55px;
+  width:140px;
+  height:140px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(247,147,30,.13),transparent 68%);
+  pointer-events:none;
+}
+.quick-card .card-arrow{
+  position:absolute;
+  right:18px;
+  bottom:16px;
+  color:#ffd08a;
+  font-weight:900;
+  opacity:.8;
+}
+.footer-social-grid{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:16px;
+}
+
+
+.project-carousel-callout{
+  position:absolute;
+  left:18px;
+  bottom:18px;
+  z-index:8;
+  max-width:320px;
+  border:1px solid rgba(247,147,30,.42);
+  border-radius:22px;
+  padding:14px 16px;
+  background:linear-gradient(145deg,rgba(10,10,12,.78),rgba(20,14,7,.88));
+  backdrop-filter:blur(16px);
+  box-shadow:0 0 0 1px rgba(247,147,30,.08),0 0 34px rgba(247,147,30,.22);
+  animation:pulseProjectGlow 2.8s ease-in-out infinite;
+}
+.project-carousel-callout .mini-kicker{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  color:#ffd08a;
+  font-size:10px;
+  font-weight:950;
+  text-transform:uppercase;
+  letter-spacing:.18em;
+  margin-bottom:6px;
+}
+.project-carousel-callout strong{
+  display:block;
+  font-family:Montserrat,sans-serif;
+  font-size:18px;
+  line-height:1.05;
+  text-transform:uppercase;
+  letter-spacing:-.04em;
+}
+.project-carousel-callout span{
+  display:block;
+  color:#cbd5e1;
+  font-size:12px;
+  line-height:1.35;
+  margin-top:5px;
+}
+.project-carousel-callout .pulse-dot{
+  width:8px;
+  height:8px;
+  border-radius:999px;
+  background:#F7931E;
+  box-shadow:0 0 18px rgba(247,147,30,.95);
+}
+.project-carousel-link{
+  position:absolute;
+  inset:0;
+  z-index:7;
+}
+@keyframes pulseProjectGlow{
+  0%,100%{box-shadow:0 0 0 1px rgba(247,147,30,.08),0 0 28px rgba(247,147,30,.18);transform:translateY(0)}
+  50%{box-shadow:0 0 0 1px rgba(247,147,30,.26),0 0 54px rgba(247,147,30,.42);transform:translateY(-3px)}
+}
+@media(max-width:720px){
+  .project-carousel-callout{
+    left:12px;
+    right:12px;
+    bottom:12px;
+    max-width:none;
+    padding:12px 14px;
+  }
+  .project-carousel-callout strong{font-size:15px}
+  .project-carousel-callout span{font-size:11px}
+}
+
+.home-float-banner{position:fixed;z-index:60;display:flex;align-items:center;gap:12px;max-width:320px;padding:14px 16px;border-radius:22px;background:rgba(10,10,14,.92);border:1px solid rgba(247,147,30,.35);box-shadow:0 18px 50px rgba(0,0,0,.45);backdrop-filter:blur(18px);color:#fff;text-decoration:none}
+.home-float-banner img{width:48px;height:48px;object-fit:cover;border-radius:16px}
+.home-float-banner strong{display:block;font-size:13px;text-transform:uppercase;font-weight:900;letter-spacing:.04em}
+.home-float-banner small{display:block;font-size:11px;color:#C7C7CD;line-height:1.35;margin-top:3px}
+.home-float-icon{width:48px;height:48px;display:flex;align-items:center;justify-content:center;border-radius:16px;background:rgba(247,147,30,.15);font-size:24px}
+.home-float-banner.bottom-right{right:18px;bottom:18px}
+.home-float-banner.bottom-left{left:18px;bottom:18px}
+.home-float-banner.top-right{right:18px;top:18px}
+.home-float-banner.top-left{left:18px;top:18px}
+@media(max-width:720px){.home-float-banner{left:12px!important;right:12px!important;bottom:12px!important;top:auto!important;max-width:none}}
+
+</style>
+</head>
+<body>
+<div id="app" v-cloak>
+  <main class="pt-6 md:pt-10 pb-10 relative z-10">
+    <div class="shell">
+      <header class="glass hero-panel px-6 py-8 md:px-10 md:py-12 reveal">
+        <nav class="flex items-center justify-between gap-4 flex-wrap">
+          <a href="/" class="block no-underline text-white">
+            <div class="font-black text-2xl md:text-3xl tracking-tight uppercase" style="font-family:Montserrat,sans-serif">PENSE <span class="text-[#F7931E]">OFFGRID</span></div>
+            <div class="text-[#A6A6AD] text-xs font-bold tracking-[.18em] uppercase mt-2">O Caminho da Independência</div>
+          </a>
+          <div class="flex items-center gap-2 flex-wrap">
+            <a href="/jogos/" class="cta cta-secondary text-[10px]">Jogos</a>
+            <a href="/calculadora/" class="cta cta-secondary text-[10px]">Calculadora</a>
+            <a href="/projetos/" class="cta cta-secondary text-[10px]">Projetos</a>
+            <a href="/noticias/" class="cta cta-secondary text-[10px]">Notícias</a>
+          </div>
+        </nav>
+
+        <div class="mt-12 md:mt-16 flex flex-col lg:flex-row items-center gap-12 lg:gap-8">
+          <div class="w-full lg:w-3/5 max-w-3xl">
+            <div class="badge"><span class="dot"></span><span id="homeHeroBadgeText">Aulas Livres • Projetos Práticos • Comunidade</span></div>
+            <h1 id="homeHeroTitle" class="font-black text-5xl md:text-7xl tracking-tight leading-[0.95] mt-6 uppercase" style="font-family:Montserrat,sans-serif">
+              MONTE SEU SISTEMA <span class="text-[#F7931E]">OFFGRID</span> COM MAIS CLAREZA
+            </h1>
+            <p id="homeHeroSubtitle" class="text-[#C7C7CD] text-lg leading-relaxed mt-6 max-w-2xl">
+              Curso gratuito, projetos de referência, calculadora prática, jogo educativo e comunidade para você sair da teoria e começar certo.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 mt-8">
+              <a href="#ecossistema" id="homeHeroPrimary" class="cta cta-primary text-sm px-8 py-4 font-black">Começar agora</a>
+              <a href="/projetos/" id="homeHeroSecondary" class="cta cta-secondary text-sm px-8 py-4">Ver projetos prontos</a>
+            </div>
+            <div id="homeExtraCtas" class="flex flex-col sm:flex-row gap-3 mt-4"></div>
+            <div id="homeProofGrid" class="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-8 max-w-3xl">
+              <div class="micro-proof"><div class="section-kicker mb-1">Entrada</div><div class="text-sm text-white font-bold">Curso gratuito para começar sem travar</div></div>
+              <div class="micro-proof"><div class="section-kicker mb-1">Aplicação</div><div class="text-sm text-white font-bold">Projetos prontos para copiar e adaptar</div></div>
+              <div class="micro-proof"><div class="section-kicker mb-1">Teste</div><div class="text-sm text-white font-bold">Simulador e calculadora para validar ideias</div></div>
+            </div>
+          </div>
+
+          <div class="w-full sm:w-4/5 md:w-3/4 lg:w-2/5 relative mt-8 lg:mt-0 reveal">
+            <div class="absolute -inset-4 bg-orange-500/15 rounded-[40px] blur-2xl"></div>
+            <a href="/projetos/" class="relative glass border border-white/10 rounded-[32px] overflow-hidden aspect-[4/3] bg-[#0a0a0e]/90 flex items-center justify-center p-6 cursor-pointer hover:border-orange-500/50 transition-colors group">
+              <transition-group name="hero-fade" tag="div" class="w-full h-full relative">
+                <div v-for="(img, i) in heroImages" :key="img" v-show="currentHeroImage === i" class="absolute inset-0 flex items-center justify-center">
+                  <img :src="img" class="max-w-full max-h-full object-contain mix-blend-lighten group-hover:scale-105 transition-transform duration-500 floating" alt="Projeto Pense OffGrid">
+                </div>
+              </transition-group>
+              <div class="project-carousel-callout">
+                <div class="mini-kicker" id="homeCarouselKicker"><i class="pulse-dot"></i> Projetos prontos</div>
+                <strong id="homeCarouselTitle">Diagramas, manuais e listas de materiais</strong>
+                <span id="homeCarouselDescription">Toque no carrossel para abrir os projetos de referência.</span>
+              </div>
+            </a>
+          </div>
+        </div>
+      </header>
+
+      <section id="ecossistema" class="mt-6 md:mt-8 reveal ecosystem-wrap">
+        <div class="ecosystem-title">
+          <div>
+            <div class="section-kicker mb-2" id="homeEcosystemKicker">Escolha seu caminho</div>
+            <h2 id="homeEcosystemTitle">Por onde você quer começar?</h2>
+            <p id="homeEcosystemDescription">O Pense Offgrid foi dividido em áreas simples para você aprender, simular, comparar, jogar, acompanhar projetos e entrar na comunidade sem se perder.</p>
+          </div>
+          <span class="ecosystem-tag" id="homeEcosystemTag">Ecossistema modular</span>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-4" id="homeCardsGrid">
+          <a href="/jogos/" class="quick-card glass p-6 rounded-3xl text-left"><div class="section-kicker mb-3">Jogos</div><h3 class="font-black text-xl uppercase text-white mb-2">Jogue Solano</h3><p class="text-sm text-gray-400">Aprenda energia solar brincando e competindo.</p><span class="card-arrow">→</span></a>
+          <a href="/calculadora/" class="quick-card glass p-6 rounded-3xl text-left"><div class="section-kicker mb-3">Ferramenta</div><h3 class="font-black text-xl uppercase text-white mb-2">Calculadora</h3><p class="text-sm text-gray-400">Dimensione consumo, baterias, painéis e inversores.</p><span class="card-arrow">→</span></a>
+          <a href="/projetos/" class="quick-card glass p-6 rounded-3xl text-left"><div class="section-kicker mb-3">Referência</div><h3 class="font-black text-xl uppercase text-white mb-2">Projetos</h3><p class="text-sm text-gray-400">Escolha modelos prontos para copiar e adaptar.</p><span class="card-arrow">→</span></a>
+          <a href="/noticias/" class="quick-card glass p-6 rounded-3xl text-left"><div class="section-kicker mb-3">Atualização</div><h3 class="font-black text-xl uppercase text-white mb-2">Notícias</h3><p class="text-sm text-gray-400">Mercado, energia, tecnologia e mundo offgrid.</p><span class="card-arrow">→</span></a>
+          <a href="/rifas/" class="quick-card glass p-6 rounded-3xl text-left"><div class="section-kicker mb-3">Oportunidade</div><h3 class="font-black text-xl uppercase text-white mb-2">Rifas</h3><p class="text-sm text-gray-400">Inversores, baterias e itens do universo offgrid.</p><span class="card-arrow">→</span></a>
+          <a href="/cursos/" class="quick-card glass p-6 rounded-3xl text-left"><div class="section-kicker mb-3">Aprender</div><h3 class="font-black text-xl uppercase text-white mb-2">Cursos</h3><p class="text-sm text-gray-400">Trilhas para instalação, diagnóstico e prática.</p><span class="card-arrow">→</span></a>
+          <a href="/tutoriais/" class="quick-card glass p-6 rounded-3xl text-left"><div class="section-kicker mb-3">Resolver</div><h3 class="font-black text-xl uppercase text-white mb-2">Tutoriais</h3><p class="text-sm text-gray-400">Soluções para inversores, baterias e instalações.</p><span class="card-arrow">→</span></a>
+          <a href="https://chat.whatsapp.com/LIL7ytXyakpE4JnGvCgMBq" class="quick-card glass p-6 rounded-3xl text-left"><div class="section-kicker mb-3">Comunidade</div><h3 class="font-black text-xl uppercase text-white mb-2">Grupo VIP</h3><p class="text-sm text-gray-400">Acompanhe ofertas, alertas e novidades.</p><span class="card-arrow">→</span></a>
+        </div>
+      </section>
+<section class="mt-16 md:mt-24 mb-8 reveal">
+        <article class="glass p-8 md:p-12 rounded-[40px] max-w-5xl mx-auto border-yellow-500/20 flex flex-col md:flex-row items-center gap-8 md:gap-12 bg-gradient-to-br from-[#0a0a0c] to-[#1a1500]">
+          <div class="w-full md:w-1/3 flex justify-center">
+            <div class="relative text-8xl md:text-9xl drop-shadow-[0_0_18px_rgba(247,147,30,.5)]" id="homeFeatureIcon">🎮</div>
+          </div>
+          <div class="w-full md:w-2/3 text-center md:text-left">
+            <div class="section-kicker mb-2" id="homeFeatureKicker">Prática sem risco</div>
+            <h2 class="font-black text-3xl md:text-4xl text-white mb-4 uppercase" style="font-family:Montserrat,sans-serif" id="homeFeatureTitle">Jogo Solano</h2>
+            <p class="text-gray-400 mb-6 text-sm" id="homeFeatureDescription">Aprenda conceitos de geração, baterias, inversores e consumo em uma experiência leve, visual e competitiva.</p>
+            <div class="flex flex-col sm:flex-row gap-4"><a href="/jogos/solano/" class="cta cta-primary" id="homeFeaturePrimary">Jogar Solano</a><a href="/projetos/" class="cta cta-secondary" id="homeFeatureSecondary">Ver projetos</a></div>
+          </div>
+        </article>
+      </section>
+    </div>
+  </main>
+
+  <footer class="py-16 border-t border-white/5 relative z-10 bg-black">
+    <div class="shell text-center mb-8 reveal"><div class="section-kicker mb-2" id="homeFooterKicker">Canais</div><h2 class="font-black text-3xl text-white uppercase" style="font-family:Montserrat,sans-serif" id="homeFooterTitle">Siga o Pense Offgrid</h2></div>
+    <div class="shell footer-social-grid reveal">
+      <a href="https://www.youtube.com/@penseoffgrid" class="social-btn group flex flex-col items-center justify-center w-28 h-28 rounded-2xl bg-white/5 border border-white/10"><span class="text-3xl">▶️</span><span class="text-[10px] font-black text-gray-400 mt-3 uppercase tracking-widest">YouTube</span></a>
+      <a href="https://www.instagram.com/penseoffgrid" class="social-btn group flex flex-col items-center justify-center w-28 h-28 rounded-2xl bg-white/5 border border-white/10"><span class="text-3xl">📸</span><span class="text-[10px] font-black text-gray-400 mt-3 uppercase tracking-widest">Instagram</span></a>
+      <a href="https://www.tiktok.com/@penseoffgrid" class="social-btn group flex flex-col items-center justify-center w-28 h-28 rounded-2xl bg-white/5 border border-white/10"><span class="text-3xl">🎵</span><span class="text-[10px] font-black text-gray-400 mt-3 uppercase tracking-widest">TikTok</span></a>
+      <a href="https://chat.whatsapp.com/LIL7ytXyakpE4JnGvCgMBq" class="social-btn group flex flex-col items-center justify-center w-28 h-28 rounded-2xl bg-white/5 border border-white/10"><span class="text-3xl">⚡</span><span class="text-[10px] font-black text-gray-400 mt-3 uppercase tracking-widest">Grupo VIP</span></a>
+      <a href="https://chat.whatsapp.com/EwVxNCXMypJFf2zlxM5wZi" class="social-btn group flex flex-col items-center justify-center w-28 h-28 rounded-2xl bg-white/5 border border-white/10"><span class="text-3xl">💬</span><span class="text-[10px] font-black text-gray-400 mt-3 uppercase tracking-widest">Conversas</span></a>
+    </div>
+    <div class="mt-14 text-center"><p class="text-gray-600 text-[10px] font-bold uppercase tracking-widest opacity-70">© 2026 PENSE OFFGRID</p></div>
+  </footer>
+  <div id="homeBannerLayer"></div>
+</div>
+
+<script>
+
+const PROJECTS = {
+  nomade: {
+    title: "Projeto Essencial 12V",
+    tag: "iniciante",
+    tagClass: "green",
+    subtitle: "Sistema compacto para primeiros testes, pequenas cargas, uso móvel e aprendizado prático.",
+    image: "https://i.imgur.com/NwJhdB4.png",
+    blueprint: "https://i.imgur.com/XvhFmSH.png",
+    specs: ["Banco 12V", "1.000W real", "Até 900Wp"],
+    inverter: "Felicity Solar IVCM1012",
+    battery: "Lítio ou Chumbo 12V",
+    panels: "Até 900Wp de painéis",
+    cta: "Ver projeto 12V"
+  },
+  essencial: {
+    title: "Simples & Móvel 24V",
+    tag: "intermediário",
+    tagClass: "yellow",
+    subtitle: "Referência para residências básicas, motorhomes, pequenos sítios e cargas essenciais.",
+    image: "https://i.imgur.com/NQLAc71.png",
+    blueprint: "https://i.imgur.com/WLGNLU4.png",
+    specs: ["Banco 24V", "4.200W", "220V"],
+    inverter: "Inversor híbrido 24V 4.0kW",
+    battery: "Banco 24V de lítio",
+    panels: "4 painéis 550W em série",
+    cta: "Ver projeto 24V"
+  },
+  total: {
+    title: "Padrão Brasileiro 48V",
+    tag: "referência master",
+    tagClass: "orange",
+    subtitle: "Projeto residencial robusto para rotina real, com folga para geladeira, bombas, iluminação, eletrônicos e expansão.",
+    image: "https://i.imgur.com/Qta9pp1.png",
+    blueprint: "https://i.imgur.com/T8FQpOb.png",
+    specs: ["Banco 48V", "6.200W", "220V"],
+    inverter: "Inversor ANENJI 6.2kW 48V",
+    battery: "Banco 48V rack ou equivalente",
+    panels: "10 painéis 550W",
+    cta: "Ver projeto 48V"
+  },
+  performance: {
+    title: "Alta Performance 11kW",
+    tag: "avançado",
+    tagClass: "red",
+    subtitle: "Para grandes propriedades, comércio, alta demanda elétrica e sistemas com maior margem operacional.",
+    image: "https://i.imgur.com/c8Vm80l.png",
+    blueprint: "https://i.imgur.com/d3DSGc9.png",
+    specs: ["Banco 48V", "11.000W", "Alta carga"],
+    inverter: "Inversor 11kW",
+    battery: "Banco 48V 200Ah+",
+    panels: "16+ painéis 550W",
+    cta: "Ver projeto avançado"
+  }
+};
+
+window.penseHomeApp = new Vue({
+  el:"#app",
+  data:{
+    currentHeroImage:0,
+    heroImages:[
+      "https://i.imgur.com/T8FQpOb.png","https://i.imgur.com/WLGNLU4.png","https://i.imgur.com/NwJhdB4.png",
+      "https://i.imgur.com/kIUsJnk.png","https://i.imgur.com/d3DSGc9.png","https://i.imgur.com/NQLAc71.png",
+      "https://i.imgur.com/pEhT8sH.png","https://i.imgur.com/Qta9pp1.png","https://i.imgur.com/XvhFmSH.png","https://i.imgur.com/MvPZy7W.png"
+    ]
+  },
+  mounted(){
+    setInterval(()=>{this.currentHeroImage=(this.currentHeroImage+1)%this.heroImages.length},3500);
+    const grid=document.getElementById("projectsPreview");
+    if(!grid) return;
+    const keys=["total","nomade","essencial","performance"];
+    grid.innerHTML=keys.map(k=>{
+      const p=PROJECTS[k];
+      const big=k==="total"?'xl:col-span-2 featured-ring':'';
+      return `<a href="/projetos/?p=${k}" class="glass project-card ${big} rounded-[28px] p-1 flex flex-col overflow-hidden">
+        <div class="project-img h-44 rounded-t-[24px] border-b border-white/5 flex items-center justify-center"><img src="${p.image}" class="max-w-full max-h-full object-contain p-4" alt="${p.title}"></div>
+        <div class="p-6 flex flex-col flex-grow text-left">
+          <h3 class="font-black text-xl text-white mb-2 uppercase">${p.title}</h3>
+          <div class="flex flex-wrap gap-2 mb-4"><span class="level ${p.tagClass}">${p.tag}</span>${p.specs.map(s=>`<span class="chip">${s}</span>`).join("")}</div>
+          <p class="text-gray-400 text-sm mb-5">${p.subtitle}</p>
+          <span class="cta cta-secondary mt-auto">${p.cta}</span>
+        </div>
+      </a>`;
+    }).join("");
+  }
+});
+const observer=new IntersectionObserver((entries)=>{entries.forEach((entry,i)=>{if(entry.isIntersecting){setTimeout(()=>entry.target.classList.add("show"),i*50);observer.unobserve(entry.target)}})},{threshold:.1});
+window.addEventListener("load",()=>document.querySelectorAll(".reveal").forEach(el=>observer.observe(el)));
+</script>
+
+<script>
+(function(){
+  const SHOPEE_REF = "https://s.shopee.com.br/7KrhPU0WRF";
+  const COOLDOWN_MS = 12 * 60 * 60 * 1000;
+  const LAST_KEY = "penseoffgrid_shopee_last_open";
+  const COUNT_KEY = "penseoffgrid_public_click_count";
+
+  function canOpenNow(){
+    const last = Number(localStorage.getItem(LAST_KEY) || 0);
+    return !last || (Date.now() - last) > COOLDOWN_MS;
+  }
+
+  function registerPublicClick(event){
+    const clickable = event.target.closest("a,button");
+    if(!clickable) return;
+
+    if(!canOpenNow()) return;
+
+    let count = Number(localStorage.getItem(COUNT_KEY) || 0) + 1;
+    localStorage.setItem(COUNT_KEY, String(count));
+
+    if(count >= 5){
+      localStorage.setItem(LAST_KEY, String(Date.now()));
+      localStorage.setItem(COUNT_KEY, "0");
+      window.open(SHOPEE_REF, "_blank", "noopener,noreferrer");
+    }
+  }
+
+  document.addEventListener("click", registerPublicClick, true);
+})();
+</script>
+
+<script type="module">
+  import { getSettings, getCollection } from "./assets/js/firebase-public.js";
+
+  const setText = (selector, value) => {
+    if (value === undefined || value === null || value === "") return;
+    const el = document.querySelector(selector);
+    if (el) el.textContent = value;
+  };
+
+  const setHref = (selector, value) => {
+    if (!value) return;
+    const el = document.querySelector(selector);
+    if (el) el.href = value;
+  };
+
+  const escapeHtml = (value = "") => String(value).replace(/[&<>"']/g, (char) => ({
+    "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#039;"
+  }[char]));
+
+  const quickCardHtml = (item = {}) => `
+    <a href="${escapeHtml(item.url || item.linkUrl || '#')}" class="quick-card glass p-6 rounded-3xl text-left">
+      <div class="section-kicker mb-3">${escapeHtml(item.kicker || item.category || 'Pense Offgrid')}</div>
+      <h3 class="font-black text-xl uppercase text-white mb-2">${escapeHtml(item.title || item.name || 'Área')}</h3>
+      <p class="text-sm text-gray-400">${escapeHtml(item.description || item.subtitle || '')}</p>
+      <span class="card-arrow">→</span>
+    </a>
+  `;
+
+  const ctaClass = (style = '') => {
+    if (style === 'secondary') return 'cta cta-secondary text-xs px-5 py-3';
+    if (style === 'whatsapp') return 'cta cta-primary text-xs px-5 py-3';
+    if (style === 'offer') return 'cta cta-primary text-xs px-5 py-3';
+    return 'cta cta-primary text-xs px-5 py-3';
+  };
+
+  const ctaHtml = (item = {}) => `
+    <a href="${escapeHtml(item.url || item.linkUrl || '#')}" class="${ctaClass(item.style)}">${escapeHtml(item.label || item.title || 'Abrir')}</a>
+  `;
+
+  const bannerHtml = (item = {}) => {
+    const position = String(item.position || 'bottom-right').replace(/[^a-z-]/g, '');
+    return `
+      <a href="${escapeHtml(item.linkUrl || item.url || '#')}" class="home-float-banner ${escapeHtml(position)}" target="_blank" rel="noopener noreferrer">
+        ${item.imageUrl ? `<img src="${escapeHtml(item.imageUrl)}" alt="">` : `<span class="home-float-icon">⚡</span>`}
+        <span><strong>${escapeHtml(item.title || 'Pense Offgrid')}</strong><small>${escapeHtml(item.description || '')}</small></span>
+      </a>
+    `;
+  };
+
+  function applyHomeSettings(settings = {}) {
+    document.title = settings.seoTitle || document.title;
+
+    const description = document.querySelector('meta[name="description"]');
+    if (description && settings.seoDescription) description.setAttribute("content", settings.seoDescription);
+
+    const ogTitle = document.querySelector('meta[property="og:title"]');
+    if (ogTitle && settings.seoTitle) ogTitle.setAttribute("content", settings.seoTitle);
+
+    const ogDescription = document.querySelector('meta[property="og:description"]');
+    if (ogDescription && settings.seoDescription) ogDescription.setAttribute("content", settings.seoDescription);
+
+    setText("#homeHeroBadgeText", settings.heroBadge);
+    setText("#homeHeroTitle", settings.heroTitle);
+    setText("#homeHeroSubtitle", settings.heroSubtitle);
+    setText("#homeHeroPrimary", settings.primaryButtonText);
+    setHref("#homeHeroPrimary", settings.primaryButtonUrl);
+    setText("#homeHeroSecondary", settings.secondaryButtonText);
+    setHref("#homeHeroSecondary", settings.secondaryButtonUrl);
+
+    const proofMap = [
+      ["proof1Kicker", "proof1Text"],
+      ["proof2Kicker", "proof2Text"],
+      ["proof3Kicker", "proof3Text"]
+    ];
+    const proofGrid = document.querySelector("#homeProofGrid");
+    if (proofGrid && proofMap.some(([kicker, text]) => settings[kicker] || settings[text])) {
+      proofGrid.innerHTML = proofMap.map(([kicker, text]) => `
+        <div class="micro-proof">
+          <div class="section-kicker mb-1">${escapeHtml(settings[kicker] || '')}</div>
+          <div class="text-sm text-white font-bold">${escapeHtml(settings[text] || '')}</div>
+        </div>
+      `).join("");
+    }
+
+    setText("#homeCarouselKicker", settings.carouselKicker);
+    setText("#homeCarouselTitle", settings.carouselTitle);
+    setText("#homeCarouselDescription", settings.carouselDescription);
+    setText("#homeEcosystemKicker", settings.ecosystemKicker);
+    setText("#homeEcosystemTitle", settings.ecosystemTitle);
+    setText("#homeEcosystemDescription", settings.ecosystemDescription);
+    setText("#homeEcosystemTag", settings.ecosystemTag);
+    setText("#homeFeatureKicker", settings.featureKicker);
+    setText("#homeFeatureTitle", settings.featureTitle);
+    setText("#homeFeatureDescription", settings.featureDescription);
+    setText("#homeFeatureIcon", settings.featureIcon);
+    setText("#homeFeaturePrimary", settings.featurePrimaryText);
+    setHref("#homeFeaturePrimary", settings.featurePrimaryUrl);
+    setText("#homeFeatureSecondary", settings.featureSecondaryText);
+    setHref("#homeFeatureSecondary", settings.featureSecondaryUrl);
+    setText("#homeFooterKicker", settings.footerKicker);
+    setText("#homeFooterTitle", settings.footerTitle);
+  }
+
+  (async function connectHomeToFirebase(){
+    const settings = await getSettings("home", "main");
+    if (settings) applyHomeSettings(settings);
+
+    const carousel = await getCollection("home", "carousel");
+    if (carousel.length && window.penseHomeApp) {
+      const images = carousel.map(item => item.imageUrl).filter(Boolean);
+      if (images.length) window.penseHomeApp.heroImages = images;
+    }
+
+    const cards = await getCollection("home", "cards");
+    const cardsGrid = document.querySelector("#homeCardsGrid");
+    if (cards.length && cardsGrid) {
+      cardsGrid.innerHTML = cards.map(quickCardHtml).join("");
+    }
+
+    const ctas = await getCollection("home", "ctas");
+    const extraCtas = document.querySelector("#homeExtraCtas");
+    if (ctas.length && extraCtas) {
+      const heroCtas = ctas.filter(item => ["hero", "home"].includes(item.context || "home")).filter(item => !["hero-comecar", "hero-projetos"].includes(item.id));
+      if (heroCtas.length) extraCtas.innerHTML = heroCtas.map(ctaHtml).join("");
+    }
+
+    const banners = await getCollection("home", "banners");
+    const bannerLayer = document.querySelector("#homeBannerLayer");
+    if (banners.length && bannerLayer) {
+      bannerLayer.innerHTML = banners.map(bannerHtml).join("");
+    }
+
+    const socials = await getCollection("home", "socials");
+    const socialGrid = document.querySelector(".footer-social-grid");
+    if (socials.length && socialGrid) {
+      socialGrid.innerHTML = socials.map(item => `
+        <a href="${escapeHtml(item.url || '#')}" class="social-btn group flex flex-col items-center justify-center w-28 h-28 rounded-2xl bg-white/5 border border-white/10">
+          <span class="text-3xl">${escapeHtml(item.icon || '⚡')}</span>
+          <span class="text-[10px] font-black text-gray-400 mt-3 uppercase tracking-widest">${escapeHtml(item.title || item.name || 'Link')}</span>
+        </a>
+      `).join("");
+    }
+  })();
+</script>
+
+<script type="module">
+  import { bootGlobalLinks } from "/assets/js/firebase-public.js";
+  bootGlobalLinks().catch((error) => console.warn("Links globais fallback:", error));
+</script>
+</body>
+</html>

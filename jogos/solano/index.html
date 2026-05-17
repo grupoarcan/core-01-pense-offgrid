@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
+  <title>Solano V5.18 | Painel do Jogo</title>
+  <meta name="theme-color" content="#050505"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800;900&family=Space+Grotesk:wght@700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+<div id="app">
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo" id="adminSecret">▦</div>
+      <div>
+        <h1>PENSE <span>OFFGRID</span></h1>
+        <p id="playerLine">Operação Solano</p>
+        <div class="xp"><i id="xpFill"></i></div>
+      </div>
+    </div>
+    <div class="bank">
+      <div><small>CPO</small><b id="wallet">0,00</b></div>
+      <div><small>Energia</small><b id="energy">0 Wh</b></div>
+      <button id="sellTop">Vender</button>
+    </div>
+    <nav>
+      <button id="navPlant" class="active">🏠 Usina</button>
+      <button id="navRunner">🏃 Solano</button>
+      <button data-modal="inventoryModal">🎒 Inventário</button>
+      <button data-modal="missionsModal">☷ Missões</button>
+      <button data-modal="rankingModal">🏆 Ranking</button>
+      <button data-modal="shopModal">▣ Loja</button>
+    </nav>
+  </header>
+
+  <section id="gate" class="gate active">
+    <div class="gateCard">
+      <div class="bolt">⚡</div>
+      <h2>Entrar na Operação</h2>
+      <p>Nome, cidade e estado para ranking local.</p>
+      <input id="playerName" placeholder="Seu nome" maxlength="22"/>
+      <div class="row">
+        <input id="playerCity" placeholder="Cidade" maxlength="24"/>
+        <input id="playerUF" placeholder="UF" maxlength="2"/>
+      </div>
+      <button id="savePlayer" class="primary">Começar</button>
+    </div>
+  </section>
+
+  <main>
+    <section id="plantSection" class="plant-grid">
+      <div class="card plant-card">
+        <div class="section-title">
+          <small>BASE PRINCIPAL</small>
+          <h2>Usina OffGrid</h2>
+          <p>A usina é o centro do jogo. O Solano coleta peças, mas você decide quando instalar.</p>
+        </div>
+        <div class="plant-scene">
+          <div class="weather">SOL NORMAL</div>
+          <div class="sun">☀</div>
+          <div id="solarField" class="solar-field"></div>
+          <svg class="flow" viewBox="0 0 900 420" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="grad" x1="0" x2="1">
+                <stop offset="0%" stop-color="#00e5ff"/>
+                <stop offset="55%" stop-color="#ff7a18"/>
+                <stop offset="100%" stop-color="#22c55e"/>
+              </linearGradient>
+            </defs>
+            <path d="M95 248 C250 208 380 245 500 312 S690 340 805 300" stroke="url(#grad)" stroke-width="6" fill="none"/>
+          </svg>
+          <div id="energyFx" class="energy-fx"></div>
+          <div class="genPulse"><small>GERANDO</small><b id="genPulse">+0 Wh</b></div>
+          <div class="machines">
+            <div class="device protectionDevice">
+              <div id="stringBoxIcon" class="protectionIcon">▧</div>
+              <small id="stringBoxLabel">STRING BOX</small>
+              <b>Proteção</b>
+            </div>
+            <div class="device invDevice">
+              <div id="plantInvImg" class="plant-inv-img">▤</div>
+              <small>INVERSOR</small>
+              <b id="plantInv">600 W</b>
+            </div>
+            <div class="device">
+              <div class="batteryIcon">▣</div>
+              <small>BATERIA</small>
+              <b id="plantBat">300 Wh</b>
+            </div>
+            <div class="device protectionDevice drDevice">
+              <div id="drIcon" class="protectionIcon">⏚</div>
+              <small id="drLabel">DR</small>
+              <b>Choque</b>
+            </div>
+            <div class="home">🏠</div>
+          </div>
+        </div>
+      </div>
+
+      <aside class="card panel-card">
+        <div class="stats">
+          <div><small>Potência</small><b id="wp">120 Wp</b></div>
+          <div><small>Geração</small><b id="gen">0 Wh/min</b><em id="genNote" class="genNote">Painéis + inversor definem o limite</em></div>
+          <div><small>Armazenado</small><b id="stored">0 Wh</b></div>
+          <div><small>Preço kWh</small><b id="price">0,30</b></div>
+        </div>
+        <div class="batteryBar"><i id="batteryFill"></i></div>
+        <button id="sellEnergy" class="primary wide">Vender energia</button>
+        <div class="feed"><h3>Telemetria</h3><div id="feed"></div></div>
+      </aside>
+    </section>
+
+    <section id="runnerSection" class="card runner-card">
+      <div class="hud">
+        <div class="wide"><small>Jogador</small><b id="hudPlayer">—</b></div>
+        <div><small>Vidas</small><b id="hudLives">❤❤❤</b></div>
+        <div><small>Distância</small><b id="hudDistance">0m</b></div>
+        <div><small>CPO Run</small><b id="hudCpo">0.00</b></div>
+        <div><small>Combo</small><b id="hudCombo">x1.0</b></div>
+        <div><small>Recorde</small><b id="hudBest">0m</b></div>
+      </div>
+      <div id="canvasWrap" class="canvas-wrap">
+        <canvas id="game"></canvas>
+        <button id="mobileBackPlant" class="mobileBackPlant" type="button">← Usina</button>
+        <button id="fullscreenRunner" class="fullscreenBtn" type="button">⛶ Tela cheia</button>
+        <button id="exitFullscreenRunner" class="exitFullscreenBtn" type="button">×</button>
+        <div class="combo">
+          <span id="comboName">NORMAL</span>
+          <div><i id="comboFill"></i></div>
+        </div>
+        <button id="dailyBtn" class="daily">🎁 Bônus</button>
+        <div id="notice" class="notice"></div>
+        <div id="itemToast" class="itemToast"></div>
+        <div id="resumeOverlay" class="resume">TOQUE PARA CONTINUAR</div>
+        <div id="startOverlay" class="overlay active">
+          <div class="box">
+            <h2>Solano Runner</h2>
+            <p>Pule, deslize, colete peças e depois instale na usina.</p>
+            <button id="startRun" class="primary">Iniciar corrida</button>
+            <small>Celular: direita pula / esquerda desliza</small>
+          </div>
+        </div>
+        <div id="resultOverlay" class="overlay">
+          <div class="box resultBox">
+            <button id="closeResult" class="resultClose" aria-label="Fechar resultado">×</button>
+            <h2>Resultado da Run</h2>
+            <div id="resultStats" class="resultStats"></div>
+            <div id="resultDrops" class="resultDrops"></div>
+            <button id="goInventory" class="primary">Melhorar usina</button>
+            <button id="resultBackPlant" class="ghost">Voltar para usina</button>
+            <button id="runAgain" class="ghost">Correr de novo</button>
+          </div>
+        </div>
+        <div class="touch"><span>DESLIZAR</span><span>PULAR</span></div>
+      </div>
+    </section>
+  </main>
+
+  <dialog id="inventoryModal" class="modal">
+    <div class="modalHead"><div><h2>Inventário</h2><p>Toque para instalar</p></div><button class="close">×</button></div>
+    <div id="inventoryGrid" class="inventoryGrid"></div>
+  </dialog>
+
+  <dialog id="missionsModal" class="modal">
+    <div class="modalHead"><div><h2>Missões</h2><p>Com resgate e cooldown</p></div><button class="close">×</button></div>
+    <div id="missionsGrid" class="missionsGrid"></div>
+  </dialog>
+
+  <dialog id="rankingModal" class="modal">
+    <div class="modalHead"><div><h2>Elite OffGrid</h2><p>Distância é a métrica principal</p></div><button class="close">×</button></div>
+    <section class="scoreBox"><h3>Score</h3><p>Distância percorrida + bônus de usina. Quanto mais longe no Solano, maior o ranking.</p></section>
+    <div id="rankingList" class="rankingList"></div>
+  </dialog>
+
+  <dialog id="shopModal" class="modal">
+    <div class="modalHead"><div><h2>Loja</h2><p>Upgrades diretos</p></div><button class="close">×</button></div>
+    <div id="shopBalance" class="shopBalance">Saldo atual: 0,00 CPO</div>
+    <div id="shopGrid" class="shopGrid"></div>
+  </dialog>
+
+
+  <dialog id="itemDetailModal" class="modal itemDetailModal">
+    <div class="modalHead"><div><h2 id="itemDetailTitle">Detalhes do item</h2><p id="itemDetailSubtitle">imagem, descrição e efeitos</p></div><button class="close">×</button></div>
+    <div id="itemDetailContent" class="itemDetailContent"></div>
+  </dialog>
+
+  <dialog id="affiliateModal" class="modal affiliateModal">
+    <div class="modalHead"><div><h2 id="affiliateTitle">Oferta OffGrid</h2><p id="affiliateSubtitle">pausa inteligente</p></div><button id="affiliateClose" class="close">×</button></div>
+    <div class="affiliateBody">
+      <div id="affiliateImage" class="affiliateImage">⚡</div>
+      <h3 id="affiliateHeadline">Veja uma oferta relacionada ao jogo</h3>
+      <p id="affiliateText">O jogo ficou pausado. Você pode abrir a oferta em nova aba e voltar sem perder a corrida.</p>
+      <div class="affiliateActions"><button id="affiliateOpen" class="primary">Ver oferta</button><button id="affiliateContinue" class="ghost">Continuar jogo</button></div>
+    </div>
+  </dialog>
+  <dialog id="adminLoginModal" class="modal adminModal">
+    <div class="modalHead"><div><h2>Admin Solano</h2><p>acesso restrito</p></div><button class="close">×</button></div>
+    <div class="adminBox"><p class="adminHelp">Acesso local inicial. Depois essa autenticação pode ser trocada pelo Firebase Auth sem alterar o runner.</p><input id="adminEmail" type="email" placeholder="E-mail admin" value="admin@solano.local"><input id="adminPass" type="password" placeholder="Senha" value="solano123"><button id="adminLoginBtn" class="primary wide">Entrar no painel</button><small class="adminHint">Padrão local: admin@solano.local / solano123</small></div>
+  </dialog>
+  <dialog id="gameAdminModal" class="modal gameAdminModal">
+    <div class="modalHead"><div><h2>Painel do Jogo</h2><p>configuração local pronta para Firebase</p></div><button class="close">×</button></div>
+    <div class="adminPanelGrid">
+      <aside class="adminTabs">
+        <button data-admin-tab="adminDash" class="active">Visão geral</button>
+        <button data-admin-tab="adminShop">Loja</button>
+        <button data-admin-tab="adminAds">Campanhas CTA</button>
+        <button data-admin-tab="adminRunner">Runner</button>
+        <button data-admin-tab="adminUsers">Administradores</button>
+        <button data-admin-tab="adminAssets">Assets</button>
+        <button data-admin-tab="adminJson">Backup JSON</button>
+      </aside>
+      <section class="adminContent">
+        <div id="adminDash" class="adminTab active">
+          <h3>Centro de controle Solano</h3>
+          <p>Este painel já altera configurações via localStorage. Na integração Firebase, os mesmos campos viram documentos/coleções do jogo.</p>
+          <div class="adminMetrics"><div><small>Itens extras</small><b id="adminMetricItems">0</b></div><div><small>CTAs</small><b id="adminMetricAds">0</b></div><div><small>Fonte</small><b>Local</b></div></div>
+        </div>
+        <div id="adminShop" class="adminTab">
+          <h3>Loja profissional</h3>
+          <p>Cadastre itens com imagem, descrição, efeito, preço e raridade. Ao salvar, o item aparece na loja sem recarregar.</p>
+          <button id="admAddItem" class="primary">+ Novo item</button>
+          <div id="admShopList" class="adminList"></div>
+        </div>
+        <div id="adminAds" class="adminTab">
+          <h3>Campanhas CTA</h3>
+          <label class="adminCheck"><input id="admAdsEnabled" type="checkbox"> Ativar pausas com CTA</label>
+          <div class="adminFormGrid">
+            <input id="admAdsInterval" type="number" placeholder="Intervalo entre CTAs em segundos. Ex: 600">
+            <input id="admAdsDisplay" type="number" placeholder="Tempo sugerido em tela. Ex: 8">
+          </div>
+          <div class="adminActions"><button id="admSaveAds" class="primary">Salvar configuração CTA</button><button id="admAddAd" class="ghost">+ Novo CTA</button></div>
+          <div id="admAdsList" class="adminList"></div>
+        </div>
+        <div id="adminRunner" class="adminTab">
+          <h3>Runner e economia</h3>
+          <div class="adminFormGrid"><input id="admBaseSpeed" type="number" placeholder="Velocidade base"><input id="admMaxSpeed" type="number" placeholder="Velocidade máxima"><input id="admInvul" type="number" placeholder="Invencibilidade ao continuar"><input id="admKwhPrice" type="number" step="0.01" placeholder="Preço kWh"><input id="admResaleRate" type="number" step="0.01" placeholder="Revenda. Ex: 0.70"></div>
+          <button id="admSaveRunner" class="primary">Salvar ajustes</button>
+        </div>
+        <div id="adminUsers" class="adminTab">
+          <h3>Administradores locais</h3>
+          <p>Controle local inicial. Depois estes dados viram Firebase Auth/permissões.</p>
+          <input type="hidden" id="admUserIndex">
+          <div class="adminFormGrid"><input id="admUserEmail" type="email" placeholder="email admin"><input id="admUserPass" type="text" placeholder="senha"><select id="admUserRole"><option value="admin">admin</option><option value="superadmin">superadmin</option></select></div>
+          <button id="admSaveUser" class="primary">Salvar admin</button>
+          <div id="admUsersList" class="adminList"></div>
+        </div>
+        <div id="adminAssets" class="adminTab"><h3>Estratégia de imagens</h3><p>Use URL direta/Imgur agora. O campo de arquivo dos modais converte para base64 local para teste. No Firebase futuro, esse botão vira upload para Firebase Storage e salva a URL no Firestore.</p><ul><li><b>Imgur:</b> prático, barato e já combina com seu fluxo atual.</li><li><b>Firebase Storage:</b> melhor para produto final, controle e painel profissional.</li><li><b>Assets locais:</b> melhor para arquivos fixos que raramente mudam.</li></ul></div>
+        <div id="adminJson" class="adminTab"><h3>Backup / Configuração bruta</h3><textarea id="admJson"></textarea><div class="adminActions"><button id="admSaveJson" class="primary">Salvar JSON</button><button id="admExportJson" class="ghost">Exportar</button><button id="admResetJson" class="ghost dangerGhost">Resetar painel</button></div></div>
+      </section>
+    </div>
+  </dialog>
+
+  <dialog id="itemEditModal" class="modal adminModal">
+    <div class="modalHead"><div><h2>Editar item da loja</h2><p>imagem, descrição e efeito</p></div><button class="close">×</button></div>
+    <div class="adminBox">
+      <input type="hidden" id="editItemIndex">
+      <div class="adminFormGrid"><input id="editItemId" placeholder="id_item"><input id="editItemName" placeholder="Nome do item"><select id="editItemType"><option value="panel">Painel</option><option value="battery">Bateria</option><option value="inverter">Inversor</option><option value="tool">Ferramenta</option><option value="character">Personagem</option><option value="generic">Genérico</option></select><select id="editItemRarity"><option value="comum">comum</option><option value="colecionável">colecionável</option><option value="raro">raro</option><option value="épico">épico</option></select><input id="editItemPrice" type="number" placeholder="Preço CPO"><input id="editItemPower" type="number" placeholder="Potência/Wh/Wp/XP"><input id="editItemImage" placeholder="URL Imgur/imagem"><input id="editItemFile" type="file" accept="image/*"><select id="editItemStatus"><option value="active">ativo</option><option value="inactive">inativo</option></select></div>
+      <textarea id="editItemDesc" placeholder="Descrição completa do item"></textarea>
+      <textarea id="editItemEffect" placeholder="Efeito no jogo. Ex: +1000W de capacidade AC"></textarea>
+      <button id="saveItemEditor" class="primary wide">Salvar item</button>
+    </div>
+  </dialog>
+
+  <dialog id="adEditModal" class="modal adminModal">
+    <div class="modalHead"><div><h2>Editar CTA</h2><p>campanha de monetização</p></div><button class="close">×</button></div>
+    <div class="adminBox">
+      <input type="hidden" id="editAdIndex">
+      <div class="adminFormGrid"><input id="editAdTitle" placeholder="Título com espaços liberados"><select id="editAdType"><option value="shopee">Shopee</option><option value="mercadolivre">Mercado Livre</option><option value="aliexpress">AliExpress</option><option value="whatsapp">WhatsApp</option><option value="outro">Outro</option></select><input id="editAdLink" placeholder="Link afiliado ou grupo"><input id="editAdImage" placeholder="Imagem/banner do CTA"><input id="editAdFile" type="file" accept="image/*"><label class="adminCheck"><input id="editAdActive" type="checkbox"> Ativo</label></div>
+      <textarea id="editAdText" placeholder="Texto principal do CTA"></textarea>
+      <textarea id="editAdDescription" placeholder="Descrição auxiliar"></textarea>
+      <button id="saveAdEditor" class="primary wide">Salvar CTA</button>
+    </div>
+  </dialog>
+
+  <div id="toast" class="toast"></div>
+</div>
+<script src="game-config.js"></script>
+<script src="game-admin-schema.js"></script>
+<script src="game.js"></script>
+<script type="module" src="firebase-game-sync.js"></script>
+</body>
+</html>

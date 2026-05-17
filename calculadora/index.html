@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora PRO Definitiva - PENSE OFF-GRID</title>
+    <meta name="description" content="A ferramenta Off-Grid definitiva. Design moderno com 100% da funcionalidade PRO original: ROI, personalização, PDF técnico completo e todos os links de indicação.">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.1/jspdf.plugin.autotable.min.js"></script>
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: { offgrid: { base: '#050505', surface: '#0F1115', accent: '#F7931E' } },
+                    fontFamily: { sans: ['Inter', 'sans-serif'], display: ['Outfit', 'sans-serif'], }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #030303;
+            /* NOVA TEXTURA DE FUNDO VIP (Malha fina e brilho central) */
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(247,147,30,0.12) 0%, transparent 60%),
+                linear-gradient(rgba(255,255,255,.015) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,.015) 1px, transparent 1px);
+            background-size: 100% 100%, 36px 36px, 36px 36px;
+            color: #E5E7EB;
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+        h1, h2, h3, h4, h5, h6 { font-family: 'Outfit', sans-serif; }
+        [v-cloak] { display: none; }
+        
+        /* NOVO GLASSMORPHISM PREMIUM */
+        .glass-card {
+            background: linear-gradient(145deg, rgba(30, 30, 35, 0.6) 0%, rgba(15, 15, 18, 0.8) 100%);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            border-left: 1px solid rgba(255, 255, 255, 0.1);
+            border-right: 1px solid rgba(255, 255, 255, 0.02);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+            border-radius: 1.5rem;
+            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 1), inset 0 1px 0 rgba(255,255,255,0.05);
+            transition: all 0.3s ease;
+        }
+        .glass-card:hover {
+            border-left-color: rgba(247,147,30,.4);
+            border-top-color: rgba(247,147,30,.4);
+            box-shadow: 0 20px 40px -10px rgba(247,147,30,.2), inset 0 1px 0 rgba(255,255,255,0.05);
+        }
+        
+        .form-input, .form-select { 
+            background-color: rgba(0,0,0,0.5); 
+            color: #e2e8f0; 
+            border: 1px solid rgba(255,255,255,0.1); 
+            border-radius: 0.5rem; 
+            padding: 0.5rem 0.75rem; 
+            width: 100%; 
+            transition: all 0.2s;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
+        }
+        .form-input:focus, .form-select:focus { 
+            outline: none; 
+            border-color: #F7931E; 
+            background-color: rgba(0,0,0,0.7);
+            box-shadow: 0 0 0 2px rgba(247, 147, 30, 0.2), inset 0 2px 4px rgba(0,0,0,0.5); 
+        }
+        
+        .fade-in-up { animation: fadeInUp 0.6s ease-in-out forwards; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,.15); border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(247,147,30,.5); }
+
+        #image-viewer-modal, #video-modal { background-color: rgba(0,0,0,0.85); backdrop-filter: blur(12px); }
+        #image-viewer-modal img { max-height: 90vh; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 20px 50px rgba(0,0,0,0.8); }
+        #image-viewer-modal .close-btn, #video-modal .close-btn { position: absolute; top: 1rem; right: 1rem; color: white; font-size: 2rem; cursor: pointer; transition: color 0.3s; }
+        #image-viewer-modal .close-btn:hover, #video-modal .close-btn:hover { color: #F7931E; }
+        
+        .sub-accordion-content { display: none; padding-top: 0.5rem; }
+        .sub-accordion-trigger.open .sub-accordion-arrow { transform: rotate(-180deg); }
+        
+        /* NOVA ESTÉTICA PARA CTA WHATSAPP */
+        .whatsapp-cta-box { 
+            background: linear-gradient(145deg, rgba(30, 30, 35, 0.9) 0%, rgba(15, 15, 18, 0.95) 100%);
+            border-top: 1px solid rgba(247, 147, 30, 0.5);
+            border-left: 1px solid rgba(247, 147, 30, 0.3);
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 1.5rem; 
+            color: white; 
+            transition: all 0.3s ease; 
+            box-shadow: 0 20px 40px -10px rgba(247,147,30,.15);
+        }
+        .whatsapp-cta-box:hover { box-shadow: 0 30px 60px -10px rgba(247, 147, 30, 0.3); transform: translateY(-3px); }
+        
+        /* OVERRIDE PREMIUM PARA TODOS OS BOTÕES DE AÇÃO */
+        .bg-orange-500, .bg-orange-600, .whatsapp-cta-button {
+            background: linear-gradient(90deg, #F7931E 0%, #FFC078 100%) !important;
+            color: #120A02 !important;
+            box-shadow: 0 10px 25px -5px rgba(247, 147, 30, 0.5), inset 0 2px 0 rgba(255, 255, 255, 0.3) !important;
+            border: none !important;
+            text-shadow: none !important;
+        }
+        .bg-orange-500:hover, .bg-orange-600:hover, .whatsapp-cta-button:hover {
+            transform: translateY(-2px) scale(1.02) !important;
+            box-shadow: 0 15px 35px -5px rgba(247, 147, 30, 0.6), inset 0 2px 0 rgba(255, 255, 255, 0.4) !important;
+        }
+
+        button:disabled { cursor: not-allowed; opacity: 0.5 !important; filter: grayscale(100%); transform: none !important; box-shadow: none !important; }
+        .fa-spin { animation: spin 1s linear infinite; }
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    </style>
+
+<!-- V2.20 Calculadora Painel -->
+<script>
+window.ecoCalculatorConfig = {
+  enabled: true,
+  panelControlled: true,
+  sections: ['hero','seo','cta','products','warning']
+};
+</script>
+
+</head>
+<body class="min-h-screen selection:bg-orange-500/30 selection:text-white">
+    <div id="app" v-cloak>
+        <input type="file" ref="fileInput" @change="carregarProjeto" accept=".json" class="hidden">
+        
+        <nav class="border-b border-white/5 bg-[#050505]/90 backdrop-blur fixed w-full z-50">
+            <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+                <a href="/" class="flex items-center gap-2 hover:opacity-80 transition-opacity">
+                    <i class="fa-solid fa-arrow-left text-gray-500"></i>
+                    <span class="font-display font-bold text-lg tracking-wide text-white">PENSE<span class="text-orange-500">OFFGRID</span></span>
+                </a>
+                <div class="flex gap-4">
+                    <!-- ATUALIZADO: Tracking Adicionado no botão de Ajuda -->
+                    <a @click="plantShopeeCookieWithCooldown" href="https://whatsapp.com/channel/0029Vb7DVdL1NCrPouPkf02y" target="_blank" class="text-xs font-bold text-orange-500 hover:text-orange-400 uppercase tracking-wider flex items-center gap-2">
+                        <i class="fa-brands fa-whatsapp"></i> Ajuda
+                    </a>
+                </div>
+            </div>
+        </nav>
+
+        <main class="container mx-auto px-4 md:px-8 pt-28 pb-20">
+            <header class="text-center mb-12">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-900/30 border border-orange-500/30 text-orange-400 text-xs font-bold tracking-widest uppercase mb-4">
+                    <span class="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse"></span> Modo Engenharia
+                </div>
+                <h1 class="font-display text-4xl md:text-6xl font-black text-white mb-2">
+                    Calculadora <span class="text-orange-500">PRO</span>
+                </h1>
+                <p class="mt-3 text-lg max-w-2xl mx-auto font-light text-gray-400">
+                    Engenharia de precisão para sua independência. Dimensione seu sistema Off-Grid com a tecnologia do Pense Off-Grid OS.
+                </p>
+                <div class="mt-6">
+                    <!-- ATUALIZADO: Tracking Adicionado no vídeo de tutorial -->
+                    <button @click="videoModalVisible = true; plantShopeeCookieWithCooldown()" class="text-sm font-semibold transition-all duration-300 hover:text-white border border-orange-500/30 hover:bg-orange-500/10 px-4 py-2 rounded-full text-orange-500">
+                        <i class="fas fa-play-circle mr-2"></i>Tutorial: Como usar a ferramenta?
+                    </button>
+                </div>
+            </header>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                 <div class="glass-card p-6 border-t-4 border-orange-500">
+                    <h2 class="font-display text-xl font-bold mb-6 flex items-center text-white"><i class="fas fa-clipboard-list mr-3 text-orange-500"></i>1. Diagnóstico de Consumo</h2>
+                    <div class="grid grid-cols-2 gap-4 mb-6">
+                        <div><label class="block text-xs font-mono uppercase text-gray-500 mb-1">Tensão da Rede</label><select class="form-select" v-model.number="projectConfig.tensaoSaidaAC"><option value="220">220V</option><option value="127">110V / 127V</option></select></div>
+                        <div class="col-span-2"><label class="block text-xs font-mono uppercase text-gray-500 mb-1">Potencial Solar (HSP)</label><select class="form-select" v-model="projectConfig.hspSelection" @change="updateHsp"><option value="4.9">Média Brasil (4.9h)</option><option value="5.5">Nordeste (5.5h)</option><option value="5.2">Centro-Oeste (5.2h)</option><option value="4.7">Sudeste (4.7h)</option><option value="4.5">Sul (4.5h)</option><option value="manual">Entrada Manual</option></select></div>
+                        <div v-if="projectConfig.hspSelection === 'manual'" class="col-span-2"><label class="block text-xs font-mono uppercase text-gray-500 mb-1">HSP Manual:</label><input type="number" step="0.1" class="form-input" v-model.number="projectConfig.hsp"></div>
+                    </div>
+                    
+                    <div class="border-t border-white/5 pt-6">
+                        <form @submit.prevent="adicionarEquipamento" class="grid grid-cols-2 md:grid-cols-4 gap-4 items-end">
+                            <div class="col-span-2 md:col-span-4"><label class="block text-xs font-mono uppercase text-gray-500 mb-1">Equipamento</label><select class="form-select" v-model="form.selectedEquipmentIndex" @change="updateEquipamentoFields"><optgroup v-for="(group, groupName) in groupedEquipmentOptions" :label="groupName"><option v-for="item in group" :value="item.originalIndex">{{ item.name }}</option></optgroup></select></div>
+                            <div v-if="isOutroSelected" class="col-span-2 md:col-span-4">
+                                <label class="block text-xs font-mono uppercase text-gray-500 mb-1">Nome do Equipamento*</label>
+                                <input type="text" class="form-input" v-model.trim="form.outroNome" placeholder="Ex: Bomba de Piscina">
+                            </div>
+                            <div><label class="block text-xs font-mono uppercase text-gray-500 mb-1">Potência (W)</label><input type="number" class="form-input" v-model.number="form.potencia"></div>
+                            <div><label class="block text-xs font-mono uppercase text-gray-500 mb-1">Horas/dia</label><input type="number" class="form-input" step="0.1" v-model.number="form.horas"></div>
+                            <div><label class="block text-xs font-mono uppercase text-gray-500 mb-1">Qtde.</label><input type="number" class="form-input" v-model.number="form.quantidade"></div>
+                            <div class="col-span-2 md:col-span-1"><button type="submit" class="w-full py-2 rounded-lg text-black font-bold transition-transform hover:-translate-y-1 shadow-[0_0_15px_rgba(247,147,30,0.3)] bg-orange-500"><i class="fas fa-plus mr-1"></i> Add</button></div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="glass-card p-6 flex flex-col border-t-4 border-orange-500">
+                    <h2 class="font-display text-xl font-bold mb-6 flex items-center text-white"><i class="fas fa-tasks mr-3 text-orange-500"></i>2. Sua Lista de Cargas</h2>
+                    <div class="flex-grow p-4 rounded-lg min-h-[300px] overflow-y-auto custom-scrollbar border border-white/5 bg-black/40">
+                        <div v-if="projectConfig.equipamentos.length > 0">
+                            <table class="w-full text-sm">
+                                <thead><tr class="text-left text-xs font-mono text-gray-500 uppercase border-b border-white/10"><th class="py-2">Item</th><th class="text-center">☀️ Diurno?</th><th class="text-right">Remover</th></tr></thead>
+                                <tbody><tr v-for="(eq, index) in projectConfig.equipamentos" :key="index" class="border-b border-white/5"><td class="py-3 text-gray-300 font-medium">{{ eq.qtde }}x {{ eq.nome }} <span class="text-xs block text-gray-500 font-mono">{{eq.pot}}W | {{eq.hrs}}h/dia</span></td><td class="text-center"><input type="checkbox" v-model="eq.isDayOnly" class="h-4 w-4 rounded border-gray-600 bg-gray-800 accent-orange-500 focus:ring-orange-500 cursor-pointer"></td><td class="text-right"><button class="text-red-500 hover:text-red-400 p-1" @click="removerEquipamento(index)"><i class="fas fa-trash-alt"></i></button></td></tr></tbody>
+                            </table>
+                        </div>
+                        <div v-else class="h-full flex flex-col items-center justify-center opacity-30 text-gray-500"><i class="fas fa-plug text-6xl mb-4"></i><p class="font-medium text-center font-mono text-sm">Adicione equipamentos para começar.</p></div>
+                    </div>
+                    <div class="mt-auto pt-6">
+                        <div class="grid grid-cols-2 gap-3 mb-4">
+                            <button @click="abrirSeletorDeArquivo" class="w-full py-2 text-xs uppercase font-bold tracking-wider rounded border border-white/10 hover:bg-white/5 transition-colors text-gray-400"><i class="fas fa-upload mr-2"></i>Carregar</button>
+                            <button @click="salvarProjeto" class="w-full py-2 text-xs uppercase font-bold tracking-wider rounded border border-white/10 hover:bg-white/5 transition-colors text-gray-400"><i class="fas fa-save mr-2"></i>Salvar</button>
+                        </div>
+                        <button @click="calcularProjeto" class="w-full py-4 text-lg rounded-lg text-black font-black flex items-center justify-center transition-all hover:scale-[1.02] hover:bg-orange-400 bg-orange-500 shadow-[0_0_25px_rgba(247,147,30,0.4)]" :disabled="projectConfig.equipamentos.length === 0 || isLoading">
+                            <i class="fas mr-3" :class="isLoading ? 'fa-spinner fa-spin' : (resultado ? 'fa-sync-alt' : 'fa-microchip')"></i>
+                            {{ isLoading ? 'Processando Engenharia...' : (resultado ? 'ATUALIZAR PROJETO' : 'GERAR BLUEPRINT DO PROJETO') }}
+                        </button>
+                        <p v-if="errorMessage" class="text-red-500 text-center mt-4 text-sm bg-red-900/20 p-2 rounded border border-red-900/50">{{ errorMessage }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div v-if="resultado" class="mt-12 fade-in-up">
+                <div class="flex items-center gap-4 mb-6 border-b border-white/10 pb-4">
+                    <div class="w-10 h-10 rounded-full bg-orange-500 flex items-center justify-center text-black font-bold text-xl"><i class="fas fa-check"></i></div>
+                    <div>
+                        <h2 class="font-display text-2xl font-bold text-white">Projeto Dimensionado</h2>
+                        <p class="text-gray-500 text-sm font-mono">REF: {{ new Date().toLocaleDateString() }} | {{ resultado.inverter.voltageDC }}V SYSTEM</p>
+                    </div>
+                </div>
+
+                <div class="glass-card p-6 md:p-8 mb-8 relative overflow-hidden">
+                     <div class="absolute top-0 right-0 w-64 h-64 bg-orange-500/5 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none"></div>
+
+                     <div class="grid md:grid-cols-2 gap-8 items-start relative z-10">
+                        <div>
+                             <span class="inline-block py-1 px-3 rounded text-[10px] font-bold tracking-widest uppercase mb-2 bg-orange-500/10 text-orange-500 border border-orange-500/20">
+                                 Recomendação IA
+                             </span>
+                             <h3 class="font-display text-3xl font-bold mb-2 text-white">{{ resultado.inverter.name }}</h3>
+                             <p class="text-base leading-relaxed text-gray-400">{{ resultado.inverter.description }}</p>
+                             
+                             <div class="mt-6 rounded-xl p-6 cursor-pointer border transition-all hover:border-orange-500/50 group bg-black/40 border-white/5" @click="openImageViewer(resultado.inverter.image)">
+                                 <div class="flex justify-center">
+                                     <img :src="resultado.inverter.image" class="rounded-md h-48 object-contain transition-transform group-hover:scale-105">
+                                 </div>
+                                 <p class="text-center text-xs text-gray-500 mt-2"><i class="fas fa-search-plus mr-1"></i> Clique para ampliar o diagrama</p>
+                             </div>
+                        </div>
+                        <div>
+                            <h4 class="font-display text-lg font-bold mb-4 text-white flex items-center"><i class="fas fa-box-open mr-2 text-orange-500"></i> Lista de Materiais</h4>
+                            <div class="space-y-3">
+                                <button @click="showModal('paineis')" class="w-full text-left p-4 rounded-lg flex items-center gap-4 transition-all duration-200 group border hover:border-orange-500/50 bg-black/40 border-white/5">
+                                    <div class="w-10 h-10 rounded bg-orange-500/10 flex items-center justify-center text-orange-500 group-hover:bg-orange-500 group-hover:text-black transition-colors">
+                                        <i class="fas fa-solar-panel text-lg"></i>
+                                    </div>
+                                    <div>
+                                        <p class="font-bold text-white group-hover:text-orange-400 transition-colors">Painéis Solares</p>
+                                        <p class="text-xs text-gray-400">{{ resultado.calculatedPanels }}x módulos de {{resultado.panel.potencia}}W</p>
+                                    </div>
+                                    <i class="fas fa-chevron-right ml-auto text-gray-600 group-hover:text-orange-500"></i>
+                                </button>
+
+                                <button @click="showModal('inversor')" class="w-full text-left p-4 rounded-lg flex items-center gap-4 transition-all duration-200 group border hover:border-orange-500/50 bg-black/40 border-white/5">
+                                    <div class="w-10 h-10 rounded bg-purple-500/10 flex items-center justify-center text-purple-500 group-hover:bg-purple-500 group-hover:text-white transition-colors">
+                                        <i class="fas fa-server text-lg"></i>
+                                    </div>
+                                    <div>
+                                        <p class="font-bold text-white group-hover:text-purple-400 transition-colors">Inversor Híbrido</p>
+                                        <p class="text-xs text-gray-400">{{ resultado.inverter.name }}</p>
+                                    </div>
+                                    <i class="fas fa-chevron-right ml-auto text-gray-600"></i>
+                                </button>
+
+                                <button @click="showModal('baterias')" class="w-full text-left p-4 rounded-lg flex items-center gap-4 transition-all duration-200 group border hover:border-orange-500/50 bg-black/40 border-white/5">
+                                    <div class="w-10 h-10 rounded bg-blue-500/10 flex items-center justify-center text-blue-500 group-hover:bg-blue-500 group-hover:text-white transition-colors">
+                                        <i class="fas fa-car-battery text-lg"></i>
+                                    </div>
+                                    <div>
+                                        <p class="font-bold text-white group-hover:text-blue-400 transition-colors">Banco de Baterias</p>
+                                        <p class="text-xs text-gray-400">{{ resultado.calculatedBatteries }}x {{resultado.inverter.batteryAh}}Ah ({{projectConfig.batteryType}})</p>
+                                    </div>
+                                    <i class="fas fa-chevron-right ml-auto text-gray-600"></i>
+                                </button>
+
+                                <button @click="showModal('protecoes')" class="w-full text-left p-4 rounded-lg flex items-center gap-4 transition-all duration-200 group border hover:border-orange-500/50 bg-black/40 border-white/5">
+                                    <div class="w-10 h-10 rounded bg-red-500/10 flex items-center justify-center text-red-500 group-hover:bg-red-500 group-hover:text-white transition-colors">
+                                        <i class="fas fa-bolt text-lg"></i>
+                                    </div>
+                                    <div>
+                                        <p class="font-bold text-white group-hover:text-red-400 transition-colors">Disjuntores e Cabos</p>
+                                        <p class="text-xs text-gray-400">Proteções DC/AC recomendadas</p>
+                                    </div>
+                                    <i class="fas fa-chevron-right ml-auto text-gray-600"></i>
+                                </button>
+                            </div>
+                            <div v-if="resultado.avisoTransformador" class="mt-6 bg-yellow-500/5 border border-yellow-500/30 text-yellow-200 p-4 rounded-lg text-sm">
+                                <h5 class="font-bold flex items-center mb-1 text-yellow-400"><i class="fas fa-exclamation-triangle mr-2"></i>Atenção à Tensão</h5>
+                                <span v-html="resultado.avisoTransformador"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                     <div class="glass-card p-6">
+                        <h3 class="font-display text-lg font-bold mb-4 flex items-center text-white"><i class="fas fa-chart-bar mr-3 text-orange-500"></i>Dados de Engenharia</h3>
+                         <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                            <div class="p-3 rounded border border-white/5 text-center bg-black/40"><p class="text-[10px] uppercase font-mono text-gray-500">Consumo Diário</p><p class="text-xl font-bold text-white">{{ (resultado.consumoTotalWh / 1000).toFixed(2) }} <span class="text-xs text-gray-500">kWh</span></p></div>
+                            <div class="p-3 rounded border border-white/5 text-center bg-black/40"><p class="text-[10px] uppercase font-mono text-gray-500">Geração Mensal Est.</p><p class="text-xl font-bold text-orange-400">{{ ((resultado.consumoTotalWh / 1000) * 30).toFixed(1) }} <span class="text-xs text-orange-600">kWh</span></p></div>
+                            <div class="p-3 rounded border border-white/5 text-center bg-black/40"><p class="text-[10px] uppercase font-mono text-gray-500">Potência PV</p><p class="text-xl font-bold text-white">{{ resultado.calculatedPanels * resultado.panel.potencia }} <span class="text-xs text-gray-500">Wp</span></p></div>
+                            <div class="p-3 rounded border border-white/5 text-center bg-black/40"><p class="text-[10px] uppercase font-mono text-gray-500">Banco Baterias</p><p class="text-xl font-bold text-white">{{ resultado.calculatedBatteries * resultado.inverter.batteryAh }} <span class="text-xs text-gray-500">Ah</span></p></div>
+                            <div class="p-3 rounded border border-white/5 text-center bg-black/40"><p class="text-[10px] uppercase font-mono text-gray-500">Tensão DC</p><p class="text-xl font-bold text-white">{{ resultado.inverter.voltageDC }}V</p></div>
+                            <div class="p-3 rounded border border-white/5 text-center bg-black/40"><p class="text-[10px] uppercase font-mono text-gray-500">Config. Arranjo</p><p class="text-lg font-bold text-white truncate" :title="resultado.arranjoConfig">{{ resultado.arranjoConfig }}</p></div>
+                        </div>
+                    </div>
+                      <div class="glass-card p-6">
+                         <h3 class="font-display text-lg font-bold mb-4 flex items-center text-white"><i class="fas fa-network-wired mr-3 text-orange-500"></i>Bitolas de Cabos (NBR 5410)</h3>
+                         <div class="space-y-3">
+                             <div class="p-3 rounded flex justify-between items-center border border-white/5 bg-black/40"><p class="text-sm text-gray-400"><i class="fas fa-sun mr-2"></i>Cabo Solar (PV)</p><p class="font-mono font-bold text-white">{{ resultado.bitolaCaboSolar }}</p></div>
+                             <div @click="showModal('cabeamento_bateria')" class="p-3 rounded flex justify-between items-center cursor-pointer border border-orange-500/20 hover:bg-orange-500/10 transition-colors bg-black/40"><p class="text-sm text-gray-400"><i class="fas fa-car-battery mr-2"></i>Cabo Bateria (DC)</p><p class="font-mono font-bold text-orange-400">{{ resultado.bitolaCaboBateria }} <i class="fas fa-info-circle text-xs ml-1 opacity-50"></i></p></div>
+                             <div @click="showModal('cabeamento_ac')" class="p-3 rounded flex justify-between items-center cursor-pointer border border-orange-500/20 hover:bg-orange-500/10 transition-colors bg-black/40"><p class="text-sm text-gray-400"><i class="fas fa-plug mr-2"></i>Cabo Saída (AC)</p><p class="font-mono font-bold text-orange-400">{{ resultado.bitolaCaboAC }} <i class="fas fa-info-circle text-xs ml-1 opacity-50"></i></p></div>
+                             <div @click="showModal('tabela_nbr')" class="mt-2 text-center cursor-pointer text-xs font-bold text-gray-500 hover:text-white uppercase tracking-wider py-2 transition-colors">VER TABELA DE REFERÊNCIA COMPLETA</div>
+                         </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                     <div class="glass-card p-6">
+                        <h3 class="font-display text-xl font-bold mb-4 flex items-center text-white"><i class="fas fa-coins mr-3 text-yellow-500"></i>Viabilidade Financeira</h3>
+                        <div class="grid grid-cols-2 gap-4 text-xs mb-4">
+                            <div><label class="block text-gray-500 mb-1">Qtde. Painéis</label><input type="number" class="form-input" v-model.number="roi.quantidadePaineis"></div>
+                            <div><label class="block text-gray-500 mb-1">Preço/Painel (R$)</label><input type="number" class="form-input" v-model.number="roi.custoPainelUnitario"></div>
+                            <div><label class="block text-gray-500 mb-1">Qtde. Baterias</label><input type="number" class="form-input" v-model.number="roi.quantidadeBaterias"></div>
+                            <div><label class="block text-gray-500 mb-1">Preço/Bateria (R$)</label><input type="number" class="form-input" v-model.number="roi.custoBateriaUnitario"></div>
+                            <div><label class="block text-gray-500 mb-1">Custo Inversor (R$)</label><input type="number" class="form-input" v-model.number="roi.custoInversor"></div>
+                            <div><label class="block text-gray-500 mb-1">Outros (R$)</label><input type="number" class="form-input" v-model.number="roi.custoOutros"></div>
+                            <div class="col-span-2"><label class="block text-gray-500 mb-1">Tarifa Energia (R$/kWh)</label><input type="number" step="0.01" class="form-input" v-model.number="roi.custoKwh"></div>
+                        </div>
+                        <div class="bg-black/40 rounded-lg p-4 space-y-2 border border-white/5">
+                            <div class="flex justify-between items-center"><p class="text-sm text-gray-400">Investimento Total:</p><p class="font-bold text-white">R$ {{ roiComputed.custoTotalSistema.toLocaleString('pt-BR', {minimumFractionDigits: 2}) }}</p></div>
+                            <div class="flex justify-between items-center"><p class="text-sm text-gray-400">Economia Mensal:</p><p class="font-bold text-orange-400">+ R$ {{ roiComputed.economiaMensal.toLocaleString('pt-BR', {minimumFractionDigits: 2}) }}</p></div>
+                            <div class="h-px bg-white/10 my-2"></div>
+                            <div class="flex justify-between items-center"><p class="text-sm text-gray-400">Payback (Retorno):</p><p class="font-bold text-yellow-400">{{ roiComputed.paybackTxt }}</p></div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-8">
+                         <div class="glass-card p-6 border-l-4 border-l-orange-500">
+                             <h3 class="font-display text-xl font-bold mb-4 flex items-center text-white"><i class="fas fa-file-pdf mr-3 text-orange-500"></i>Relatório Técnico</h3>
+                             <p class="text-xs text-gray-400 mb-4">Gere um PDF profissional com todos os dados, diagramas e lista de compras para levar a campo.</p>
+                             <form @submit.prevent="generatePdf">
+                                <div class="space-y-3">
+                                    <div><input type="text" v-model.trim="clientData.name" class="form-input" placeholder="Seu Nome ou Nome do Cliente"></div>
+                                    <div><input type="text" v-model.trim="clientData.location" class="form-input" placeholder="Cidade/UF"></div>
+                                    <button type="submit" class="w-full bg-orange-600 hover:bg-orange-500 text-white font-bold py-3 rounded-lg text-sm uppercase tracking-wide flex items-center justify-center transition-all shadow-lg hover:shadow-orange-500/20"><i class="fas fa-download mr-2"></i> Baixar Projeto PDF</button>
+                                </div>
+                             </form>
+                         </div>
+                         
+                          <div class="p-6 whatsapp-cta-box text-center relative overflow-hidden group">
+                              <div class="absolute inset-0 bg-gradient-to-r from-orange-600/20 to-red-600/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                              <i class="fab fa-whatsapp text-4xl mb-3 text-orange-400 animate-pulse"></i>
+                              <h4 class="font-display text-lg font-bold mb-2 text-white">Validação Gratuita</h4>
+                              <p class="text-orange-100 text-xs mb-4">
+                                  Dúvida se esse projeto está certo? Me mande o PDF no WhatsApp e eu valido para você sem custo.
+                              </p>
+                              <button @click="sendProjectToWhatsApp" class="w-full whatsapp-cta-button py-3 rounded-lg text-sm uppercase tracking-wide relative z-10">
+                                  Falar com Arcanjo
+                              </button>
+                          </div>
+                          
+                          <div class="glass-card p-6">
+                            <button @click="showSettings = !showSettings" class="flex justify-between items-center w-full text-left text-sm font-bold text-gray-400 hover:text-white">
+                                <span><i class="fas fa-sliders-h mr-2"></i> Ajustes Avançados</span>
+                                <i class="fas" :class="showSettings ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+                            </button>
+                            <div v-show="showSettings" class="mt-4 space-y-4 pt-4 border-t border-white/5">
+                                <div>
+                                    <label class="block text-xs font-mono uppercase text-gray-500 mb-1">Forçar Inversor</label>
+                                    <select class="form-select text-xs" v-model="selectedInverterId" @change="updateInverterSelection">
+                                        <option value="auto">Automático (Recomendado)</option>
+                                        <optgroup v-for="(group, voltage) in inversoresAgrupados" :label="'--- ' + voltage + 'V ---'"><option v-for="inverter in group" :value="inverter.id">{{ inverter.name }}</option></optgroup>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-mono uppercase text-gray-500 mb-1">Bateria</label>
+                                    <select class="form-select text-xs" v-model="projectConfig.batteryType">
+                                        <option value="litio">Lítio (LiFePO4) - Recomendado</option>
+                                        <option value="chumbo">Chumbo-Ácido</option>
+                                    </select>
+                                </div>
+                                <div>
+                                     <label class="block text-xs font-mono uppercase text-gray-500 mb-1">Autonomia (Dias)</label>
+                                     <div class="grid grid-cols-4 gap-2">
+                                         <div v-for="day in [1, 2, 3, 4]" @click="projectConfig.diasAutonomia = day" class="p-2 text-center rounded cursor-pointer border text-xs font-bold transition-all" :class="projectConfig.diasAutonomia == day ? 'border-orange-500 bg-orange-500/10 text-orange-400' : 'border-white/10 hover:border-white/30 text-gray-500 bg-black/30'">{{ day }}d</div>
+                                     </div>
+                                 </div>
+                            </div>
+                         </div>
+                         
+                         <div class="pt-2 text-center">
+                             <button @click="resetarProjeto" class="inline-flex items-center justify-center px-6 py-4 border border-gray-700 hover:border-red-500/50 hover:bg-red-500/10 text-gray-400 hover:text-red-400 rounded-xl font-bold text-sm transition-all group w-full">
+                                 <i class="fas fa-trash-alt mr-2 group-hover:rotate-12 transition-transform"></i> Limpar Dados e Começar do Zero
+                             </button>
+                         </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+         <div v-if="modalState.visible" @click="modalState.visible = false" class="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+             <div @click.stop class="glass-card p-0 w-full max-w-2xl max-h-[85vh] overflow-hidden flex flex-col shadow-2xl shadow-orange-900/20">
+                <div class="flex justify-between items-center p-4 border-b border-white/5 bg-black/50">
+                    <h3 class="font-display text-lg font-bold text-white" v-html="modalState.title"></h3>
+                    <button @click="modalState.visible = false" class="text-gray-400 hover:text-white transition-colors"><i class="fas fa-times text-xl"></i></button>
+                </div>
+                <div class="p-6 overflow-y-auto custom-scrollbar text-gray-300 leading-relaxed bg-[#0b101a]" v-html="modalState.content" ref="modalContent"></div>
+            </div>
+         </div>
+         
+         <div v-if="imageViewer.visible" @click="imageViewer.visible = false" id="image-viewer-modal" class="fixed inset-0 flex items-center justify-center z-[100] p-4">
+             <div class="relative max-w-5xl w-full flex justify-center">
+                 <img :src="imageViewer.src" class="max-w-full max-h-[90vh] rounded-lg shadow-2xl bg-black">
+                 <button @click="imageViewer.visible = false" class="close-btn text-white absolute -top-10 right-0 text-3xl hover:text-orange-500">&times;</button>
+             </div>
+         </div>
+         
+         <div v-if="videoModalVisible" @click="videoModalVisible = false" id="video-modal" class="fixed inset-0 flex items-center justify-center z-[100] p-4">
+            <div @click.stop class="relative w-full max-w-4xl aspect-video bg-black rounded-xl overflow-hidden border border-white/10 shadow-2xl">
+                <button @click="videoModalVisible = false" class="close-btn absolute top-4 right-4 z-10 text-white bg-black/50 rounded-full w-10 h-10 flex items-center justify-center hover:bg-orange-600 transition-colors">&times;</button>
+                <iframe class="w-full h-full" src="https://www.youtube.com/embed/ZdpXlU0Mtww?autoplay=1&rel=0" title="Tutorial da Calculadora PRO" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+         </div>
+    </div>
+    
+    <script>
+    const EQUIPMENT_OPTIONS = [ { group: 'Cozinha', name: 'Air Fryer', power: 1500, hours: 0.5 }, { group: 'Cozinha', name: 'Cafeteira Elétrica', power: 800, hours: 0.2 }, { group: 'Cozinha', name: 'Fogão de Indução', power: 2000, hours: 0.5 }, { group: 'Cozinha', name: 'Forno Elétrico', power: 1500, hours: 0.5 }, { group: 'Cozinha', name: 'Freezer', power: 120, hours: 8 }, { group: 'Cozinha', name: 'Geladeira', power: 150, hours: 8 }, { group: 'Cozinha', name: 'Liquidificador', power: 500, hours: 0.1 }, { group: 'Cozinha', name: 'Micro-ondas', power: 1200, hours: 0.2 }, { group: 'Lavanderia', name: 'Ferro de Passar', power: 1200, hours: 0.5 }, { group: 'Lavanderia', name: 'Máquina de Lavar', power: 500, hours: 1 }, { group: 'Sala / Quartos', name: 'Ar Condicionado', power: 1000, hours: 8 }, { group: 'Sala / Quartos', name: 'Computador', power: 250, hours: 4 }, { group: 'Sala / Quartos', name: 'Iluminação LED', power: 10, hours: 6 }, { group: 'Sala / Quartos', name: 'Televisão', power: 100, hours: 5 }, { group: 'Sala / Quartos', name: 'Ventilador', power: 120, hours: 8 }, { group: 'Geral', name: 'Bomba D\'água', power: 370, hours: 1 }, { group: 'Geral', name: 'Câmera de Segurança', power: 30, hours: 24 }, { group: 'Geral', name: 'Roteador Wi-Fi', power: 10, hours: 24 }, { group: 'Outro', name: 'Outro (especificar)', power: 0, hours: 0 } ];
+    
+    // ATUALIZADO: Dados completos incluíndo maxPower e voltageAC para que a simulação local dos cabos não falhe
+    const INVERTER_OPTIONS_DB = { 
+        'p12v': { id: 'p12v', title: 'Projeto Y&H 12V 1kW', voltageDC: 12, voltageAC: 220, maxPower: 1000, image: 'https://i.imgur.com/TOvbWsK.png' }, 
+        'p24v_110': { id: 'p24v_110', title: 'Projeto ANENJI 24V 3.0kW (110V)', voltageDC: 24, voltageAC: 127, maxPower: 3000, image: 'https://i.imgur.com/NwN1yPR.png' }, 
+        'p24v_220': { id: 'p24v_220', title: 'Projeto ANENJI 24V 4.0kW (220V)', voltageDC: 24, voltageAC: 220, maxPower: 4000, image: 'https://i.imgur.com/NQLAc71.png' }, 
+        'p48v': { id: 'p48v', title: 'Projeto ANENJI 48V 6.2kW', voltageDC: 48, voltageAC: 220, maxPower: 6200, image: 'https://i.imgur.com/Qta9pp1.png' }, 
+        'p48v_plus': { id: 'p48v_plus', title: 'Projeto ANENJI 48V 11kW', voltageDC: 48, voltageAC: 220, maxPower: 11000, image: 'https://i.imgur.com/c8Vm80l.png' } 
+    };
+    
+    const PAINEL_OPTIONS_DB = { 'p160': { name: 'Painel Padrão 160W' }, 'p440': { name: 'Painel Padrão 440W' }, 'p560': { name: 'Painel Padrão 560W' }, 'p585': { name: 'Painel Padrão 585W' }, 'p600': { name: 'Painel Padrão 600W' }, 'p700': { name: 'Painel Padrão 700W' } };
+
+    const WHATSAPP_CHANNEL = 'https://whatsapp.com/channel/0029Vb7DVdL1NCrPouPkf02y';
+
+    const MODAL_CONTENT_DB = {
+        paineis: { 
+            title: `<i class="fas fa-solar-panel mr-2 text-orange-400"></i>Opções de Painéis Solares`, 
+            content: `
+            <div class="p-4 bg-orange-900/20 border border-orange-500/30 rounded-lg mb-4 text-center">
+                <p class="text-sm text-gray-300 mb-3"><i class="fas fa-info-circle text-orange-500"></i> O preço dos painéis varia conforme o lote. Acompanhe o nosso Canal VIP para participar em compras coletivas e promoções exclusivas.</p>
+                <a href="https://whatsapp.com/channel/0029Vb7DVdL1NCrPouPkf02y/275" target="_blank" class="inline-flex items-center justify-center w-full p-3 font-bold rounded-lg text-black bg-orange-500 hover:bg-orange-400 transition-colors shadow-lg">
+                    <i class="fab fa-whatsapp text-xl mr-2"></i> VER OFERTAS DE PAINÉIS NO CANAL
+                </a>
+            </div>
+            <div class="text-center">
+                <p class="text-xs text-gray-500 mb-2">Ou pesquise nos fornecedores oficiais (Sem garantia de desconto):</p>
+                <ul class="space-y-2">
+                    <li><a href="https://soollar.com.br" target="_blank" class="text-xs text-gray-400 hover:text-white underline">Soollar (Atacado)</a></li>
+                    <li><a href="https://www.neosolar.com.br/loja/painel-solar.html" target="_blank" class="text-xs text-gray-400 hover:text-white underline">Neosolar (Varejo)</a></li>
+                </ul>
+            </div>
+            <div class="mt-4 p-4 rounded-lg bg-yellow-900/20 border border-yellow-500/30">
+                <h6 class="text-yellow-500 font-bold"><i class="fas fa-exclamation-triangle mr-2"></i>Atenção: Tensão Voc</h6>
+                <p class="text-xs mt-2 text-gray-400">A etapa mais crítica é conectar os painéis em série. Respeite estritamente o limite de 450V ou 500V do seu inversor para não o queimar.</p>
+            </div>` 
+        },
+        baterias_12: { 
+            title: `<i class="fas fa-car-battery mr-2 text-blue-400"></i>Opções de Baterias (12V)`, 
+            content: `
+            <div class="p-4 bg-orange-900/20 border border-orange-500/30 rounded-lg mb-4 text-center">
+                <p class="text-sm text-gray-300 mb-3"><i class="fas fa-info-circle text-orange-500"></i> As baterias LiFePO4 esgotam rápido e os preços mudam. Pegue a melhor oferta atualizada diretamente no nosso Canal VIP.</p>
+                <a href="${WHATSAPP_CHANNEL}" target="_blank" class="inline-flex items-center justify-center w-full p-3 font-bold rounded-lg text-black bg-orange-500 hover:bg-orange-400 transition-colors shadow-lg">
+                    <i class="fab fa-whatsapp text-xl mr-2"></i> VER OFERTAS DE BATERIAS NO CANAL
+                </a>
+            </div>
+            <div class="text-center">
+                <p class="text-xs text-gray-500 mb-2">Ou tente os links diretos (Podem estar sem estoque):</p>
+                <ul class="space-y-2">
+                    <li><a href="https://mercadolivre.com/sec/2uMB4LT" target="_blank" class="text-xs text-gray-400 hover:text-white underline">Bateria 12V 100Ah Lítio - ML</a></li>
+                </ul>
+            </div>` 
+        },
+        baterias_24: { 
+            title: `<i class="fas fa-car-battery mr-2 text-blue-400"></i>Opções de Baterias (24V)`, 
+            content: `
+            <div class="p-4 bg-orange-900/20 border border-orange-500/30 rounded-lg mb-4 text-center">
+                <p class="text-sm text-gray-300 mb-3"><i class="fas fa-info-circle text-orange-500"></i> As baterias LiFePO4 esgotam rápido. Pegue a oferta exata de 24V atualizada diretamente no nosso Canal VIP.</p>
+                <a href="https://whatsapp.com/channel/0029Vb7DVdL1NCrPouPkf02y/273" target="_blank" class="inline-flex items-center justify-center w-full p-3 font-bold rounded-lg text-black bg-orange-500 hover:bg-orange-400 transition-colors shadow-lg">
+                    <i class="fab fa-whatsapp text-xl mr-2"></i> VER OFERTA BATERIA 24V NO CANAL
+                </a>
+            </div>
+            <div class="text-center">
+                <p class="text-xs text-gray-500 mb-2">Ou tente os links diretos (Podem estar sem estoque):</p>
+                <ul class="space-y-2">
+                    <li><a href="https://mercadolivre.com/sec/2uMB4LT" target="_blank" class="text-xs text-gray-400 hover:text-white underline">Comprar 2x Baterias 12V (Série) - ML</a></li>
+                </ul>
+            </div>` 
+        },
+        baterias_48: { 
+            title: `<i class="fas fa-car-battery mr-2 text-blue-400"></i>Opções de Baterias (48V)`, 
+            content: `
+            <div class="p-4 bg-orange-900/20 border border-orange-500/30 rounded-lg mb-4 text-center">
+                <p class="text-sm text-gray-300 mb-3"><i class="fas fa-info-circle text-orange-500"></i> Para sistemas 48V recomendamos Baterias de Rack. Pegue a melhor oferta atualizada diretamente no nosso Canal VIP.</p>
+                <a href="${WHATSAPP_CHANNEL}" target="_blank" class="inline-flex items-center justify-center w-full p-3 font-bold rounded-lg text-black bg-orange-500 hover:bg-orange-400 transition-colors shadow-lg">
+                    <i class="fab fa-whatsapp text-xl mr-2"></i> VER OFERTAS DE BATERIAS NO CANAL
+                </a>
+            </div>
+            <div class="text-center">
+                <p class="text-xs text-gray-500 mb-2">Ou tente os links diretos (Podem estar sem estoque):</p>
+                <ul class="space-y-2">
+                    <li><a href="https://mercadolivre.com/sec/2EKdzmw" target="_blank" class="text-xs text-gray-400 hover:text-white underline">Bateria Rack 48V (ZTE/Moura) - ML</a></li>
+                </ul>
+            </div>` 
+        },
+        protecoes: { 
+            title: `<i class="fas fa-shield-halved mr-2 text-red-400"></i>Proteções Essenciais`, 
+            content: `
+            <div class="p-4 bg-orange-900/20 border border-orange-500/30 rounded-lg mb-4 text-center">
+                <p class="text-sm text-gray-300 mb-3"><i class="fas fa-info-circle text-orange-500"></i> Kits de cabos, disjuntores e ferramentas aparecem com frequência com cupons de desconto no Canal VIP. Não compre mais caro!</p>
+                <a href="${WHATSAPP_CHANNEL}" target="_blank" class="inline-flex items-center justify-center w-full p-3 font-bold rounded-lg text-black bg-orange-500 hover:bg-orange-400 transition-colors shadow-lg">
+                    <i class="fab fa-whatsapp text-xl mr-2"></i> VER CUPONS DE ACESSÓRIOS NO CANAL
+                </a>
+            </div>
+            <div class="text-center">
+                <p class="text-xs text-gray-500 mb-2">Links diretos (Sem garantia de cupom ativo):</p>
+                <ul class="space-y-2">
+                    <li><a href="https://s.shopee.com.br/2g4s7e1tGl" target="_blank" class="text-xs text-gray-400 hover:text-white underline">String Box Clamper Original</a></li>
+                    <li><a href="https://s.shopee.com.br/9KZ9PNZwH9" target="_blank" class="text-xs text-gray-400 hover:text-white underline">Kit de Ferramentas Solares</a></li>
+                </ul>
+            </div>` 
+        },
+        tabela_nbr: { 
+            title: `<i class="fas fa-table mr-2 text-orange-400"></i>Referência NBR 5410`, 
+            content: `<p class="text-sm mb-3 text-gray-300">Capacidade de condução segura para Cabos Flexíveis de Cobre (Método B1):</p><div class="table-responsive text-sm border border-gray-700 rounded-lg overflow-hidden"><table class="w-full text-center"><thead><tr class="bg-gray-800 text-gray-300"><th class="p-2">Secção Nominal</th><th class="p-2">Ampéres Máx (A)</th></tr></thead><tbody class="text-gray-400"><tr class="border-t border-gray-800"><td class="py-2">2,5 mm²</td><td>21 A</td></tr><tr class="border-t border-gray-800"><td class="py-2">4,0 mm²</td><td class="font-bold text-white">28 A</td></tr><tr class="border-t border-gray-800"><td class="py-2">6,0 mm²</td><td>36 A</td></tr><tr class="border-t border-gray-800"><td class="py-2">10,0 mm²</td><td>50 A</td></tr><tr class="border-t border-gray-800"><td class="py-2">16,0 mm²</td><td>68 A</td></tr><tr class="border-t border-gray-800"><td class="py-2">25,0 mm²</td><td>89 A</td></tr><tr class="border-t border-gray-800"><td class="py-2 font-bold text-orange-400">35,0 mm²</td><td class="font-bold text-orange-400">111 A</td></tr><tr class="border-t border-gray-800"><td class="py-2 font-bold text-orange-400">50,0 mm²</td><td class="font-bold text-orange-400">134 A</td></tr></tbody></table></div>` 
+        },
+        
+        inversor_p12v: { 
+            title: `Kit 12V Básico`, 
+            content: `
+            <div class="p-4 bg-orange-900/20 border border-orange-500/30 rounded-lg mb-4 text-center">
+                <p class="text-sm text-gray-300 mb-3"><i class="fas fa-info-circle text-orange-500"></i> Os links das lojas chinesas expiram rápido. Aceda à postagem oficial no nosso Canal VIP para garantir o link ativo.</p>
+                <a href="https://whatsapp.com/channel/0029Vb7DVdL1NCrPouPkf02y/263" target="_blank" class="inline-flex items-center justify-center w-full p-3 font-bold rounded-lg text-black bg-orange-500 hover:bg-orange-400 transition-colors shadow-lg">
+                    <i class="fab fa-whatsapp text-xl mr-2"></i> VER LINK ATUALIZADO NO CANAL
+                </a>
+            </div>
+            <div class="text-center">
+                <p class="text-xs text-gray-500 mb-2">Ou tente o link direto (Pode estar esgotado):</p>
+                <a href="https://s.shopee.com.br/5VQ3F2WfQR" target="_blank" class="text-xs text-gray-400 hover:text-white underline">Inversor Y&H 1kW (AliExpress)</a>
+            </div>` 
+        },
+        inversor_p24v_220: { 
+            title: `Kit 24V Eficiente`, 
+            content: `
+            <div class="p-4 bg-orange-900/20 border border-orange-500/30 rounded-lg mb-4 text-center">
+                <p class="text-sm text-gray-300 mb-3"><i class="fas fa-info-circle text-orange-500"></i> Os links das lojas chinesas expiram rápido. Aceda à postagem oficial no nosso Canal VIP para garantir o link ativo.</p>
+                <a href="${WHATSAPP_CHANNEL}" target="_blank" class="inline-flex items-center justify-center w-full p-3 font-bold rounded-lg text-black bg-orange-500 hover:bg-orange-400 transition-colors shadow-lg">
+                    <i class="fab fa-whatsapp text-xl mr-2"></i> VER LINK ATUALIZADO NO CANAL
+                </a>
+            </div>
+            <div class="text-center">
+                <p class="text-xs text-gray-500 mb-2">Ou tente o link direto (Pode estar esgotado):</p>
+                <a href="https://s.click.aliexpress.com/e/_mOsgvNN" target="_blank" class="text-xs text-gray-400 hover:text-white underline">Inversor ANENJI 4kW (AliExpress)</a>
+            </div>` 
+        },
+        inversor_p24v_110: { 
+            title: `Kit 24V (Rede 110V)`, 
+            content: `
+            <div class="p-4 bg-orange-900/20 border border-orange-500/30 rounded-lg mb-4 text-center">
+                <p class="text-sm text-gray-300 mb-3"><i class="fas fa-info-circle text-orange-500"></i> Os links das lojas chinesas expiram rápido. Aceda à postagem oficial no nosso Canal VIP para garantir o link ativo.</p>
+                <a href="https://whatsapp.com/channel/0029Vb7DVdL1NCrPouPkf02y/252" target="_blank" class="inline-flex items-center justify-center w-full p-3 font-bold rounded-lg text-black bg-orange-500 hover:bg-orange-400 transition-colors shadow-lg">
+                    <i class="fab fa-whatsapp text-xl mr-2"></i> VER LINK ATUALIZADO NO CANAL
+                </a>
+            </div>
+            <div class="text-center">
+                <p class="text-xs text-gray-500 mb-2">Ou tente o link direto (Pode estar esgotado):</p>
+                <a href="https://a.aliexpress.com/_mM0X2Dr" target="_blank" class="text-xs text-gray-400 hover:text-white underline">Inversor 3kW 110V (AliExpress)</a>
+            </div>` 
+        },
+        inversor_p48v: { 
+            title: `O Padrão Brasileiro 48V`, 
+            content: `
+            <div class="p-4 bg-orange-900/20 border border-orange-500/30 rounded-lg mb-4 text-center">
+                <p class="text-sm text-gray-300 mb-3"><i class="fas fa-info-circle text-orange-500"></i> Os links do AliExpress expiram frequentemente. Aceda à postagem oficial no nosso Canal VIP para garantir o link ativo e promoções.</p>
+                <a href="https://whatsapp.com/channel/0029Vb7DVdL1NCrPouPkf02y/254" target="_blank" class="inline-flex items-center justify-center w-full p-3 font-bold rounded-lg text-black bg-orange-500 hover:bg-orange-400 transition-colors shadow-lg">
+                    <i class="fab fa-whatsapp text-xl mr-2"></i> VER LINK ATUALIZADO NO CANAL
+                </a>
+            </div>
+            <div class="text-center">
+                <p class="text-xs text-gray-500 mb-2">Links Diretos (Podem estar inativos):</p>
+                <ul class="space-y-2">
+                    <li><a href="https://a.aliexpress.com/_mMnFQVf" target="_blank" class="text-xs text-gray-400 hover:text-white underline">Opção 1: ANENJI 6.2kW (AliExpress)</a></li>
+                    <li><a href="https://s.click.aliexpress.com/e/_mLuKPYz" target="_blank" class="text-xs text-gray-400 hover:text-white underline">Opção 2: Loja Secundária (AliExpress)</a></li>
+                </ul>
+            </div>` 
+        },
+        inversor_p48v_plus: { 
+            title: `Extremo 48V (11.000W)`, 
+            content: `
+            <div class="p-4 bg-orange-900/20 border border-orange-500/30 rounded-lg mb-4 text-center">
+                <p class="text-sm text-gray-300 mb-3"><i class="fas fa-info-circle text-orange-500"></i> Os links das lojas chinesas expiram rápido. Aceda à postagem oficial no nosso Canal VIP para garantir o link ativo.</p>
+                <a href="${WHATSAPP_CHANNEL}" target="_blank" class="inline-flex items-center justify-center w-full p-3 font-bold rounded-lg text-black bg-orange-500 hover:bg-orange-400 transition-colors shadow-lg">
+                    <i class="fab fa-whatsapp text-xl mr-2"></i> VER LINK ATUALIZADO NO CANAL
+                </a>
+            </div>
+            <div class="text-center">
+                <p class="text-xs text-gray-500 mb-2">Ou tente o link direto (Pode estar esgotado):</p>
+                <a href="https://s.click.aliexpress.com/e/_mr3nQr3" target="_blank" class="text-xs text-gray-400 hover:text-white underline">Inversor Twin 11kW 48V (AliExpress)</a>
+            </div>` 
+        }
+    };
+
+    const calculationHelpers = {
+        bitola: (potencia, tensao, minGauge = 0, isSolar = false) => {
+            if (tensao <= 0) return 'N/A';
+            const corrente = isSolar ? 20 : (potencia / tensao) / 0.9;
+            const bitolas = [ {g:2.5,a:21},{g:4,a:28},{g:6,a:36},{g:10,a:50}, {g:16,a:68},{g:25,a:89},{g:35,a:110},{g:50,a:134},{g:70,a:171},{g:95,a:207} ];
+            const rec = bitolas.find(bit => bit.a >= corrente);
+            const final = rec ? rec.g : 95; 
+            if(isSolar) return '6mm² (Padrão)';
+            return `${Math.max(final, minGauge)} mm²`;
+        },
+        gerarConteudoModalCabo: (inv, isBattery) => {
+            const powerSource = inv.maxPower;
+            const voltageSource = isBattery ? inv.voltageDC : inv.voltageAC;
+            if (isBattery) {
+                const power70 = powerSource * 0.7;
+                const current70 = (power70 / voltageSource) / 0.9;
+                const current100 = (powerSource / voltageSource) / 0.9;
+                const bitola70 = calculationHelpers.bitola(power70, voltageSource, 0, false);
+                const bitola100 = calculationHelpers.bitola(powerSource, voltageSource, 0, false);
+                return { 
+                    title: `Cálculo de Engenharia: Cabo da Bateria (DC)`, 
+                    content: `
+                        <h4 class="text-orange-400 font-bold mb-2">Dimensionamento Inteligente (Uso Cotidiano)</h4>
+                        <p class="mb-4 text-sm text-gray-300">Para a maioria dos sistemas e utilizadores no <strong>uso cotidiano comum</strong>, o inversor raramente opera no seu limite máximo continuamente. Calculando para <strong>70% da capacidade (${power70.toFixed(0)}W)</strong>, a corrente exigida é de aproximadamente <strong>${current70.toFixed(1)}A</strong>.</p>
+                        <p class="mb-4 text-sm text-gray-300">Para este cenário, a bitola recomendada é de <strong class="text-orange-400">${bitola70}</strong>, que atende perfeitamente à maioria dos sistemas com segurança e economia.</p>
+                        <h4 class="text-yellow-400 font-bold mb-2"><i class="fas fa-exclamation-triangle mr-2"></i>Atenção: Uso Extremo (100%)</h4>
+                        <p class="mb-4 text-sm text-gray-300">Se pretende utilizar <strong>100% da capacidade do inversor (${powerSource}W) de forma contínua</strong>, a corrente chegará a <strong>${current100.toFixed(1)}A</strong>. Neste caso rigoroso, a NBR 5410 exige uma bitola conservadora de <strong class="text-yellow-400">${bitola100}</strong>.</p>
+                        <h4 class="text-orange-400 font-bold mb-2">Recomendação de Instalação:</h4>
+                        <ul class="list-disc pl-5 text-sm space-y-2 mb-4 text-gray-400">
+                            <li>Utilize cabos 100% Cobre, ultra flexíveis.</li>
+                            <li>A distância entre a bateria e o inversor <b>NÃO DEVE</b> ultrapassar 1.5 a 2 metros.</li>
+                            <li>Terminais tubulares (olhais) bem crimpados com alicate hidráulico são obrigatórios.</li>
+                        </ul>` 
+                };
+            } else {
+                const current = powerSource / voltageSource;
+                return { 
+                    title: `Cálculo de Engenharia: Cabo da Casa (AC)`, 
+                    content: `
+                        <h4 class="text-orange-400 font-bold mb-2">Porque o cabo precisa de ser assim?</h4>
+                        <p class="mb-4 text-sm text-gray-300">Para o seu sistema entregar a potência de pico de <strong>${powerSource}W</strong> trabalhando a <strong>${voltageSource}V</strong>, os fios sofrem uma "pressão" (corrente) de impressionantes <strong>${current.toFixed(1)} Ampéres</strong> (Corrente Alternada).</p>
+                        <h4 class="text-orange-400 font-bold mb-2">Recomendação do Canal:</h4>
+                        <ul class="list-disc pl-5 text-sm space-y-2 mb-4 text-gray-400">
+                            <li>Utilize cabos 100% Cobre, ultra flexíveis.</li>
+                            <li>Se o quadro da casa estiver longe, use o dobro da bitola sugerida para evitar quedas de tensão.</li>
+                        </ul>` 
+                };
+            }
+        }
+    };
+
+    new Vue({
+        el: '#app',
+        data: {
+            theme: 'dark',
+            showSettings: false,
+            isLoading: false, 
+            errorMessage: '',
+            resultado: null,
+            form: { selectedEquipmentIndex: '0', potencia: 0, horas: 1, quantidade: 1, outroNome: '' },
+            equipmentOptions: EQUIPMENT_OPTIONS,
+            projectConfig: {
+                equipamentos: [], tensaoSaidaAC: 220, hspSelection: '4.9', hsp: 4.9, diasAutonomia: 1, batteryType: 'litio', inverter: {}, panel: {}
+            },
+            roi: { quantidadePaineis: 0, custoPainelUnitario: 550, quantidadeBaterias: 0, custoBateriaUnitario: 2800, custoInversor: 2000, custoOutros: 1500, custoKwh: 1.10 },
+            clientData: { name: '', location: '', email: '' },
+            modalState: { visible: false, title: '', content: '' },
+            imageViewer: { visible: false, src: '' },
+            selectedInverterId: 'auto',
+            selectedPanelId: '',
+            videoModalVisible: false
+        },
+        watch: {
+             selectedInverterId(newId) {
+                 if (this.resultado && newId && newId !== 'auto') {
+                    if (newId === 'custom') return;
+                    if (newId !== this.projectConfig.inverter.id) { this.calcularProjeto(); }
+                 }
+            },
+            selectedPanelId(newId) {
+                 if (this.resultado && newId) {
+                     if (newId === 'custom') return;
+                     if (newId !== this.projectConfig.panel.id) { this.projectConfig.panel = {id: newId, ...PAINEL_OPTIONS_DB[newId]}; this.calcularProjeto(); }
+                 }
+            },
+            'projectConfig.diasAutonomia': function() { if (this.resultado) this.calcularProjeto(); },
+            'projectConfig.batteryType': function() { if (this.resultado) this.calcularProjeto(); },
+        },
+        computed: {
+             groupedEquipmentOptions() {
+                const groups = {};
+                this.equipmentOptions.forEach((item, index) => {
+                    if (!groups[item.group]) groups[item.group] = [];
+                    groups[item.group].push({ ...item, originalIndex: index });
+                });
+                return groups;
+            },
+            inversoresAgrupados() {
+                 const grouped = { '12': [], '24': [], '48': [] };
+                 Object.values(INVERTER_OPTIONS_DB).forEach(inv => {
+                     if (grouped[inv.voltageDC]) grouped[inv.voltageDC].push({ id: inv.id, name: inv.title });
+                 });
+                 return grouped;
+            },
+            paineisDisponiveis() {
+                 return PAINEL_OPTIONS_DB;
+            },
+            roiComputed() {
+                if (!this.resultado) return { custoTotalSistema: 0, economiaMensal: 0, paybackTxt: 'N/A' };
+                const r = this.roi;
+                const econMensal = (this.resultado.consumoTotalWh / 1000 * 30) * r.custoKwh;
+                const custoTotal = (r.quantidadePaineis * r.custoPainelUnitario) + (r.quantidadeBaterias * r.custoBateriaUnitario) + r.custoInversor + r.custoOutros;
+                const payMes = econMensal > 0 ? (custoTotal / econMensal) : 0;
+                const anos = Math.floor(payMes / 12);
+                const meses = Math.round(payMes % 12);
+                return { custoTotalSistema: custoTotal, economiaMensal: econMensal, paybackTxt: payMes > 0 ? `${anos}a e ${meses}m` : 'N/A' };
+            },
+            isOutroSelected() {
+                 if (this.form.selectedEquipmentIndex === null || this.form.selectedEquipmentIndex === undefined) return false;
+                 return this.equipmentOptions[this.form.selectedEquipmentIndex] && this.equipmentOptions[this.form.selectedEquipmentIndex].name === 'Outro (especificar)';
+            }
+        },
+        methods: {
+            // --- SISTEMA INTELIGENTE DE SUPRESSÃO (FREQUENCY CAPPING) ---
+            plantShopeeCookieWithCooldown() {
+                const cooldownHours = 12; // Aguarda 12h antes de abrir de novo no mesmo dispositivo
+                const lastTracked = localStorage.getItem('archan_shopee_tracked_calc');
+                const now = Date.now();
+                
+                if (!lastTracked || (now - parseInt(lastTracked)) > (cooldownHours * 60 * 60 * 1000)) {
+                    try {
+                        // Link Geral de Descontos (Gatilho da Shopee)
+                        window.open('https://s.shopee.com.br/7KrhPU0WRF', '_blank');
+                        localStorage.setItem('archan_shopee_tracked_calc', now.toString());
+                    } catch(e) {} // Captura silenciosa para bloqueadores severos
+                }
+            },
+
+            toggleTheme() { this.theme = this.theme === 'dark' ? 'light' : 'dark'; document.body.className = this.theme; },
+            updateHsp() { if (this.projectConfig.hspSelection !== 'manual') this.projectConfig.hsp = parseFloat(this.projectConfig.hspSelection); },
+            updateEquipamentoFields() {
+                if (this.form.selectedEquipmentIndex !== null && this.form.selectedEquipmentIndex !== undefined) {
+                    const index = parseInt(this.form.selectedEquipmentIndex, 10);
+                    if (!isNaN(index) && index >= 0 && index < this.equipmentOptions.length) {
+                        const sel = this.equipmentOptions[index];
+                        if (sel) {
+                            this.form.potencia = sel.power; this.form.horas = sel.hours; this.form.quantidade = 1;
+                            if (sel.name !== 'Outro (especificar)') this.form.outroNome = '';
+                        }
+                    }
+                }
+            },
+            adicionarEquipamento() {
+                 const pot = parseFloat(this.form.potencia); const hrs = parseFloat(this.form.horas);
+                 if (pot <= 0 || hrs <= 0) return;
+                 let nome = '';
+                 const index = parseInt(this.form.selectedEquipmentIndex, 10);
+                 if (!isNaN(index) && index >= 0 && index < this.equipmentOptions.length) nome = this.equipmentOptions[index].name;
+                 if (this.isOutroSelected) {
+                     if (!this.form.outroNome || this.form.outroNome.trim() === '') return;
+                     nome = this.form.outroNome.trim();
+                 }
+                 if (nome) {
+                    this.projectConfig.equipamentos.push({ nome: nome, pot: pot, hrs: hrs, qtde: parseInt(this.form.quantidade) || 1, isDayOnly: false });
+                    if (this.isOutroSelected) this.form.outroNome = '';
+                 }
+            },
+            removerEquipamento(index) { this.projectConfig.equipamentos.splice(index, 1); },
+
+            simularBackendLocal() {
+                return new Promise((resolve) => {
+                    setTimeout(() => {
+                        const config = this.projectConfig;
+                        let totalWh = config.equipamentos.reduce((acc, eq) => acc + (eq.pot * eq.hrs * eq.qtde), 0);
+                        let peakW = 0;
+                        config.equipamentos.forEach(eq => {
+                            let isInductive = false;
+                            const n = eq.nome.toLowerCase();
+                            if (n.includes('geladeira') || n.includes('ar cond') || n.includes('bomba') || n.includes('motor') || n.includes('máquina') || n.includes('freezer')) isInductive = true;
+                            peakW += (eq.pot * (isInductive ? 3 : 1) * eq.qtde);
+                        });
+
+                        let hsp = config.hsp || 4.9;
+                        
+                        let inverterId = 'p24v_220';
+                        if (peakW > 6200) inverterId = 'p48v_plus'; 
+                        else if (peakW > 3500 || totalWh > 6000) inverterId = 'p48v';
+                        else if (config.tensaoSaidaAC === 127) inverterId = 'p24v_110';
+                        else if (peakW <= 1000 && totalWh <= 2000) inverterId = 'p12v';
+                        
+                        if (this.selectedInverterId && this.selectedInverterId !== 'auto' && this.selectedInverterId !== 'custom') {
+                            inverterId = this.selectedInverterId;
+                        }
+                        
+                        let inverter = { 
+                            id: inverterId, name: INVERTER_OPTIONS_DB[inverterId].title, voltageDC: INVERTER_OPTIONS_DB[inverterId].voltageDC, voltageAC: INVERTER_OPTIONS_DB[inverterId].voltageAC, maxPower: INVERTER_OPTIONS_DB[inverterId].maxPower, batteryAh: 100, 
+                            description: inverterId.includes('plus') ? 'Poder de fogo industrial para cargas extremas (Paralelo).' : (inverterId.includes('48v') ? 'Sistema Robusto para alta demanda residencial ou comercial.' : 'Inversor ideal para sistemas de entrada e uso moderado.'), 
+                            image: INVERTER_OPTIONS_DB[inverterId].image
+                        };
+
+                        let panel = { id: 'p560', potencia: 560 };
+                        let calculatedPanels = Math.max(1, Math.ceil((totalWh / hsp / 0.75) / panel.potencia));
+                        let calculatedBatteries = Math.max(1, Math.ceil((totalWh * config.diasAutonomia) / inverter.voltageDC / (config.batteryType === 'chumbo' ? 0.3 : 0.85) / inverter.batteryAh));
+
+                        const bitolaCaboBateria70 = calculationHelpers.bitola(inverter.maxPower * 0.7, inverter.voltageDC, 0, false);
+                        
+                        const mockResponse = {
+                            resultado: {
+                                inverter: inverter, panel: panel, calculatedPanels: calculatedPanels, calculatedBatteries: calculatedBatteries, consumoTotalWh: totalWh, peakWatts: peakW,
+                                arranjoConfig: `${calculatedPanels}x Painéis (Arranjo depende do limite de tensão Voc do Inversor)`,
+                                bitolaCaboSolar: '6mm²', bitolaCaboBateria: `${bitolaCaboBateria70} (Cotidiano)`, bitolaCaboAC: calculationHelpers.bitola(inverter.maxPower, inverter.voltageAC, 0, false),
+                                avisoTransformador: (config.tensaoSaidaAC === 127 && inverter.voltageDC === 48) ? '<b>Atenção:</b> O inversor 48V possui saída 220V. Você precisará de um autotransformador para as suas cargas 127V.' : null,
+                                modalContent: {
+                                    paineis: MODAL_CONTENT_DB.paineis,
+                                    baterias: MODAL_CONTENT_DB['baterias_' + inverter.voltageDC] || MODAL_CONTENT_DB.baterias_48, 
+                                    protecoes: MODAL_CONTENT_DB.protecoes, 
+                                    tabela_nbr: MODAL_CONTENT_DB.tabela_nbr,
+                                    inversor: MODAL_CONTENT_DB['inversor_' + inverterId] || MODAL_CONTENT_DB['inversor'],
+                                    cabeamento_bateria: calculationHelpers.gerarConteudoModalCabo(inverter, true),
+                                    cabeamento_ac: calculationHelpers.gerarConteudoModalCabo(inverter, false)
+                                }
+                            },
+                            roiUpdates: {
+                                quantidadePaineis: calculatedPanels, quantidadeBaterias: calculatedBatteries,
+                                custoBateriaUnitario: config.batteryType === 'litio' ? 2800 : 1200,
+                                custoInversor: inverter.id === 'p48v_plus' ? 4000 : (inverter.voltageDC === 48 ? 2200 : 1600)
+                            }
+                        };
+
+                        this.resultado = mockResponse.resultado;
+                        this.projectConfig.inverter = mockResponse.resultado.inverter;
+                        this.projectConfig.panel = mockResponse.resultado.panel;
+                        this.roi.quantidadePaineis = mockResponse.roiUpdates.quantidadePaineis;
+                        this.roi.quantidadeBaterias = mockResponse.roiUpdates.quantidadeBaterias;
+                        this.roi.custoBateriaUnitario = mockResponse.roiUpdates.custoBateriaUnitario;
+                        this.roi.custoInversor = mockResponse.roiUpdates.custoInversor;
+
+                        this.isLoading = false;
+                        this.$nextTick(() => document.querySelector('.fade-in-up')?.scrollIntoView({ behavior: 'smooth' }));
+                        resolve();
+                    }, 800);
+                });
+            },
+
+            async calcularProjeto() {
+                this.plantShopeeCookieWithCooldown(); // Rastreio Invisível Plantado no clique de Calcular!
+                this.isLoading = true; this.errorMessage = ''; this.resultado = null; 
+                const isLocalPreview = window.location.protocol === 'blob:' || window.location.protocol === 'file:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+                if (isLocalPreview) return this.simularBackendLocal();
+
+                try {
+                    const payloadToSend = { ...this.projectConfig, forceInverter: this.selectedInverterId !== 'auto' ? this.selectedInverterId : null };
+                    const response = await fetch('/.netlify/functions/calcular', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payloadToSend) });
+                    if (!response.ok) throw new Error('Erro ao calcular no servidor.');
+                    
+                    const { resultado, roiUpdates } = await response.json();
+                    this.resultado = resultado; this.projectConfig.inverter = resultado.inverter; this.projectConfig.panel = resultado.panel;
+                    this.roi.quantidadePaineis = roiUpdates.quantidadePaineis; this.roi.quantidadeBaterias = roiUpdates.quantidadeBaterias;
+                    this.roi.custoBateriaUnitario = roiUpdates.custoBateriaUnitario; this.roi.custoInversor = roiUpdates.custoInversor;
+
+                    this.$nextTick(() => document.querySelector('.fade-in-up')?.scrollIntoView({ behavior: 'smooth' }));
+                } catch (error) {
+                    console.error("Erro API:", error); this.errorMessage = error.message; return this.simularBackendLocal();
+                } finally { this.isLoading = false; }
+            },
+            
+            updateInverterSelection() {}, updatePanelSelection() {},
+            
+            resetarProjeto() {
+                this.resultado = null; this.projectConfig.equipamentos = []; this.clientData = { name: '', location: '', email: '' };
+                this.selectedInverterId = 'auto'; this.selectedPanelId = ''; this.errorMessage = '';
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            },
+
+            showModal(key) {
+                this.plantShopeeCookieWithCooldown(); // Rastreio no clique de consultar materiais
+                if (!this.resultado || !this.resultado.modalContent) return;
+                let modalData = this.resultado.modalContent[key];
+                 if (!modalData) {
+                    if (key.startsWith('inversor_')) modalData = this.resultado.modalContent['inversor'];
+                    else return;
+                 }
+                 this.modalState.title = modalData.title; this.modalState.content = modalData.content; this.modalState.visible = true;
+                 this.$nextTick(() => {
+                    const triggers = this.$refs.modalContent?.querySelectorAll('.sub-accordion-trigger');
+                    triggers?.forEach(trigger => { trigger.onclick = () => { trigger.classList.toggle('open'); const content = trigger.nextElementSibling; if (content && content.classList.contains('sub-accordion-content')) content.style.display = content.style.display === 'block' ? 'none' : 'block'; }; });
+                 });
+            },
+            openImageViewer(src) { this.imageViewer.src = src; this.imageViewer.visible = true; },
+            salvarProjeto() {
+                 const data = JSON.stringify(this.projectConfig); const blob = new Blob([data], { type: 'application/json' });
+                 const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = `projeto_archan_solar_${new Date().toISOString().slice(0, 10)}.json`; document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
+            },
+            abrirSeletorDeArquivo() { this.$refs.fileInput.click(); },
+            carregarProjeto(event) {
+                 const file = event.target.files[0]; if (!file) return;
+                 const reader = new FileReader();
+                 reader.onload = (e) => {
+                     try { const data = JSON.parse(e.target.result); if (data && data.equipamentos && typeof data.tensaoSaidaAC !== 'undefined') { this.projectConfig = data; this.resultado = null; } } catch (error) { console.error("Erro JSON", error); }
+                 };
+                 reader.readAsText(file); event.target.value = '';
+            },
+            sendProjectToWhatsApp() {
+                this.plantShopeeCookieWithCooldown(); // Rastreio Invisível Plantado ao validar no WhatsApp!
+                if (!this.resultado) return;
+                const res = this.resultado; const clientName = this.clientData.name || 'Cliente';
+                let message = `*Olá, Arcanjo!* 👋\n\nGerei meu projeto gratuito na Calculadora PRO e quero aproveitar a *Validação Grátis*.\n\n*Cliente:* ${clientName}\n\n*Resumo do Sistema:*\n- Inversor: *${res.inverter.name}*\n- Painéis: *${res.calculatedPanels}x ${res.panel.potencia}W*\n- Baterias: *${res.calculatedBatteries}x ${res.inverter.batteryAh}Ah* (${res.inverter.voltageDC}V)\n- Consumo Diário: *${(res.consumoTotalWh / 1000).toFixed(2)} kWh*\n\nAguardo suas orientações! (PDF em anexo)\n`;
+                window.open(`https://api.whatsapp.com/send?phone=5581989051276&text=${encodeURIComponent(message)}`, '_blank');
+            },
+            parseAndAddLinks(doc, title, htmlContent, startY, MARGIN) {
+                let currentY = startY; doc.setFont('helvetica', 'bold'); doc.setFontSize(14); doc.setTextColor(247, 147, 30); doc.text(title, MARGIN, currentY); currentY += 8;
+                const parser = new DOMParser(); const htmlDoc = parser.parseFromString(htmlContent, 'text/html');
+                const elements = htmlDoc.querySelectorAll('h6, button.sub-accordion-trigger, a');
+                elements.forEach(el => {
+                    if (currentY > doc.internal.pageSize.height - MARGIN) { doc.addPage(); currentY = MARGIN; }
+                    const text = el.innerText.replace(/\s+/g, ' ').trim();
+                    if (el.tagName === 'H6' || el.tagName === 'BUTTON') { doc.setFont('helvetica', 'bold'); doc.setFontSize(11); doc.setTextColor(45, 55, 72); doc.text(text, MARGIN, currentY); currentY += 7; } 
+                    else if (el.tagName === 'A') { const url = el.getAttribute('href'); if (text && url) { doc.setFont('helvetica', 'normal'); doc.setFontSize(10); doc.setTextColor(230, 130, 13); doc.textWithLink(text, MARGIN + 2, currentY, { url: url }); currentY += 7; } }
+                });
+                return currentY;
+            },
+             async generatePdf() {
+                 this.plantShopeeCookieWithCooldown(); // Rastreio Invisível Plantado ao baixar PDF!
+                 if (!this.resultado) return;
+                 const { jsPDF } = window.jspdf; const doc = new jsPDF({ orientation: 'p', unit: 'mm', format: 'a4' });
+                 const res = this.resultado; const roi = this.roiComputed; const today = new Date();
+                 const clientName = this.clientData.name || "Entusiasta Solar"; const clientLocation = this.clientData.location || "Brasil";
+                 const PAGE_WIDTH = doc.internal.pageSize.width; const MARGIN = 15; let y = 0;
+                 const addHeaderFooter = () => { const pageCount = doc.internal.getNumberOfPages(); for (let i = 1; i <= pageCount; i++) { doc.setPage(i); doc.setFontSize(8); doc.setTextColor(100, 116, 139); doc.text(`Relatório PRO – Pense Off-Grid OS`, MARGIN, doc.internal.pageSize.height - 8); doc.text(`Página ${i} de ${pageCount}`, PAGE_WIDTH - MARGIN, doc.internal.pageSize.height - 8, { align: 'right' }); } };
+                 
+                 doc.setFillColor(2, 4, 8); doc.rect(0, 0, PAGE_WIDTH, doc.internal.pageSize.height, 'F');
+                 doc.setDrawColor(247, 147, 30); doc.setLineWidth(1); doc.line(MARGIN, 60, PAGE_WIDTH - MARGIN, 60);
+                 doc.setTextColor(247, 147, 30); doc.setFontSize(22); doc.setFont('helvetica', 'bold'); doc.text("PENSE OFF-GRID", PAGE_WIDTH / 2, 50, { align: 'center' });
+                 doc.setTextColor('#FFFFFF'); doc.setFontSize(28); doc.text("BLUEPRINT DO SISTEMA", PAGE_WIDTH / 2, 95, { align: 'center' });
+                 doc.setFontSize(16); doc.setFont('helvetica', 'normal'); doc.setTextColor('#e2e8f0'); doc.text(clientName, PAGE_WIDTH / 2, 140, { align: 'center' });
+                 doc.setFontSize(11); doc.text(clientLocation, PAGE_WIDTH / 2, 148, { align: 'center' }); doc.setFontSize(9); doc.text(`Gerado em: ${today.toLocaleDateString('pt-BR')}`, PAGE_WIDTH / 2, 160, { align: 'center' });
+
+                  doc.addPage(); y = MARGIN; doc.setFontSize(16); doc.setTextColor(247, 147, 30); doc.text("1. Diagnóstico de Consumo", MARGIN, y); y += 10;
+                  doc.autoTable({ startY: y, head: [['Equipamento', 'Qtde', 'Pot.(W)', 'Hrs/dia', 'Total(Wh)', 'Uso Diurno?']], body: this.projectConfig.equipamentos.map(e => [e.nome, e.qtde, e.pot, e.hrs.toFixed(1), (e.pot * e.hrs * e.qtde), e.isDayOnly ? 'Sim' : 'Não']), theme: 'grid', headStyles: { fillColor: [247, 147, 30] } });
+                  y = doc.lastAutoTable.finalY + 10;
+
+                  doc.setFontSize(16); doc.setTextColor(247, 147, 30); doc.text("2. Sistema Recomendado", MARGIN, y); y += 10;
+                  doc.autoTable({ startY: y, head: [['Componente', 'Especificação']], body: [['Inversor Híbrido', res.inverter.name], ['Painéis Solares', `${res.calculatedPanels} un de ${res.panel.potencia}W`], ['Banco de Baterias', `${res.calculatedBatteries} un de ${res.inverter.batteryAh}Ah em ${res.inverter.voltageDC}V`]], theme: 'striped', headStyles: { fillColor: [11, 16, 26] } });
+                  y = doc.lastAutoTable.finalY + 10;
+
+                  doc.setFontSize(16); doc.setTextColor(247, 147, 30); doc.text("3. Resumo Técnico e Cabeamento", MARGIN, y); y += 10;
+                  doc.autoTable({ startY: y, head: [['Métrica', 'Valor']], body: [['Arranjo Fotovoltaico', res.arranjoConfig], ['Bitola Cabo Solar (PV)', res.bitolaCaboSolar], ['Bitola Cabo Bateria (DC)', res.bitolaCaboBateria], ['Bitola Cabo Saída (AC)', res.bitolaCaboAC], ['Dias de Autonomia', `${this.projectConfig.diasAutonomia} dia(s)`], ['Tecnologia da Bateria', this.projectConfig.batteryType === 'litio' ? 'Lítio (LiFePO4)' : 'Chumbo-Ácido']], theme: 'striped', headStyles: { fillColor: [11, 16, 26] } });
+                  y = doc.lastAutoTable.finalY + 15;
+
+                 try {
+                     const img = new Image(); if(!res.inverter.image.startsWith('data:')) img.crossOrigin = 'Anonymous'; 
+                     const loadImage = (src) => new Promise((resolve, reject) => { img.onload = resolve; img.onerror = () => reject(new Error('Image failed to load')); setTimeout(() => reject(new Error('Image load timeout')), 5000); img.src = src; });
+                     try { await loadImage(res.inverter.image); } catch(e) { await loadImage('data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'); }
+                     const imgProps = doc.getImageProperties(img); const imgWidth = PAGE_WIDTH - (MARGIN*2); const imgHeight = imgProps.width > 0 ? (imgProps.height * imgWidth) / imgProps.width : 50; 
+                     if (y + imgHeight > doc.internal.pageSize.height - MARGIN) { doc.addPage(); y = MARGIN; }
+                     doc.addImage(img, 'PNG', MARGIN, y, imgWidth, imgHeight); y += imgHeight + 10;
+                 } catch (e) {}
+
+                  if(this.roiComputed.custoTotalSistema > 0) {
+                     if (y + 30 > doc.internal.pageSize.height - MARGIN) { doc.addPage(); y = MARGIN; }
+                     doc.setFontSize(16); doc.setTextColor(247, 147, 30); doc.text("4. Análise Financeira (ROI)", MARGIN, y); y += 10;
+                     doc.autoTable({ startY: y, head: [['Métrica', 'Valor']], body: [['Custo Total Estimado', `R$ ${roi.custoTotalSistema.toLocaleString('pt-BR', {minimumFractionDigits: 2})}`], ['Economia Mensal', `R$ ${roi.economiaMensal.toLocaleString('pt-BR', {minimumFractionDigits: 2})}`], ['Payback Estimado', roi.paybackTxt]], theme: 'striped', headStyles: { fillColor: [247, 147, 30] } });
+                    y = doc.lastAutoTable.finalY + 15;
+                 }
+
+                 doc.addPage(); y = MARGIN;
+                 y = this.parseAndAddLinks(doc, 'Painéis Solares (Links e Ofertas)', res.modalContent.paineis.content, y, MARGIN);
+                 y = this.parseAndAddLinks(doc, 'Inversor Híbrido (Links e Ofertas)', res.modalContent.inversor.content, y + 5, MARGIN);
+                 if (y > doc.internal.pageSize.height - 80) { doc.addPage(); y = MARGIN; }
+                 y = this.parseAndAddLinks(doc, 'Baterias (Links e Ofertas)', res.modalContent.baterias.content, y + 5, MARGIN);
+                 if (y > doc.internal.pageSize.height - 100) { doc.addPage(); y = MARGIN; }
+                 y = this.parseAndAddLinks(doc, 'Proteções e Componentes (Links)', res.modalContent.protecoes.content, y + 5, MARGIN);
+
+                  doc.addPage(); y = MARGIN;
+                  doc.setFontSize(16); doc.setTextColor(247, 147, 30); doc.text("Plano de Ação e Segurança", MARGIN, y); y += 10;
+                  doc.setFont('helvetica', 'normal'); doc.setFontSize(10); doc.setTextColor(50, 50, 50);
+                  doc.text("Este relatório é um guia educacional robusto, mas a execução exige responsabilidade. Siga este plano:", MARGIN, y); y += 8;
+                  doc.setFont('helvetica', 'bold'); doc.text("1. Estudo (Curso Gratuito):", MARGIN, y); y += 5;
+                  doc.setFont('helvetica', 'normal'); doc.text("Assista ao nosso Curso Gratuito no YouTube para entender a instalação.", MARGIN + 5, y); y += 8;
+                  doc.setFont('helvetica', 'bold'); doc.text("2. Verificação (Links):", MARGIN, y); y += 5;
+                  doc.setFont('helvetica', 'normal'); doc.text("Acesse o nosso Canal VIP no WhatsApp para garantir os links mais atualizados.", MARGIN + 5, y); y += 8;
+                  doc.setFont('helvetica', 'bold'); doc.text("3. Segurança:", MARGIN, y); y += 5;
+                  doc.setFont('helvetica', 'normal'); doc.text("Se você não tem 100% de certeza, NÃO FAÇA. Aproveite a validação gratuita via WhatsApp.", MARGIN + 5, y); y += 15;
+                  doc.setFillColor(247, 147, 30); doc.rect(MARGIN, y, PAGE_WIDTH - (MARGIN * 2), 20, 'F');
+                  doc.setFontSize(12); doc.setFont('helvetica', 'bold'); doc.setTextColor('#FFFFFF'); doc.text("Parabéns pelo seu Projeto! Siga os passos e alcance sua independência.", PAGE_WIDTH / 2, y + 12, { align: 'center', maxWidth: PAGE_WIDTH - (MARGIN * 2) - 10 });
+
+                 addHeaderFooter(); doc.save(`Projeto_OffGrid_${clientName.replace(/\s/g, '_')}.pdf`);
+            }
+        },
+        mounted() { this.updateEquipamentoFields(); document.body.className = this.theme; }
+    });
+    </script>
+<div id="calculator-panel-cta" style="display:none"></div>
+</body>
+</html>
