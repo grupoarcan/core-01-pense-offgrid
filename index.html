@@ -14,6 +14,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js"></script>
   <script defer src="https://cdn.tailwindcss.com"></script>
   <noscript><link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
   <style>
@@ -429,33 +430,68 @@ img{max-width:100%;display:block;height:auto}
 @media(max-width:720px){.home-float-banner{left:12px!important;right:12px!important;bottom:12px!important;top:auto!important;max-width:none}}
 
 /* Dashboard OS */
-body.os-mode{background-color:#050508}
-.os-shell{min-height:100vh;padding-bottom:76px}
-.os-menubar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px clamp(16px,3vw,28px);border-bottom:1px solid rgba(255,255,255,.08);background:rgba(8,8,12,.85);backdrop-filter:blur(18px)}
+body.os-mode{
+  background:
+    radial-gradient(circle at 8% 0%,rgba(247,147,30,.12),transparent 32%),
+    radial-gradient(circle at 100% 18%,rgba(68,121,255,.08),transparent 34%),
+    linear-gradient(135deg,rgba(255,255,255,.018) 25%,transparent 25%) 0 0/28px 28px,
+    #050508;
+}
+.os-shell{min-height:100vh;padding-bottom:84px}
+.os-menubar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px clamp(16px,3vw,28px);border-bottom:1px solid rgba(255,255,255,.08);background:rgba(8,8,12,.82);backdrop-filter:blur(18px);box-shadow:0 16px 40px rgba(0,0,0,.26)}
 .os-menubar-brand .brand-title{font-size:clamp(1rem,1.8vw,1.35rem)}
 .os-menubar-brand .brand-tag{font-size:9px;margin-top:2px}
 .os-status{display:flex;align-items:center;gap:8px;font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#7a7f8c}
 .os-status-dot{width:7px;height:7px;border-radius:50%;background:#22c55e;box-shadow:0 0 10px rgba(34,197,94,.55)}
-.os-desktop{display:grid;gap:clamp(16px,2.5vw,22px)}
-@media(min-width:1100px){.os-desktop{grid-template-columns:1.1fr .9fr;align-items:start}.os-window--hero{grid-row:span 2}.os-window--preview{grid-column:2}.os-widget-panel{grid-column:2}.os-window--apps{grid-column:1/-1}}
-.os-window{border-radius:16px;border:1px solid rgba(255,255,255,.09);background:linear-gradient(180deg,rgba(22,22,28,.95),rgba(12,12,16,.92));box-shadow:0 20px 50px rgba(0,0,0,.4);overflow:hidden}
-.os-window-chrome{display:flex;align-items:center;gap:10px;padding:9px 14px;border-bottom:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.03)}
+.os-desktop{display:grid;gap:clamp(16px,2.5vw,22px);align-items:start}
+@media(min-width:1100px){
+  .os-desktop{grid-template-columns:minmax(0,.95fr) minmax(420px,1.05fr)}
+  .os-window--hero{grid-column:1}
+  .os-window--apps{grid-column:2}
+}
+.os-window{border-radius:20px;border:1px solid rgba(255,255,255,.1);background:linear-gradient(180deg,rgba(24,24,31,.94),rgba(10,10,15,.92));box-shadow:0 24px 70px rgba(0,0,0,.48),inset 0 1px 0 rgba(255,255,255,.04);overflow:hidden}
+.os-window-chrome{display:flex;align-items:center;gap:10px;min-height:42px;padding:9px 14px;border-bottom:1px solid rgba(255,255,255,.07);background:linear-gradient(90deg,rgba(255,255,255,.055),rgba(255,255,255,.02))}
 .os-window-controls{display:flex;gap:6px}
 .os-window-controls span{width:10px;height:10px;border-radius:50%}
 .os-win-close{background:#ff5f57}.os-win-min{background:#febc2e}.os-win-max{background:#28c840}
 .os-window-title{margin-left:auto;font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#8b919e}
-.os-window-body{padding:clamp(1rem,2vw,1.5rem)}
+.os-window-body{padding:clamp(1rem,2vw,1.45rem)}
 .os-window--hero .hero-layout{margin-top:0}
 .os-window--hero .hero-title{font-size:clamp(1.6rem,3.2vw,2.6rem)}
 .os-window--hero .site-nav,.os-window--hero .hero-panel-inner>.site-nav{display:none}
+.os-window--hero .hero-panel-inner{padding:0}
+.os-window--hero .hero-subtitle{max-width:31rem;font-size:clamp(.95rem,1.15vw,1.05rem)}
+.os-window--hero .hero-actions{margin-top:1.25rem}
+.os-window--hero .cta{min-height:46px;border-radius:14px;padding:0 18px}
+.os-window--hero .badge{font-size:10px;letter-spacing:.14em}
 .os-preview-widget{display:block;position:relative;aspect-ratio:4/3;background:#08080c;border-radius:12px;overflow:hidden}
 .os-preview-widget .w-full,.os-preview-widget transition-group{position:absolute;inset:0}
-.os-app-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(128px,1fr));gap:12px}
-.os-app-grid .quick-card{min-height:112px;display:flex;flex-direction:column;align-items:center;text-align:center;padding:14px 10px;border-radius:16px}
-.os-app-grid .os-app-icon{font-size:26px;width:50px;height:50px;display:flex;align-items:center;justify-content:center;border-radius:14px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);margin-bottom:8px}
-.os-app-grid .quick-card h3{font-family:Montserrat,sans-serif;font-size:12px;font-weight:900;text-transform:uppercase;margin:0 0 4px}
-.os-app-grid .quick-card p{font-size:10px;color:#8b919e;margin:0;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.os-app-grid .quick-card .card-arrow{display:none}
+.os-window--apps{min-height:100%}
+.os-window--apps.ecosystem-wrap{margin-top:0;padding:0;background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.012))}
+.os-window--apps .ecosystem-title{align-items:flex-start;margin-bottom:1rem}
+.os-window--apps .ecosystem-title h2{font-size:clamp(24px,3vw,34px)}
+.os-window--apps .ecosystem-title p{font-size:13px;max-width:560px}
+.os-feature-row{grid-column:1/-1}
+.os-app-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media(min-width:1280px){.os-app-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.os-app-grid .quick-card{min-height:132px;display:flex;flex-direction:column;align-items:flex-start;text-align:left;padding:14px;border-radius:18px;position:relative}
+.os-app-grid .os-app-icon{font-size:25px;width:48px;height:48px;display:flex;align-items:center;justify-content:center;border-radius:14px;background:linear-gradient(145deg,rgba(247,147,30,.14),rgba(255,255,255,.045));border:1px solid rgba(255,255,255,.09);margin-bottom:10px;box-shadow:inset 0 1px 0 rgba(255,255,255,.08)}
+.os-app-grid .quick-card h3{font-family:Montserrat,sans-serif;font-size:13px;font-weight:900;text-transform:uppercase;margin:0 0 5px;line-height:1.05}
+.os-app-grid .quick-card p{font-size:10.5px;color:#9aa0ad;margin:0;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.os-app-grid .quick-card .section-kicker{font-size:9px;margin-bottom:8px!important}
+.os-app-grid .quick-card .card-arrow{display:flex;position:absolute;right:12px;top:12px;width:26px;height:26px;align-items:center;justify-content:center;border-radius:10px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04)}
+.os-app-grid .quick-card[href="/projetos/"]{order:1}
+.os-app-grid .quick-card[href="/calculadora/"]{order:2}
+.os-app-grid .quick-card[href="/noticias/"]{order:3}
+.os-app-grid .quick-card[href="/rifas/"]{order:4}
+.os-app-grid .quick-card[href="/cursos/"]{order:5}
+.os-app-grid .quick-card[href="/tutoriais/"]{order:6}
+.os-app-grid .quick-card[href="/jogos/"]{order:7}
+.os-app-grid .quick-card[href^="https://chat.whatsapp.com"]{order:8}
+.os-quick-strip{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:1.25rem}
+.os-quick-stat{border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:12px;background:rgba(255,255,255,.035)}
+.os-quick-stat strong{display:block;font-family:Montserrat,sans-serif;font-size:18px;line-height:1;color:#fff}
+.os-quick-stat span{display:block;margin-top:6px;font-size:10px;line-height:1.35;color:#8f96a3;text-transform:uppercase;font-weight:800;letter-spacing:.08em}
 .os-widget-panel .widget-icon{font-size:44px;text-align:center;margin-bottom:6px}
 .os-widget-panel .widget-title{font-family:Montserrat,sans-serif;font-size:1.1rem;font-weight:900;text-transform:uppercase;margin:0 0 8px}
 .os-widget-panel .widget-desc{font-size:12px;color:#9ca3af;line-height:1.5;margin:0 0 12px}
@@ -464,13 +500,311 @@ body.os-mode{background-color:#050508}
 .os-dock a:hover{transform:translateY(-3px);background:rgba(247,147,30,.12);color:#fff}
 .os-dock-icon{font-size:20px;line-height:1}
 .os-tray{margin-top:2rem;border-top:1px solid rgba(255,255,255,.06)}
+.solano-home-embed{
+  width:100%;
+  border:1px solid rgba(247,147,30,.28);
+  border-radius:22px;
+  overflow:hidden;
+  background:#050505;
+  box-shadow:0 24px 60px rgba(0,0,0,.42),inset 0 1px 0 rgba(255,255,255,.06);
+}
+.solano-home-embed iframe{
+  display:block;
+  width:100%;
+  height:clamp(420px,58vw,680px);
+  border:0;
+  background:#050505;
+}
+.solano-home-actions{
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+}
+.solano-home-actions .cta-secondary{
+  align-self:flex-start;
+}
 @media(min-width:1100px){.os-menubar .nav-links{display:none}.hero-proof-strip{display:none!important}}
 @media(max-width:1099px){.os-dock{display:none}}
+@media(max-width:720px){
+  .os-app-grid,.os-quick-strip{grid-template-columns:1fr}
+  .os-window{border-radius:16px}
+  .solano-home-embed iframe{height:520px}
+}
+
+/* Mini arcade home */
+body.arcade-home{
+  min-height:100vh;
+  overflow-x:hidden;
+  color:#f8fafc;
+  background:
+    radial-gradient(circle at 50% 0%,rgba(247,147,30,.18),transparent 34%),
+    linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px),
+    #050505;
+  background-size:100% 100%,34px 34px,34px 34px;
+}
+.arcade-shell{
+  width:min(1280px,calc(100% - 24px));
+  min-height:100vh;
+  margin:0 auto;
+  padding:clamp(12px,2vw,24px) 0;
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(300px,360px);
+  gap:16px;
+  align-items:stretch;
+}
+.arcade-screen,.arcade-ranking{
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:18px;
+  background:linear-gradient(180deg,rgba(18,18,24,.94),rgba(5,5,8,.96));
+  box-shadow:0 24px 70px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.06);
+  overflow:hidden;
+}
+.arcade-topbar{
+  min-height:44px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:10px 14px;
+  border-bottom:1px solid rgba(255,255,255,.08);
+  background:rgba(255,255,255,.035);
+}
+.arcade-title{
+  font-family:Montserrat,sans-serif;
+  font-weight:900;
+  text-transform:uppercase;
+  letter-spacing:.06em;
+  font-size:13px;
+}
+.arcade-live{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  color:#8ef0b0;
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+}
+.arcade-live:before{
+  content:"";
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:#22c55e;
+  box-shadow:0 0 16px rgba(34,197,94,.8);
+}
+.runner-stage{
+  position:relative;
+  height:calc(100vh - 92px);
+  min-height:520px;
+  background:#050505;
+  touch-action:manipulation;
+}
+#arcadeRunnerCanvas{
+  display:block;
+  width:100%;
+  height:100%;
+}
+.arcade-hud{
+  position:absolute;
+  left:12px;
+  right:12px;
+  top:12px;
+  z-index:3;
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:8px;
+  pointer-events:none;
+}
+.arcade-hud div{
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:12px;
+  padding:9px 10px;
+  background:rgba(0,0,0,.58);
+  backdrop-filter:blur(8px);
+}
+.arcade-hud small{
+  display:block;
+  color:#9ca3af;
+  font-size:9px;
+  font-weight:900;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+}
+.arcade-hud b{
+  display:block;
+  margin-top:2px;
+  font-family:Montserrat,sans-serif;
+  font-size:18px;
+}
+.arcade-overlay{
+  position:absolute;
+  inset:0;
+  z-index:4;
+  display:grid;
+  place-items:center;
+  padding:20px;
+  background:linear-gradient(rgba(0,0,0,.22),rgba(0,0,0,.5));
+}
+.arcade-overlay.is-hidden{display:none}
+.arcade-panel{
+  width:min(430px,100%);
+  border:1px solid rgba(247,147,30,.32);
+  border-radius:18px;
+  padding:20px;
+  text-align:center;
+  background:rgba(8,8,12,.9);
+  box-shadow:0 18px 60px rgba(0,0,0,.45);
+}
+.arcade-panel h1{
+  margin:0 0 8px;
+  font-family:Montserrat,sans-serif;
+  font-size:clamp(26px,5vw,42px);
+  font-weight:900;
+  line-height:.95;
+  text-transform:uppercase;
+}
+.arcade-panel p{margin:0 0 14px;color:#cbd5e1;font-size:13px;line-height:1.5}
+.arcade-player{
+  display:grid;
+  grid-template-columns:1fr 1fr 68px;
+  gap:8px;
+  margin-bottom:12px;
+}
+.arcade-player input{
+  width:100%;
+  min-height:42px;
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:12px;
+  padding:0 10px;
+  background:#06070a;
+  color:#fff;
+  font-weight:800;
+}
+.arcade-button{
+  width:100%;
+  min-height:46px;
+  border:0;
+  border-radius:14px;
+  background:linear-gradient(90deg,#F7931E,#FFC078);
+  color:#120A02;
+  cursor:pointer;
+  font-weight:950;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+}
+.arcade-ranking{
+  min-height:calc(100vh - 48px);
+  display:flex;
+  flex-direction:column;
+}
+.ranking-list{
+  display:grid;
+  gap:10px;
+  padding:12px;
+  overflow:auto;
+}
+.ranking-card{
+  display:grid;
+  grid-template-columns:auto 1fr auto;
+  gap:10px;
+  align-items:center;
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:14px;
+  padding:12px;
+  background:rgba(255,255,255,.035);
+}
+.ranking-pos{
+  width:34px;
+  height:34px;
+  display:grid;
+  place-items:center;
+  border-radius:12px;
+  background:rgba(247,147,30,.16);
+  color:#ffd08a;
+  font-weight:950;
+}
+.ranking-card strong{
+  display:block;
+  font-size:13px;
+}
+.ranking-card span{
+  display:block;
+  margin-top:3px;
+  color:#9ca3af;
+  font-size:11px;
+}
+.ranking-score{
+  font-family:Montserrat,sans-serif;
+  font-size:16px;
+  font-weight:900;
+  color:#fff;
+  text-align:right;
+}
+@media(max-width:900px){
+  .arcade-shell{
+    width:100%;
+    min-height:100svh;
+    padding:0;
+    grid-template-columns:1fr;
+    gap:0;
+  }
+  .arcade-screen,.arcade-ranking{border-radius:0;border-left:0;border-right:0}
+  .runner-stage{height:68svh;min-height:430px}
+  .arcade-ranking{min-height:32svh}
+  .arcade-topbar{min-height:38px;padding:8px 10px}
+  .arcade-title{font-size:11px}
+  .arcade-hud{left:8px;right:8px;top:8px;grid-template-columns:repeat(3,1fr);gap:6px}
+  .arcade-hud div{padding:7px 8px}
+  .arcade-hud b{font-size:14px}
+  .arcade-player{grid-template-columns:1fr 1fr 58px}
+}
 
 </style>
 </head>
 <body class="os-mode">
 <div id="app" v-cloak>
+  <main class="arcade-shell" aria-label="Solano Runner Arcade" hidden>
+    <section class="arcade-screen">
+      <div class="arcade-topbar">
+        <div class="arcade-title">Solano Runner</div>
+        <div class="arcade-live">Firebase ranking</div>
+      </div>
+      <div class="runner-stage" id="arcadeRunnerStage">
+        <canvas id="arcadeRunnerCanvas" aria-label="Runner Solano"></canvas>
+        <div class="arcade-hud" aria-live="polite">
+          <div><small>Distancia</small><b id="arcadeDistance">0m</b></div>
+          <div><small>Melhor</small><b id="arcadeBest">0m</b></div>
+          <div><small>Status</small><b id="arcadeStatus">Pronto</b></div>
+        </div>
+        <div class="arcade-overlay" id="arcadeOverlay">
+          <div class="arcade-panel">
+            <h1>Solano Runner</h1>
+            <p>Toque no lado direito para pular. Segure o lado esquerdo para deslizar.</p>
+            <div class="arcade-player">
+              <input id="arcadePlayerName" maxlength="28" placeholder="Nome" autocomplete="nickname">
+              <input id="arcadePlayerCity" maxlength="24" placeholder="Cidade" autocomplete="address-level2">
+              <input id="arcadePlayerUF" maxlength="2" placeholder="UF" autocomplete="address-level1">
+            </div>
+            <button class="arcade-button" id="arcadeStart">Jogar</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <aside class="arcade-ranking" aria-label="Ranking global">
+      <div class="arcade-topbar">
+        <div class="arcade-title">Ranking global</div>
+        <div class="arcade-live">Top players</div>
+      </div>
+      <div class="ranking-list" id="arcadeRankingList">
+        <div class="ranking-card"><div class="ranking-pos">...</div><div><strong>Carregando</strong><span>Firebase</span></div><div class="ranking-score">0m</div></div>
+      </div>
+    </aside>
+  </main>
+  <div class="legacy-home">
   <div class="os-shell">
     <header class="os-menubar" aria-label="Barra do sistema">
       <a href="/" class="os-menubar-brand no-underline text-white">
@@ -480,8 +814,11 @@ body.os-mode{background-color:#050508}
       <div class="os-status"><span class="os-status-dot"></span> Online</div>
       <nav class="nav-links" aria-label="Atalhos">
         <a href="/jogos/" class="nav-link">Jogos</a>
-        <a href="/calculadora/" class="nav-link">Calc</a>
         <a href="/projetos/" class="nav-link">Projetos</a>
+        <a href="/calculadora/" class="nav-link">Calc</a>
+        <a href="/rifas/" class="nav-link">Rifas</a>
+        <a href="/cursos/" class="nav-link">Cursos</a>
+        <a href="/tutoriais/" class="nav-link">Tutoriais</a>
         <a href="/noticias/" class="nav-link">Notícias</a>
       </nav>
     </header>
@@ -522,6 +859,11 @@ body.os-mode{background-color:#050508}
               <a href="/projetos/" id="homeHeroSecondary" class="cta cta-secondary">Ver projetos prontos</a>
             </div>
             <div id="homeExtraCtas" class="hero-actions" style="margin-top:0"></div>
+            <div class="os-quick-strip" aria-label="Resumo do ecossistema">
+              <div class="os-quick-stat"><strong>7</strong><span>Apps principais</span></div>
+              <div class="os-quick-stat"><strong>48V</strong><span>Projeto guia</span></div>
+              <div class="os-quick-stat"><strong>VIP</strong><span>Comunidade ativa</span></div>
+            </div>
             <p class="hero-proof-strip" id="homeProofStrip" aria-hidden="true">
               <strong>Entrada</strong> curso gratuito · <strong>Aplicação</strong> projetos prontos · <strong>Teste</strong> calculadora e simulador
             </p>
@@ -577,8 +919,9 @@ body.os-mode{background-color:#050508}
           <a href="/tutoriais/" class="quick-card glass text-left"><span class="os-app-icon">🔧</span><div class="section-kicker mb-3">Resolver</div><h3 class="font-black text-xl uppercase text-white mb-2">Tutoriais</h3><p class="text-sm text-gray-400">Soluções para inversores, baterias e instalações.</p><span class="card-arrow">→</span></a>
           <a href="https://chat.whatsapp.com/LIL7ytXyakpE4JnGvCgMBq" class="quick-card glass text-left"><span class="os-app-icon">⚡</span><div class="section-kicker mb-3">Comunidade</div><h3 class="font-black text-xl uppercase text-white mb-2">Grupo VIP</h3><p class="text-sm text-gray-400">Acompanhe ofertas, alertas e novidades.</p><span class="card-arrow">→</span></a>
         </div>
+        </div>
       </section>
-<section class="mt-16 md:mt-24 mb-8 reveal">
+<section class="os-feature-row mt-16 md:mt-24 mb-8 reveal">
         <article class="glass p-8 md:p-12 rounded-[40px] max-w-5xl mx-auto border-yellow-500/20 flex flex-col md:flex-row items-center gap-8 md:gap-12 bg-gradient-to-br from-[#0a0a0c] to-[#1a1500]">
           <div class="w-full md:w-1/3 flex justify-center">
             <div class="relative text-8xl md:text-9xl drop-shadow-[0_0_18px_rgba(247,147,30,.5)]" id="homeFeatureIcon">🎮</div>
@@ -587,7 +930,10 @@ body.os-mode{background-color:#050508}
             <div class="section-kicker mb-2" id="homeFeatureKicker">Prática sem risco</div>
             <h2 class="font-black text-3xl md:text-4xl text-white mb-4 uppercase" style="font-family:Montserrat,sans-serif" id="homeFeatureTitle">Jogo Solano</h2>
             <p class="text-gray-400 mb-6 text-sm" id="homeFeatureDescription">Aprenda conceitos de geração, baterias, inversores e consumo em uma experiência leve, visual e competitiva.</p>
-            <div class="flex flex-col sm:flex-row gap-4"><a href="/jogos/solano/" class="cta cta-primary" id="homeFeaturePrimary">Jogar Solano</a><a href="/projetos/" class="cta cta-secondary" id="homeFeatureSecondary">Ver projetos</a></div>
+            <div class="solano-home-actions">
+              <a href="/jogos/solano/" class="cta cta-primary" id="homeFeaturePrimary">Jogar Solano</a>
+              <a href="/projetos/" class="cta cta-secondary" id="homeFeatureSecondary">Ver projetos</a>
+            </div>
           </div>
         </article>
       </section>
@@ -606,6 +952,16 @@ body.os-mode{background-color:#050508}
     <div class="mt-14 text-center"><p class="text-gray-600 text-[10px] font-bold uppercase tracking-widest opacity-70">© 2026 PENSE OFFGRID</p></div>
   </footer>
   <div id="homeBannerLayer"></div>
+  <nav class="os-dock" aria-label="Dock de aplicativos">
+    <a href="/projetos/"><span class="os-dock-icon">PR</span><span>Projetos</span></a>
+    <a href="/calculadora/"><span class="os-dock-icon">CA</span><span>Calc</span></a>
+    <a href="/noticias/"><span class="os-dock-icon">NO</span><span>Noticias</span></a>
+    <a href="/rifas/"><span class="os-dock-icon">RI</span><span>Rifas</span></a>
+    <a href="/cursos/"><span class="os-dock-icon">CU</span><span>Cursos</span></a>
+    <a href="/tutoriais/"><span class="os-dock-icon">TU</span><span>Tutoriais</span></a>
+    <a href="/jogos/"><span class="os-dock-icon">JO</span><span>Jogos</span></a>
+  </nav>
+  </div>
 </div>
 
 <script>
@@ -701,34 +1057,319 @@ window.addEventListener("load",()=>document.querySelectorAll(".reveal").forEach(
 
 <script>
 (function(){
-  const SHOPEE_REF = "https://s.shopee.com.br/7KrhPU0WRF";
-  const COOLDOWN_MS = 12 * 60 * 60 * 1000;
-  const LAST_KEY = "penseoffgrid_shopee_last_open";
-  const COUNT_KEY = "penseoffgrid_public_click_count";
+  const canvas = document.getElementById("arcadeRunnerCanvas");
+  if (!canvas) return;
+  const ctx = canvas.getContext("2d");
+  const stage = document.getElementById("arcadeRunnerStage");
+  const overlay = document.getElementById("arcadeOverlay");
+  const startButton = document.getElementById("arcadeStart");
+  const distanceEl = document.getElementById("arcadeDistance");
+  const bestEl = document.getElementById("arcadeBest");
+  const statusEl = document.getElementById("arcadeStatus");
+  const nameInput = document.getElementById("arcadePlayerName");
+  const cityInput = document.getElementById("arcadePlayerCity");
+  const ufInput = document.getElementById("arcadePlayerUF");
 
-  function canOpenNow(){
-    const last = Number(localStorage.getItem(LAST_KEY) || 0);
-    return !last || (Date.now() - last) > COOLDOWN_MS;
+  const SAVE_KEY = "solano_arcade_home_player";
+  const state = {
+    dpr: 1, w: 900, h: 520, ground: 420, running: false, last: 0,
+    distance: 0, best: Number(localStorage.getItem("solano_arcade_home_best") || 0),
+    speed: 360, spawn: 1.1, obstacles: [], clouds: [], slide: false,
+    runner: { x: 86, y: 0, w: 46, h: 72, vy: 0, jumps: 0 }
+  };
+
+  function loadPlayer(){
+    try{
+      const data = JSON.parse(localStorage.getItem(SAVE_KEY) || "{}");
+      nameInput.value = data.name || "";
+      cityInput.value = data.city || "";
+      ufInput.value = data.uf || "";
+    }catch(e){}
+    bestEl.textContent = Math.floor(state.best) + "m";
   }
 
-  function registerPublicClick(event){
-    const clickable = event.target.closest("a,button");
-    if(!clickable) return;
+  function player(){
+    const data = {
+      name: (nameInput.value || "Jogador").trim().slice(0, 28),
+      city: (cityInput.value || "Cidade").trim().slice(0, 24),
+      uf: (ufInput.value || "BR").trim().toUpperCase().slice(0, 2)
+    };
+    localStorage.setItem(SAVE_KEY, JSON.stringify(data));
+    return data;
+  }
 
-    if(!canOpenNow()) return;
+  function resize(){
+    const rect = stage.getBoundingClientRect();
+    state.dpr = Math.min(window.devicePixelRatio || 1, 2);
+    state.w = Math.max(320, Math.floor(rect.width));
+    state.h = Math.max(360, Math.floor(rect.height));
+    canvas.width = Math.floor(state.w * state.dpr);
+    canvas.height = Math.floor(state.h * state.dpr);
+    ctx.setTransform(state.dpr, 0, 0, state.dpr, 0, 0);
+    state.ground = state.h - 64;
+    state.runner.y = Math.min(state.runner.y || state.ground - state.runner.h, state.ground - state.runner.h);
+  }
 
-    let count = Number(localStorage.getItem(COUNT_KEY) || 0) + 1;
-    localStorage.setItem(COUNT_KEY, String(count));
+  function start(){
+    player();
+    state.running = true;
+    state.distance = 0;
+    state.speed = 360;
+    state.spawn = .8;
+    state.obstacles = [];
+    state.runner.y = state.ground - state.runner.h;
+    state.runner.vy = 0;
+    state.runner.jumps = 0;
+    overlay.classList.add("is-hidden");
+    statusEl.textContent = "Run";
+  }
 
-    if(count >= 5){
-      localStorage.setItem(LAST_KEY, String(Date.now()));
-      localStorage.setItem(COUNT_KEY, "0");
-      window.open(SHOPEE_REF, "_blank", "noopener,noreferrer");
+  function finish(){
+    if (!state.running) return;
+    state.running = false;
+    const distance = Math.floor(state.distance);
+    state.best = Math.max(state.best, distance);
+    localStorage.setItem("solano_arcade_home_best", String(state.best));
+    bestEl.textContent = Math.floor(state.best) + "m";
+    statusEl.textContent = "Fim";
+    overlay.classList.remove("is-hidden");
+    startButton.textContent = "Jogar de novo";
+    document.dispatchEvent(new CustomEvent("solano:submitRanking", {
+      detail: { ...player(), distance, score: distance, level: Math.max(1, Math.floor(distance / 300)), cpo: "0.00", lastActiveAt: Date.now(), source: "home-runner" }
+    }));
+  }
+
+  function jump(){
+    if (!state.running) return;
+    if (state.runner.jumps < 2) {
+      state.runner.vy = state.runner.jumps ? -620 : -760;
+      state.runner.jumps++;
     }
   }
 
-  document.addEventListener("click", registerPublicClick, true);
+  function setSlide(value){
+    state.slide = value && state.running && state.runner.y + state.runner.h >= state.ground - 2;
+  }
+
+  function spawnObstacle(){
+    const tall = Math.random() > .62;
+    state.obstacles.push({ x: state.w + 40, y: state.ground - (tall ? 82 : 42), w: tall ? 34 : 46, h: tall ? 82 : 42, tall });
+  }
+
+  function rects(a,b){
+    return a.x < b.x + b.w && a.x + a.w > b.x && a.y < b.y + b.h && a.y + a.h > b.y;
+  }
+
+  function update(dt){
+    if (!state.running) return;
+    state.distance += state.speed * dt / 8;
+    state.speed = Math.min(760, state.speed + dt * 9);
+    state.spawn -= dt;
+    if (state.spawn <= 0) {
+      spawnObstacle();
+      state.spawn = .78 + Math.random() * .72;
+    }
+    const p = state.runner;
+    p.h = state.slide ? 44 : 72;
+    p.vy += 1680 * dt;
+    p.y += p.vy * dt;
+    if (p.y + p.h >= state.ground) {
+      p.y = state.ground - p.h;
+      p.vy = 0;
+      p.jumps = 0;
+    }
+    state.obstacles.forEach(o => o.x -= state.speed * dt);
+    state.obstacles = state.obstacles.filter(o => o.x + o.w > -60);
+    const hitbox = { x:p.x + 10, y:p.y + 8, w:p.w - 18, h:p.h - 12 };
+    if (state.obstacles.some(o => rects(hitbox, o))) finish();
+    distanceEl.textContent = Math.floor(state.distance) + "m";
+  }
+
+  function drawRunner(){
+    const p = state.runner;
+    const step = Math.sin(performance.now() / 70);
+    ctx.save();
+    ctx.translate(p.x, p.y);
+    if (state.slide) ctx.scale(1.08, .78);
+    ctx.fillStyle = "rgba(247,147,30,.16)";
+    round(-10, -8, p.w + 20, p.h + 16, 16);
+    ctx.fill();
+    ctx.strokeStyle = "#0f172a";
+    ctx.lineWidth = 7;
+    ctx.lineCap = "round";
+    ctx.beginPath();
+    ctx.moveTo(18, 48); ctx.lineTo(12 + step * 7, 70);
+    ctx.moveTo(31, 48); ctx.lineTo(40 - step * 7, 70);
+    ctx.stroke();
+    ctx.fillStyle = "#F7931E";
+    round(10, 22, 29, 34, 10);
+    ctx.fill();
+    ctx.fillStyle = "#111827";
+    round(15, 28, 19, 22, 7);
+    ctx.fill();
+    ctx.fillStyle = "#f5c28b";
+    ctx.beginPath();
+    ctx.arc(24, 14, 11, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = "#facc15";
+    ctx.fillRect(10, 8, 29, 6);
+    ctx.restore();
+  }
+
+  function round(x,y,w,h,r){
+    ctx.beginPath();
+    ctx.moveTo(x+r,y); ctx.arcTo(x+w,y,x+w,y+h,r); ctx.arcTo(x+w,y+h,x,y+h,r);
+    ctx.arcTo(x,y+h,x,y,r); ctx.arcTo(x,y,x+w,y,r); ctx.closePath();
+  }
+
+  function draw(){
+    ctx.clearRect(0, 0, state.w, state.h);
+    const sky = ctx.createLinearGradient(0, 0, 0, state.h);
+    sky.addColorStop(0, "#111827");
+    sky.addColorStop(.62, "#05070b");
+    sky.addColorStop(1, "#020202");
+    ctx.fillStyle = sky;
+    ctx.fillRect(0, 0, state.w, state.h);
+    ctx.strokeStyle = "rgba(247,147,30,.12)";
+    ctx.lineWidth = 1;
+    for (let x = -(state.distance % 48); x < state.w; x += 48) {
+      ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, state.h); ctx.stroke();
+    }
+    ctx.fillStyle = "#121212";
+    ctx.fillRect(0, state.ground, state.w, state.h - state.ground);
+    ctx.fillStyle = "#F7931E";
+    ctx.fillRect(0, state.ground, state.w, 3);
+    state.obstacles.forEach(o => {
+      ctx.fillStyle = o.tall ? "#ef4444" : "#facc15";
+      round(o.x, o.y, o.w, o.h, 8);
+      ctx.fill();
+    });
+    drawRunner();
+  }
+
+  function loop(now){
+    const dt = Math.min(.033, (now - (state.last || now)) / 1000);
+    state.last = now;
+    update(dt);
+    draw();
+    requestAnimationFrame(loop);
+  }
+
+  startButton.addEventListener("click", start);
+  canvas.addEventListener("pointerdown", (event) => {
+    const rect = canvas.getBoundingClientRect();
+    if (event.clientX - rect.left > rect.width / 2) jump();
+    else setSlide(true);
+  });
+  canvas.addEventListener("pointerup", () => setSlide(false));
+  canvas.addEventListener("pointercancel", () => setSlide(false));
+  window.addEventListener("keydown", (event) => {
+    if (event.code === "Space" || event.code === "ArrowUp") { event.preventDefault(); jump(); }
+    if (event.code === "ArrowDown") setSlide(true);
+  });
+  window.addEventListener("keyup", (event) => { if (event.code === "ArrowDown") setSlide(false); });
+  window.addEventListener("resize", resize);
+  loadPlayer();
+  resize();
+  requestAnimationFrame(loop);
 })();
+</script>
+
+<script type="module">
+  import { auth, db } from "./jogos/solano/firebase-config.js";
+  import { doc, getDoc, setDoc, collection, getDocs, query, orderBy, limit, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
+  import { signInAnonymously } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+
+  const rankingList = document.getElementById("arcadeRankingList");
+  const rankingCol = collection(db, "games", "solano", "ranking");
+
+  const escapeHtml = (value = "") => String(value).replace(/[&<>"']/g, (char) => ({
+    "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#039;"
+  }[char]));
+
+  function safeId(value = "jogador") {
+    return String(value || "jogador")
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[^a-z0-9_-]+/g, "_")
+      .replace(/^_+|_+$/g, "")
+      .slice(0, 80) || `player_${Date.now()}`;
+  }
+
+  async function ensureAnonAuth() {
+    if (auth.currentUser) return auth.currentUser;
+    try {
+      const result = await signInAnonymously(auth);
+      return result.user;
+    } catch (error) {
+      console.warn("Auth anonimo indisponivel para ranking.", error);
+      return null;
+    }
+  }
+
+  function renderRanking(items = []) {
+    if (!rankingList) return;
+    if (!items.length) {
+      rankingList.innerHTML = `<div class="ranking-card"><div class="ranking-pos">--</div><div><strong>Sem ranking</strong><span>Jogue para entrar no top</span></div><div class="ranking-score">0m</div></div>`;
+      return;
+    }
+    rankingList.innerHTML = items.slice(0, 20).map((item, index) => `
+      <div class="ranking-card">
+        <div class="ranking-pos">#${index + 1}</div>
+        <div>
+          <strong>${escapeHtml(item.name || "Jogador")}</strong>
+          <span>${escapeHtml(item.city || "Cidade")}/${escapeHtml(item.uf || "BR")}</span>
+        </div>
+        <div class="ranking-score">${Math.floor(Number(item.distance || 0))}m</div>
+      </div>
+    `).join("");
+  }
+
+  async function loadRanking() {
+    try {
+      const snap = await getDocs(query(rankingCol, orderBy("distance", "desc"), limit(50)));
+      const items = [];
+      snap.forEach((item) => items.push({ id: item.id, ...item.data() }));
+      renderRanking(items);
+      return items;
+    } catch (error) {
+      console.warn("Falha ao carregar ranking Firebase.", error);
+      renderRanking([]);
+      return [];
+    }
+  }
+
+  async function submitRanking(entry = {}) {
+    try {
+      await ensureAnonAuth();
+      const id = safeId(`${entry.name || "jogador"}_${entry.city || "cidade"}_${entry.uf || "br"}`);
+      const ref = doc(db, "games", "solano", "ranking", id);
+      const snap = await getDoc(ref);
+      const old = snap.exists() ? snap.data() : {};
+      const distance = Math.max(Number(old.distance || 0), Number(entry.distance || 0));
+      const score = Math.max(Number(old.score || 0), Number(entry.score || 0));
+      await setDoc(ref, {
+        ...old,
+        ...entry,
+        distance,
+        score,
+        lastActiveAt: Date.now(),
+        updatedAt: serverTimestamp(),
+        source: "home-runner"
+      }, { merge: true });
+      await loadRanking();
+      return true;
+    } catch (error) {
+      console.warn("Falha ao enviar ranking Firebase.", error);
+      return false;
+    }
+  }
+
+  document.addEventListener("solano:submitRanking", (event) => submitRanking(event.detail || {}));
+  ensureAnonAuth().finally(loadRanking);
+  setInterval(loadRanking, 90000);
+  window.SolanoHomeRanking = { submitRanking, loadRanking };
 </script>
 
 <script type="module">
